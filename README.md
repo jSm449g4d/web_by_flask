@@ -10,6 +10,8 @@ plz clone `flask/` folder
 plz setting apache2.conf<br>
 `$ sudo vim /etc/apache2/apache2.conf`
 
-
 plz add below<br>
-`WSGIScriptAlias (root path) (path to /flask/wsgi.py)`
+`WSGIScriptAlias (root path) (path to flask/wsgi.py)`
+
+### Some features are restricted by permissions.
+`sudo chmod -R 777 (path to flask/)`
