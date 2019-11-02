@@ -14,4 +14,4 @@ plz add below<br>
 `WSGIScriptAlias (root path) (path to flask/wsgi.py)`
 
 ### Some features are restricted by permissions.
-`sudo chmod -R 777 (path to flask/)`
+`$ sudo chmod -R 777 (path to flask/)`
