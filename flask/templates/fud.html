@@ -6,15 +6,19 @@
     <title>ふぁぃるさぁばぁ</title>
 </head>
 <body>
-    <h2>FileList</h2>
-    <h3>ご自由にお使いください</h3>
-    {{FILES}}
-    <li>
-        <form method="post" enctype="multipart/form-data">
-            <input type="file" name="upload" size="30">
-            <input type="submit" value="送信する">
-        </form>
-    </li>
-        
-    <a class="contents_link" href="./">Flask_Indexへ</a></li>
+    <h2>File storage for Flask+HTML+SQlite3 study</h2>
+    <h5>Please use freely...</h5>
+    <p>※詳細はReadMe.txtをご覧ください</p>
+
+    <form method="post" enctype="multipart/form-data" style="display:inline;">
+        <li>
+            Upload_File:<input type="file" name="upload" size="30">
+            <button name="upload_file" value="True">送信する</button>
+        </li>
+        <li>Pass:<input type="text" name="pass"></li>
+        <li>=====</li>
+        {{FILES}}
+    </form>
+    <li>=====</li>
+    <li><a class="contents_link" href="./">Flask_Indexへ</a></li>
 </body>
