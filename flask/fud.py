@@ -7,7 +7,6 @@ import os
 import sqlite3
 import hashlib
 
-os.chdir(os.path.dirname(__file__))
 DataDir="./fud"
 
 def htmlwalk():

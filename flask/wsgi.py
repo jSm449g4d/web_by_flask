@@ -4,8 +4,9 @@ import os
 import flask
 from flask import  render_template,redirect,request
 import importlib
+import sqlite3
 
-sys.path.append(os.path.dirname(__file__))
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 app = flask.Flask(__name__)
 
@@ -13,14 +14,11 @@ app = flask.Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 100000000
 
 @app.route("/")
-def rootpage():
-    return redirect('./index')
-
-@app.route("/index")
-def index_show():
-   return render_template("/index.html",
-   used_python="python "+sys.version,
-   used_flask="flask "+flask.__version__)
+def indexpage_show():
+   return render_template("index.html",
+   used_python=sys.version,
+   used_flask=flask.__version__,
+   used_sqlite3=sqlite3.version)
 
 @app.route("/<name>.html")
 def html_show(name):
