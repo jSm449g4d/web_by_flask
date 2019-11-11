@@ -11,11 +11,11 @@ DataDir="./fud"
 
 def htmlwalk():
     #sqlite3 
-    con=sqlite3.connect(os.path.join(DataDir,"fud.sqlite"),isolation_level = None)
+    con=sqlite3.connect(os.path.join("./flask.sqlite"),isolation_level = None)
     cur=con.cursor()
-    cur.execute("create table if not exists protected (name text unique,sha256 text)")
+    cur.execute("create table if not exists fub (name text unique,sha256 text)")
     wlks="\""+"\",\"".join(os.listdir(DataDir))+"\""#[A,B,C,...] -> "A","B","C",...
-    cur.execute("delete from protected where name not in (%s)"%wlks)
+    cur.execute("delete from fub where name not in (%s)"%wlks)
 
     html=""
     wlks=os.listdir(DataDir)
@@ -23,7 +23,7 @@ def htmlwalk():
     for wlk in wlks:
         html+="<li>"+"<a class=\"file\" href=\"?dl="+wlk+"\">"+wlk+"</a>\t"
         html+="<button name=\"delete\" value=\""+wlk+"\">DEL</button>"
-        sha256=cur.execute("select sha256 from protected where name=\"%s\""%wlk).fetchone()
+        sha256=cur.execute("select sha256 from fub where name=\"%s\""%wlk).fetchone()
         if sha256!=None:sha256=sha256[0]
         html+="sha256:"+str(sha256)+"</li>"
     cur.close();con.close()
@@ -31,10 +31,10 @@ def htmlwalk():
 
 def sql_reg(name,passwd,mode=0):#confirmation->registration
     passwd=hashlib.sha256(passwd.encode('utf-8')).hexdigest()
-    con=sqlite3.connect(os.path.join(DataDir,"fud.sqlite"),isolation_level = None)
+    con=sqlite3.connect(os.path.join("./flask.sqlite"),isolation_level = None)
     cur=con.cursor()
-    cur.execute("create table if not exists protected (name text unique,sha256 text)")
-    sha256=cur.execute("select sha256 from protected where name=\"%s\""%name).fetchone()
+    cur.execute("create table if not exists fub (name text unique,sha256 text)")
+    sha256=cur.execute("select sha256 from fub where name=\"%s\""%name).fetchone()
     if sha256!=None:sha256=sha256[0]
     #registrated and mismatch -> rejected!
     if sha256!=None and str(sha256)!=passwd:
@@ -43,7 +43,7 @@ def sql_reg(name,passwd,mode=0):#confirmation->registration
     if mode==0 or passwd==hashlib.sha256().hexdigest():
         cur.close();con.close();return 1
     #registration
-    try :cur.execute("insert into protected values(\"%s\",\"%s\")"%(name,passwd))
+    try :cur.execute("insert into fub values(\"%s\",\"%s\")"%(name,passwd))
     except:print("overwrite!");cur.close();con.close();return 2
     print("success!");cur.close();con.close();return 2
 
