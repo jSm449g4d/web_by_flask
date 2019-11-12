@@ -21,11 +21,12 @@ def htmlwalk():
     wlks=os.listdir(DataDir)
     
     for wlk in wlks:
-        html+="<li>"+"<a class=\"file\" href=\"?dl="+wlk+"\">"+wlk+"</a>\t"
-        html+="<button name=\"delete\" value=\""+wlk+"\">DEL</button>"
         sha256=cur.execute("select sha256 from fub where name=\"%s\""%wlk).fetchone()
         if sha256!=None:sha256=sha256[0]
-        html+="sha256:"+str(sha256)+"</li>"
+        
+        html+="<tr><td class=\"flask_table\"><button name=\"delete\" value=\""+wlk+"\">DEL</button></td>"
+        html+="<td class=\"flask_table\"><a class=\"file\" href=\"?dl="+wlk+"\">"+wlk+"</a></td>"
+        html+="<td class=\"flask_table\">"+str(sha256)+"</td></tr>"
     cur.close();con.close()
     return html
 
