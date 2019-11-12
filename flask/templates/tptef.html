@@ -41,9 +41,9 @@
     <form method="post" enctype="multipart/form-data" style="display:inline;">
         <li><input type="submit" value="Reload"></li>
         <li>
-            <input type="text" name="room" placeholder="Room" value={{ROOM}}>
-            <input type="text" name="user" placeholder="User" value={{USER}}>
-            <input type="text" name="pass" placeholder="Pass" value={{PASS}}>
+            <input type="text" name="room" placeholder="Room" value="{{ROOM}}">
+            <input type="text" name="user" placeholder="User" value="{{USER}}">
+            <input type="text" name="pass" placeholder="Pass" value="{{PASS}}">
         </li>
         <textarea name="remark" cols="80" rows="5" placeholder="Remark"></textarea>
         <li>
@@ -53,11 +53,12 @@
         <table class="flask_table">
             <caption class="flask_table">Room</caption>
             <thead>
-                <td class="flask_table">handle_name</td>
-                <td class="flask_table">remark</td>
-                <td class="flask_table">sha:256</td>
-                <td class="flask_table">timestamp</td>
-
+                <tr>
+                    <td class="flask_table">handle_name</td>
+                    <td class="flask_table">remark</td>
+                    <td class="flask_table">sha:256</td>
+                    <td class="flask_table">timestamp</td>
+                </tr>
             </thead>
             <tbody>{{ORDERS}}</tbody>
         </table>

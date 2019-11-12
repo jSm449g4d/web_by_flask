@@ -32,19 +32,20 @@
     <h4 style="color:firebrick">=Please use freely at your own risk=</h4>
 
     <form method="post" enctype="multipart/form-data" style="display:inline;">
-        <li>URL(API_endpoint):<input type="text" name="url" size="80" value={{URL}}></li>
+        <li>URL(API_endpoint):<input type="text" name="url" size="80" value="{{URL}}"></li>
         <li>query:?<input type="text" name="query" size="100"></li>
         <li><input type="submit" value="Reload">
-            Pass:<input type="text" name="pass" value={{PASS}}>
+            Pass:<input type="text" name="pass" value="{{PASS}}">
             <button name="launch" value="True">Launch</button>
         </li>
         <li>=====</li>
         <table class="flask_table">
             <caption class="flask_table">Orders</caption>
             <thead>
-                <td class="flask_table">URL?query</td>
-                <td class="flask_table">timestamp</td>
-
+                <tr>
+                    <td class="flask_table">URL?query</td>
+                    <td class="flask_table">timestamp</td>
+                </tr>
             </thead>
             <tbody>{{ORDERS}}</tbody>
         </table>

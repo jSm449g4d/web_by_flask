@@ -17,7 +17,7 @@ def Display_Current_SQL(room=""):
     for order in orders:
         html+="<tr><td class=\"flask_table\">"+str(order[1])+"</td>"
         html+="<td class=\"flask_table\">"+str(order[2])+"</td>"
-        html+="<td class=\"flask_table\" style:\"\">"+str(order[3])+"</td>"
+        html+="<td class=\"flask_table\">"+str(order[3])+"</td>"
         html+="<td class=\"flask_table\">"+str(order[4])+"</td></tr>"
     return html
 
