@@ -1,7 +1,7 @@
 # web_by_flask
 For studying the web framework
 
-The images are in development
+Image is in development
 ![1](https://github.com/jSm449g4d/web_by_flask/blob/master/assets/aa.png)
 
 ## how to use
