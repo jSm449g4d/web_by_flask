@@ -2,7 +2,6 @@
 For studying the web framework
 
 The images are in development
-![1](https://github.com/jSm449g4d/web_by_flask/blob/master/assets/aa.png)
 ![1](https://github.com/jSm449g4d/web_by_flask/blob/master/assets/image-4.png)
 
 ## how to use
