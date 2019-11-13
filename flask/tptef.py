@@ -17,8 +17,11 @@ def Display_Current_SQL(room=""):
     for order in orders:
         html+="<tr><td class=\"flask_table\">"+str(order[1])+"</td>"
         html+="<td class=\"flask_table\">"+str(order[2])+"</td>"
-        html+="<td class=\"flask_table\">"+str(order[3])+"</td>"
-        html+="<td class=\"flask_table\">"+str(order[4])+"</td></tr>"
+        #Display 48 characters of sha256
+        html+="<td class=\"flask_table\" style=\"font-size: 12px;\">"+str(order[3])[:16]+"<br>"+str(order[3])[16:32]+\
+        "<br>"+str(order[3])[32:48]+"<br>"+str(order[3])[48:]+"</td>"
+        #timestamp
+        html+="<td class=\"flask_table\" style=\"font-size: 12px;\">"+str(order[4]).split(".")[0]+"</td></tr>"
     return html
 
 def Order_Into_SQL(room="",user="",remark="",passwd=""):
@@ -53,13 +56,13 @@ def show(req):
     passwd=""
     if req.method == 'POST':
         if 'room' in req.form:
-            room=req.form['room']
+            room=req.form['room'].translate(str.maketrans("\"\'\\/<>%",'_______'))#Not_secure_filename!
         if 'user' in req.form:
-            user=req.form['user']
+            user=req.form['user'].translate(str.maketrans("\"\'\\/<>%",'_______'))#Not_secure_filename!
         if 'remark' in req.form:
-            remark=req.form['remark']
+            remark=req.form['remark'].translate(str.maketrans("\"\'\\/<>%",'_______'))#Not_secure_filename!
         if 'pass' in req.form:
-            passwd=secure_filename(req.form['pass'])
+            passwd=req.form['pass'].translate(str.maketrans("\"\'\\/<>%",'_______'))#Not_secure_filename!
         if "launch" in req.form and secure_filename(req.form["launch"])=="True":
             Order_Into_SQL(room,user,remark,passwd)
         if "clear" in req.form and secure_filename(req.form["clear"])=="True":
