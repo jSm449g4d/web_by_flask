@@ -22,11 +22,10 @@ def htmlwalk():
     
     for wlk in wlks:
         sha256=cur.execute("select sha256 from fub where name=\"%s\""%wlk).fetchone()
-        if sha256!=None:sha256=sha256[0]
-        
+        if sha256==None:continue#if not exist in table,be rejected
         html+="<tr><td class=\"flask_table\"><button name=\"delete\" value=\""+wlk+"\">DEL</button></td>"
         html+="<td class=\"flask_table\"><a class=\"file\" href=\"?dl="+wlk+"\">"+wlk+"</a></td>"
-        html+="<td class=\"flask_table\">"+str(sha256)+"</td></tr>"
+        html+="<td class=\"flask_table\">"+str(sha256[0])+"</td></tr>"
     cur.close();con.close()
     return html
 
@@ -34,16 +33,16 @@ def sql_reg(name,passwd,mode=0):#confirmation->registration
     passwd=hashlib.sha256(passwd.encode('utf-8')).hexdigest()
     con=sqlite3.connect(os.path.join("./flask.sqlite"),isolation_level = None)
     cur=con.cursor()
-    cur.execute("create table if not exists fub (name text unique,sha256 text)")
     sha256=cur.execute("select sha256 from fub where name=\"%s\""%name).fetchone()
-    if sha256!=None:sha256=sha256[0]
-    #registrated and mismatch -> rejected!
-    if sha256!=None and str(sha256)!=passwd:
-        print("rejected!");cur.close();con.close();return 0
-    #confirmation_mode or non_registering -> accepted!
-    if mode==0 or passwd==hashlib.sha256().hexdigest():
-        cur.close();con.close();return 1
+    #confirmation_mode
+    if mode==0:
+        if sha256==None:
+            print("not_registrated!");cur.close();con.close();return 0
+        elif str(sha256[0])!=passwd:print("rejected!");cur.close();con.close();return 0
+        else :print("accepted!");cur.close();con.close();return 1
     #registration
+    if sha256!=None:
+        if str(sha256[0])!=passwd:print("rejected!");cur.close();con.close();return 0
     try :cur.execute("insert into fub values(\"%s\",\"%s\")"%(name,passwd))
     except:print("overwrite!");cur.close();con.close();return 2
     print("success!");cur.close();con.close();return 2
@@ -60,16 +59,16 @@ def show(req):
     os.chdir(os.path.dirname(__file__))
     #GET
     if req.args.get('dl')!=None:
-        target=secure_filename(req.args.get('dl'))
+        target=req.args.get('dl').translate(str.maketrans("\"\'\\/<>%",'_______'))#Not_secure_filename!
         return send_file(os.path.join(DataDir,target),as_attachment = True)
     #POST
     if req.method == 'POST':
         if 'upload_file' in req.form and 'upload' in req.files:
-            target=secure_filename(req.files['upload'].filename)
+            target=req.files['upload'].filename.translate(str.maketrans("\"\'\\/<>%",'_______'))#Not_secure_filename!
             if sql_reg(target,req.form['pass'],mode=1)!=0:
                 req.files['upload'].save(os.path.join(DataDir,target))
         if 'delete' in req.form:
-            target=secure_filename(req.form['delete'])
+            target=req.form['delete'].translate(str.maketrans("\"\'\\/<>%",'_______'))#Not_secure_filename!
             if sql_reg(target,req.form['pass'],mode=0)!=0:
                 os.remove(os.path.join(DataDir,target))
             
