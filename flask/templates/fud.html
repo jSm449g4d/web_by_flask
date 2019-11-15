@@ -31,17 +31,19 @@
     <h2>File storage for Flask+HTML+SQLite3 study</h2>
     <h4 style="color:firebrick">=Please use freely at your own risk=</h4>
     <div id=comment>
-        <li>※詳細はReadMe.txtをご覧ください※</li>
-        <li>※勉強用の試験的なサービスなので、Uploadしたファイルの保管の保証はいたしかねます※</li>
-        <li>※万一の為にUploadするファイルの暗号化を「強く」お勧めします※</li>
+        <li>※詳細はReadMe.txtをご覧ください</li>
+        <li>※勉強用で作ったWebアプリなので、Uploadしたファイルの保管の保証はいたしかねます</li>
+        <li>※万一の為にUploadするファイルの暗号化を「強く」お勧めします</li>
     </div>
 
     <form method="post" enctype="multipart/form-data" style="display:inline;">
-        <li>
-            Upload_File:<input type="file" name="upload" size="30">
-            <button name="upload_file" value="True">送信する</button>
-        </li>
-        <li>Pass:<input type="text" name="pass"></li>
+        <div>
+            <li>Pass:<input type="text" name="pass"></li>
+            <li>
+                Upload_File:<input type="file" name="upload" size="30">
+                <button name="upload_file" value="True">Upload</button>
+            </li>
+        </div>
         <li>=====</li>
         <table class="flask_table">
             <caption class="flask_table">File_list</caption>
@@ -49,7 +51,7 @@
                 <tr>
                     <td class="flask_table">Delete</td>
                     <td class="flask_table">Name</td>
-                    <td class="flask_table">sha:256</td>
+                    <td class="flask_table">sha256</td>
                 <tr>
             </thead>
             <tbody>{{FILES}}</tbody>

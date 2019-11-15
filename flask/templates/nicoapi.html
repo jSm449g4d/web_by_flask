@@ -32,11 +32,12 @@
     <h4 style="color:firebrick">=Please use freely at your own risk=</h4>
 
     <form method="post" enctype="multipart/form-data" style="display:inline;">
-        <li>URL(API_endpoint):<input type="text" name="url" size="80" value="{{URL}}"></li>
-        <li>query:?<input type="text" name="query" size="100"></li>
+        <li>URL(API_endpoint):<input type="text" name="url" size="80" value="{{URL}}" readonly></li>
+        <li>query:?<input type="text" name="query" size="100" value="{{QUERY}}"></li>
         <li><input type="submit" value="Reload">
             Pass:<input type="text" name="pass" value="{{PASS}}">
             <button name="launch" value="True">Launch</button>
+            <button name="clear" value="True">Clear_Orders</button>
         </li>
         <li>=====</li>
         <table class="flask_table">
@@ -50,7 +51,43 @@
             <tbody>{{ORDERS}}</tbody>
         </table>
         <li>=====</li>
-        <button name="clear" value="True">Clear_above</button>
+        <table class="flask_table">
+            <caption class="flask_table">About your download files</caption>
+            <thead>
+                <tr>
+                    <td class="flask_table">{{SIZE_FILES}}</td>
+                    <td class="flask_table">
+                        <button name="download" value="True">Download</button>
+                    </td>
+                    <td class="flask_table">
+                        <button name="delete" value="True">Delete</button>
+                    </td>
+                </tr>
+            </thead>
+        </table>
+        <li>=====</li>
+        <table class="">
+            <caption class="flask_table">the subprocess management console</caption>
+            <thead>
+                <tr>
+                    <td class="flask_table">
+                        <li>the subprocess fetches data </li>
+                        <li>from URLs recorded in the DB </li>
+                        <li>dont hit the button repeatedly </li>
+                    </td>
+                    <td class="flask_table" style="text-align:center">
+                        <li><button name="nicoapigostatus" value="True">Get Status</button></li>
+                        <li>Status</li>
+                        <li>{{NICOAPIGO_S}}</li>
+                    </td>
+                    <td class="flask_table" style="text-align:center">
+                        <li><button name="nicoapigo" value="True">Rerun</button></li>
+                        <li>=For Debug=</li>
+                        <li><button name="nicoapigokill" value="True">Terminate</button></li>
+                    </td>
+                </tr>
+            </thead>
+        </table>
         <li>=====</li>
     </form>
 

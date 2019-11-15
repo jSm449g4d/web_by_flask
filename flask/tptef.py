@@ -56,13 +56,13 @@ def show(req):
     passwd=""
     if req.method == 'POST':
         if 'room' in req.form:
-            room=req.form['room'].translate(str.maketrans("\"\'\\/<>%",'_______'))#Not_secure_filename!
+            room=req.form['room'].translate(str.maketrans("\"\'\\/<>%`?",'_________'))#Not_secure_filename!
         if 'user' in req.form:
-            user=req.form['user'].translate(str.maketrans("\"\'\\/<>%",'_______'))#Not_secure_filename!
+            user=req.form['user'].translate(str.maketrans("\"\'\\/<>%`?",'_________'))#Not_secure_filename!
         if 'remark' in req.form:
-            remark=req.form['remark'].translate(str.maketrans("\"\'\\/<>%",'_______'))#Not_secure_filename!
+            remark=req.form['remark'].translate(str.maketrans("\"\'\\/<>%`?",'””￥_〈〉％”？'))#Not_secure_filename!
         if 'pass' in req.form:
-            passwd=req.form['pass'].translate(str.maketrans("\"\'\\/<>%",'_______'))#Not_secure_filename!
+            passwd=secure_filename(req.form['pass'])
         if "launch" in req.form and secure_filename(req.form["launch"])=="True":
             Order_Into_SQL(room,user,remark,passwd)
         if "clear" in req.form and secure_filename(req.form["clear"])=="True":

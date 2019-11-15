@@ -10,5 +10,5 @@ def show(req):
     PLT_M=platform.processor(),
     CPU_F=psutil.cpu_freq(),
     CPU_P=psutil.cpu_percent(percpu=True),
-    MEM_T=psutil.virtual_memory().total,
-    MEM_U=psutil.virtual_memory().used,)
+    MEM_T='{:,}'.format(psutil.virtual_memory().total),
+    MEM_U='{:,}'.format(psutil.virtual_memory().used),)
