@@ -37,7 +37,8 @@ def init_flaskdb():
 
     return row
 
-def show(req):
+#Development is frozen
+def show_FREEZE(req):
     os.chdir(os.path.dirname(__file__))
     row="Under_Construction"
     #row=init_flaskdb()

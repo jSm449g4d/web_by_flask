@@ -41,6 +41,22 @@
         </li>
         <li>=====</li>
         <table class="flask_table">
+            <caption class="flask_table">Query</caption>
+            <thead>
+                <tr>
+                    <td class="flask_table">Field</td>
+                    <td class="flask_table">Value</td>
+                    <td class="flask_table">Resolution</td>
+                </tr>
+            </thead>
+            <tbody>{{FIELDS}}</tbody>
+        </table>
+        <li>
+            <button name="fields_ad" value="add">Add_Field</button>
+            <button name="fields_ad" value="del">Del_Field</button>
+        </li>
+        <li>=====</li>
+        <table class="flask_table">
             <caption class="flask_table">Orders</caption>
             <thead>
                 <tr>
@@ -68,7 +84,7 @@
         <li>=====</li>
         <table class="">
             <caption class="flask_table">the subprocess management console</caption>
-            <thead>
+            <tbody>
                 <tr>
                     <td class="flask_table">
                         <li>the subprocess fetches data </li>
@@ -82,11 +98,11 @@
                     </td>
                     <td class="flask_table" style="text-align:center">
                         <li><button name="nicoapigo" value="True">Rerun</button></li>
-                        <li>=For Debug=</li>
+                        <li>=Debug=</li>
                         <li><button name="nicoapigokill" value="True">Terminate</button></li>
                     </td>
                 </tr>
-            </thead>
+            </tbody>
         </table>
         <li>=====</li>
     </form>
