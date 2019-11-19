@@ -5,7 +5,7 @@ Image is in development
 ![1](https://github.com/jSm449g4d/web_by_flask/blob/master/assets/aa.png)
 _____
 ![2](https://github.com/jSm449g4d/web_by_flask/blob/master/assets/chat.png)
-
+ 
 ## how to use
 plz install requirements<br>
 `$ sudo apt install python3-pip apache2-dev libapache2-mod-wsgi-py3`<br>
