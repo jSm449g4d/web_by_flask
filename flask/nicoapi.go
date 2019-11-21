@@ -4,8 +4,10 @@ import (
 	"database/sql"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/mitchellh/go-ps"
@@ -13,12 +15,21 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func gethttp(url string, interval time.Duration) string { //get string by http from url
+func gethttp(urls string, interval time.Duration) string { //get string by http from url
 	if interval < 3 {
 		return ""
 	}
 	time.Sleep(time.Second * interval)
-	resp, err := http.Get(url)
+	if 1 < len(strings.Split(urls, "?")) { //encode query
+		r := strings.NewReplacer("%26", "&", "%3D", "=")
+		urls = strings.Split(urls, "?")[0] + "?" + r.Replace(url.QueryEscape(strings.Split(urls, "?")[1]))
+
+	}
+	println(urls)
+	req, _ := http.NewRequest("GET", urls, nil)
+	req.Header.Set("User-Agent", "wrapper_for_NicoNicoAPI")
+	client := new(http.Client)
+	resp, err := client.Do(req)
 	if err == nil {
 		defer resp.Body.Close()
 		byteArray, err := ioutil.ReadAll(resp.Body)
@@ -78,10 +89,12 @@ func main() {
 				os.MkdirAll("nicoapi/"+sha256s[i], 0777)
 				err := os.Chmod("nicoapi/"+sha256s[i], 0777)
 				if err == nil {
-					file, err := os.Create("nicoapi/" + sha256s[i] + "/" + strconv.FormatInt(time.Now().Unix(), 10))
+					cfname := "nicoapi/" + sha256s[i] + "/" + strconv.FormatInt(time.Now().Unix(), 10)
+					file, err := os.Create(cfname)
 					if err == nil {
 						file.Write(([]byte)(text))
 					}
+					os.Chmod(cfname, 0777)
 				}
 			}
 

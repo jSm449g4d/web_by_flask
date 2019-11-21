@@ -19,11 +19,16 @@
             border: 1px solid darkblue;
             color: black;
             display: inline-block;
+            padding:2px;
         }
 
         li {
             list-style: none;
         }
+        .unwrite{
+            background-color:greenyellow;
+        }
+
     </style>
 </head>
 
@@ -31,22 +36,41 @@
     <h2>wrapper for NicoNicoAPI</h2>
     <h4 style="color:firebrick">=Please use freely at your own risk=</h4>
 
+    <div id=comment>
+        <li>ニコニコAPIを手軽に使うために作ったWebアプリです。近日中に、なろうAPIとかにも使用可能にするつもりです。</li>
+        <li>VPSの容量につき、DL後は出来るだけ早くDeleteしてください。</li>
+        <li>簡単な使い方</li>
+        <li>userに適当なアルファベットor英数字を入力してください(内部的にはパスワード扱い)。Reloadボタンを押してください。</li>
+        <li>APIのリファレンス片手に、直感で適当にQuery欄を埋めてください。</li>
+        <li>Launchボタンを押すとニコニコAPIを叩き始めます。(全ユーザ共有で)3秒に1回しかリクエストしないので気長にお待ちください。</li>
+        <li>Reloadボタンを押して、Ordersテーブルが空になったらDownloadボタンを押してください。その後忘れずにDeleteボタンを押してください。</li>
+        <li>=====</li>
+        <li>ニコニコAPIのリファレンスページはこちらになります(2019/11/21現在)</li>
+        <li>
+            <a href="https://site.nicovideo.jp/search-api-docs/search.html">
+                https://site.nicovideo.jp/search-api-docs/search.html
+            </a>
+        </li>
+    </div>
     <form method="post" enctype="multipart/form-data" style="display:inline;">
         <li>URL(API_endpoint):<input type="text" name="url" size="80" value="{{URL}}" readonly></li>
-        <li>query:?<input type="text" name="query" size="100" value="{{QUERY}}"></li>
-        <li><input type="submit" value="Reload">
-            Pass:<input type="text" name="pass" value="{{PASS}}">
-            <button name="launch" value="True">Launch</button>
-            <button name="clear" value="True">Clear_Orders</button>
+        <li>query:?<input type="text" name="query" size="100" value="{{QUERY}}" placeholder="no input required"></li>
+        <li>=====</li>
+        <li>
+            user:<input type="text" name="pass" value="{{PASS}}">
+            <input type="submit" value="Reload">
         </li>
         <li>=====</li>
+        <li>
+            Command a_b_c_d → [a for a in range(b,c,d)]<br>
+            <input type="text" name="fields_c" size="100" value="{{FIELDS_C}}">
+        </li>
         <table class="flask_table">
             <caption class="flask_table">Query</caption>
             <thead>
                 <tr>
                     <td class="flask_table">Field</td>
                     <td class="flask_table">Value</td>
-                    <td class="flask_table">Resolution</td>
                 </tr>
             </thead>
             <tbody>{{FIELDS}}</tbody>
@@ -56,16 +80,8 @@
             <button name="fields_ad" value="del">Del_Field</button>
         </li>
         <li>=====</li>
-        <table class="flask_table">
-            <caption class="flask_table">Orders</caption>
-            <thead>
-                <tr>
-                    <td class="flask_table">URL?query</td>
-                    <td class="flask_table">timestamp</td>
-                </tr>
-            </thead>
-            <tbody>{{ORDERS}}</tbody>
-        </table>
+        <button name="launch" value="True">Launch</button>
+        <button name="clear" value="True">Clear_Orders</button>
         <li>=====</li>
         <table class="flask_table">
             <caption class="flask_table">About your download files</caption>
@@ -82,14 +98,25 @@
             </thead>
         </table>
         <li>=====</li>
-        <table class="">
-            <caption class="flask_table">the subprocess management console</caption>
+        <table class="flask_table">
+            <caption class="flask_table">Orders</caption>
+            <thead>
+                <tr>
+                    <td class="flask_table">URL?query</td>
+                    <td class="flask_table">timestamp</td>
+                </tr>
+            </thead>
+            <tbody>{{ORDERS}}</tbody>
+        </table>
+        <li>=====</li>
+        <table class="flask_table">
+            <caption class="flask_table">the subprocess management console (for Debug)</caption>
             <tbody>
                 <tr>
                     <td class="flask_table">
                         <li>the subprocess fetches data </li>
-                        <li>from URLs recorded in the DB </li>
-                        <li>dont hit the button repeatedly </li>
+                        <li>from URLs recorded in the DB. </li>
+                        <li>dont push the buttons repeatedly. </li>
                     </td>
                     <td class="flask_table" style="text-align:center">
                         <li><button name="nicoapigostatus" value="True">Get Status</button></li>

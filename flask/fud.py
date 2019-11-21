@@ -60,18 +60,18 @@ def show(req):
     passwd=""
     #GET
     if req.args.get('dl')!=None:
-        target=req.args.get('dl').translate(str.maketrans("\"\'\\/<>%`",'________'))#Not_secure_filename!
+        target=req.args.get('dl').translate(str.maketrans("\"\'\\/<>%`?;",'__________'))#Not_secure_filename!
         return send_file(os.path.join(DataDir,target),as_attachment = True)
     #POST
     if req.method == 'POST':
         if 'pass' in req.form:
             passwd=secure_filename(req.form['pass'])
         if 'upload_file' in req.form and 'upload' in req.files:
-            target=req.files['upload'].filename.translate(str.maketrans("\"\'\\/<>%`",'________'))#Not_secure_filename!
+            target=req.files['upload'].filename.translate(str.maketrans("\"\'\\/<>%`?;",'__________'))#Not_secure_filename!
             if sql_reg(target,passwd,mode=1)!=0:
                 req.files['upload'].save(os.path.join(DataDir,target))
         if 'delete' in req.form:
-            target=req.form['delete'].translate(str.maketrans("\"\'\\/<>%`",'________'))#Not_secure_filename!
+            target=req.form['delete'].translate(str.maketrans("\"\'\\/<>%`?;",'__________'))#Not_secure_filename!
             if sql_reg(target,passwd,mode=0)!=0:
                 os.remove(os.path.join(DataDir,target))
             

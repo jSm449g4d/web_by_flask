@@ -83,65 +83,114 @@ def check_nicoapigo_status():
         if 'nicoapi' in proc.name():return "Running"
     return "Stopping"
 
-def field_management(id,prm="",val="",div=""):
+def fields_to_html_text_forms(id,prm="",val=""):
     html="<tr>"
     html+="<td><input type=\"text\" name=\"field1_"+str(id)+"\" value=\""+prm+"\"></td>"
-    html+="<td><input type=\"text\" name=\"field2_"+str(id)+"\" value=\""+val+"\"></td>"
-    html+="<td><input type=\"text\" name=\"field3_"+str(id)+"\" value=\""+div+"\"></td>"
+    html+="<td><input type=\"text\" name=\"field2_"+str(id)+"\" value=\""+val+"\" size=\"80\"></td>"
     html+="</tr>"
     return html
+
+def fill_default_fields(url=""):
+    if "https://api.search.nicovideo.jp/api/v2/video/contents/search" in url:
+        html="<tr>"
+        html+="<td><input type=\"text\" name=\"field1_0\" value=\"q\" "\
+            "readonly=\"readonly\" class=\"unwrite\"></td>"
+        html+="<td><input type=\"text\" name=\"field2_0\" value=\"ゆっくり解説\" size=\"80\"></td>"
+        html+="</tr>""<tr>"
+        html+="<td><input type=\"text\" name=\"field1_1\" value=\"targets\" "\
+            "readonly=\"readonly\" class=\"unwrite\"></td>"
+        html+="<td><input type=\"text\" name=\"field2_1\" value=\"title,description,tags\" size=\"80\"></td>"
+        html+="</tr>""<tr>"
+        html+="<td><input type=\"text\" name=\"field1_2\" value=\"fields\" "\
+            "readonly=\"readonly\" class=\"unwrite\"></td>"
+        html+="<td><input type=\"text\" name=\"field2_2\" value=\"contentId,title,description,tags\" size=\"80\"></td>"
+        html+="</tr>""<tr>"
+        html+="<td><input type=\"text\" name=\"field1_3\" value=\"_sort\" "\
+            "readonly=\"readonly\" class=\"unwrite\"></td>"
+        html+="<td><input type=\"text\" name=\"field2_3\" value=\"viewCounter\" size=\"80\"></td>"
+        html+="</tr>""<tr>"
+        html+="<td><input type=\"text\" name=\"field1_4\" value=\"_limit\"></td>"
+        html+="<td><input type=\"text\" name=\"field2_4\" value=100 size=\"80\"></td>"
+        html+="</tr>""<tr>"
+        html+="<td><input type=\"text\" name=\"field1_5\" value=\"_offset\"></td>"
+        html+="<td><input type=\"text\" name=\"field2_5\" value=\"xatoffset\" size=\"80\"></td>"
+        html+="</tr>"
+        fields_command="xatoffset_0_1601_100"
+    else :
+        html=fields_to_html_text_forms(0)
+        fields_command=""
+    return html,fields_command
+
 
 
 
 #Development is frozen
-def show_FREEZE(req):
+def show(req):
     os.chdir(os.path.dirname(__file__))
     urls="https://api.search.nicovideo.jp/api/v2/video/contents/search"
     query=""
     passwd=""
     nicoapigo_s="non check"
     fields=""
+    fields_c=""#fields_command
     if req.method == 'POST':
         if 'url' in req.form:
-            urls=req.form['url'].translate(str.maketrans("\"\'<>`?",'______'))#Not_secure_filename!
+            urls=req.form['url'].translate(str.maketrans("\"\'<>`?;",'_______'))#Not_secure_filename!
         if 'query' in req.form:
-            query=req.form['query'].translate(str.maketrans("\"\'<>`?",'______'))#Not_secure_filename!
+            query=req.form['query'].translate(str.maketrans("\"\'<>`?;",'_______'))#Not_secure_filename!
         if 'pass' in req.form:
             passwd=secure_filename(req.form['pass'])
+        if 'fields_c' in req.form:
+            fields_c=secure_filename(req.form["fields_c"])
 
-        f1=[req.form[j].translate(str.maketrans("\"\'<>`?",'______')) for j in req.form if "field1_" in j]#Not_secure_filename!
-        f2=[req.form[j].translate(str.maketrans("\"\'<>`?",'______')) for j in req.form if "field2_" in j]#Not_secure_filename!
-        f3=[req.form[j].translate(str.maketrans("\"\'<>`?",'______')) for j in req.form if "field3_" in j]#Not_secure_filename!
+        f1=[req.form[j].translate(str.maketrans("\"\'\\/<>%`?;",'__________')) for j in req.form if "field1_" in j]#Not_secure_filename!
+        f2=[req.form[j].translate(str.maketrans("\"\'\\/<>%`?;",'__________')) for j in req.form if "field2_" in j]#Not_secure_filename!
         if "fields_ad" in req.form:
             if secure_filename(req.form['fields_ad'])=="add":
-                f1.append("");f2.append("");f3.append("")
+                f1.append("");f2.append("")
             if secure_filename(req.form['fields_ad'])=="del" and 1<len(f1):
-                f1.pop(-1);f2.pop(-1);f3.pop(-1)
+                f1.pop(-1);f2.pop(-1)
         for i in range(len(f1)):
-            fields+=field_management(i,f1[i],f2[i],f3[i])
-            
+            fields+=fields_to_html_text_forms(i,f1[i],f2[i])
+            query+="&"+f1[i]+"="+f2[i]
         if "launch" in req.form and secure_filename(req.form["launch"])=="True":
-            Order_Into_SQL(passwd,urls+"?"+query)
+            try:
+                for x in fields_c.split():
+                    if len(x.split("_"))==4:#a_b_c_d → [a for a in range(b,c,d)]
+                        if (int(x.split("_")[2])-int(x.split("_")[1]))/int(x.split("_")[3])>10000:
+                            print("\nerror:Too many order");continue
+                        for Y in [y for y in range(int(x.split("_")[1]),int(x.split("_")[2]),int(x.split("_")[3]))]:
+                            Order_Into_SQL(passwd,urls+"?"+query.replace(x.split("_")[0],str(Y)))
+                #If there is no command.
+                if len(fields_c.split())==0:
+                    Order_Into_SQL(passwd,urls+"?"+query)
+            except:print("Order_Into_SQL:error")
+        #Reload query for clearing query's params which ware added by html_text_forms
+        if 'query' in req.form:
+            query=req.form['query'].translate(str.maketrans("\"\'<>`?;",'_______'))#Not_secure_filename!
         if "clear" in req.form and secure_filename(req.form["clear"])=="True":
             Clear_Order_SQL(passwd)
         if "delete" in req.form and secure_filename(req.form["delete"])=="True":
             delete_files(passwd)
         if "download" in req.form and secure_filename(req.form["download"])=="True":
             return download_files(passwd)
-#        if "nicoapigo" in req.form and secure_filename(req.form["nicoapigo"])=="True":
-#            subprocess.run(['go','run',os.path.join(os.getcwd(),'nicoapi.go')])
-#            nicoapigo_s=check_nicoapigo_status()
-#        if "nicoapigokill" in req.form and secure_filename(req.form["nicoapigokill"])=="True":
-#            for proc in psutil.process_iter():
-#                if 'nicoapi' in proc.name():proc.terminate()
-#            nicoapigo_s=check_nicoapigo_status()
+        if "nicoapigo" in req.form and secure_filename(req.form["nicoapigo"])=="True":
+            try:subprocess.run(['go','run',os.path.join(os.getcwd(),'nicoapi.go')])
+            except:print("Faild to launch nicoapi.go")
+            nicoapigo_s=check_nicoapigo_status()
+        if "nicoapigokill" in req.form and secure_filename(req.form["nicoapigokill"])=="True":
+            try:
+                for proc in psutil.process_iter():
+                    if 'nicoapi' in proc.name():proc.terminate()
+            except:print("Faild to Terminate nicoapi.go")
+            nicoapigo_s=check_nicoapigo_status()
         if "nicoapigostatus" in req.form and secure_filename(req.form["nicoapigostatus"])=="True":
             nicoapigo_s=check_nicoapigo_status()
     else :
-        fields+=field_management(0)
+        fields,fields_c=fill_default_fields(urls)
     
 
     orders=Display_Current_SQL(passwd)
     _,size_files=about_files(passwd)
     return render_template_2("nicoapi.html",ORDERS=orders,URL=urls,QUERY=query,PASS=passwd,\
-    SIZE_FILES=size_files,NICOAPIGO_S=nicoapigo_s,FIELDS=fields)
+    SIZE_FILES=size_files,NICOAPIGO_S=nicoapigo_s,FIELDS=fields,FIELDS_C=fields_c)
