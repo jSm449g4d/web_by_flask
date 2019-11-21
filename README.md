@@ -1,7 +1,7 @@
 # web_by_flask
 For studying the web framework
 
-## Image (in development)
+## Images (in development)
 
 ![3](https://github.com/jSm449g4d/web_by_flask/blob/master/assets/nicoapi.png)
 
