@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>FlaskなニコニコAPIラッパー</title>
+    <style type="text/css">
+        .flask_table {
+            font-size: 18px;
+            border: 2px solid darkolivegreen;
+            border-collapse: collapse;
+            background-color: azure;
+            font-weight: border;
+            color: black;
+        }
+
+        #comment {
+            background-color: azure;
+            border: 1px solid darkblue;
+            color: black;
+            display: inline-block;
+            padding: 2px;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .li_textform {
+            background-color: seashell;
+            border: 1px solid orange;
+            color: black;
+            display: inline-block;
+            padding: 2px;
+        }
+
+        .unwrite {
+            background-color: greenyellow;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h2>wrapper for NicoNicoAPI</h2>
+    <h4 style="color:firebrick">=Please use freely at your own risk=</h4>
+
+    <div id=comment>
+        <li>ニコニコAPIを手軽に使うために作ったWebアプリです。</li>
+        <li>VPSの容量につき、DL後は出来るだけ早くDeleteしてください。</li>
+        <li style="color:darkslateblue; font-weight: bolder;">簡単な使い方</li>
+        <li>userに適当なアルファベットor英数字を入力してください(内部的にはパスワード扱い)。Reloadボタンを押してください。</li>
+        <li>APIのリファレンス片手に、直感で適当にQuery欄を埋めてください。</li>
+        <li>Launchボタンを押すとニコニコAPIを叩き始めます。(全ユーザ共有で)3秒に1回しかリクエストしないので気長にお待ちください。</li>
+        <li>Reloadボタンを押して、Ordersテーブルが空になったらDownloadボタンを押してください。その後忘れずにDeleteボタンを押してください。</li>
+    </div>
+    <form method="post" enctype="multipart/form-data" style="display:inline;">
+
+        <li>=====</li>
+        <li>
+            user:<input type="text" name="pass" value="{{PASS}}">
+            <input type="submit" value="Reload">
+        </li>
+        <li>=====</li>
+        <table class="flask_table">
+            <caption class="flask_table">API_Endpoint</caption>
+            <thead>
+                <tr>
+                    <td class="flask_table">
+                        API_endpoint
+                    </td>
+                    <td class="flask_table">
+                        API_reference
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="flask_table">
+                        <button name="select_API_endpoint"
+                            value="https://api.search.nicovideo.jp/api/v2/video/contents/search">ニコニコ動画
+                        </button>
+                    </td>
+                    <td class="flask_table">
+                        <a href="https://site.nicovideo.jp/search-api-docs/search.html">
+                            https://site.nicovideo.jp/search-api-docs/search.html
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="flask_table">
+                        <button name="select_API_endpoint"
+                            value="https://api.search.nicovideo.jp/api/v2/live/contents/search">ニコニコ生放送
+                        </button>
+                    </td>
+                    <td class="flask_table">
+                        <a href="https://site.nicovideo.jp/search-api-docs/search.html">
+                            https://site.nicovideo.jp/search-api-docs/search.html
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="flask_table">
+                        <button name="select_API_endpoint" value="https://api.syosetu.com/novelapi/api/">なろう小説
+                        </button>
+                    </td>
+                    <td class="flask_table">
+                        <a href="https://dev.syosetu.com/man/api/">
+                            https://dev.syosetu.com/man/api/
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="flask_table">
+                        <li><button name="select_API_endpoint" value="">other</button></li>
+                    </td>
+                    <td class="flask_table">
+                        None
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <li class="li_textform">
+            URL(API_endpoint):<br>
+            <input type="text" name="url" size="120" value="{{URL}}" id="API_endpoint">
+        </li>
+        <li class="li_textform">
+            query:<br>
+            <input type="text" name="query" size="120" value="{{QUERY}}" placeholder="no input required">
+        </li>
+        <li>=====</li>
+        <li class="li_textform">
+            Command a_b_c_d → [a for a in range(b,c,d)]<br>
+            <input type="text" name="fields_c" size="120" value="{{FIELDS_C}}">
+        </li>
+        <table class="flask_table">
+            <caption class="flask_table">Query</caption>
+            <thead>
+                <tr>
+                    <td class="flask_table">Field</td>
+                    <td class="flask_table">Value</td>
+                </tr>
+            </thead>
+            <tbody>{{FIELDS}}</tbody>
+        </table>
+        <li>
+            <button name="fields_ad" value="add">Add_Field</button>
+            <button name="fields_ad" value="del">Del_Field</button>
+        </li>
+        <li>=====</li>
+        <button name="launch" value="True">Launch</button>
+        <button name="clear" value="True">Clear_Orders</button>
+        <li>=====</li>
+        <table class="flask_table">
+            <caption class="flask_table">About your download files</caption>
+            <thead>
+                <tr>
+                    <td class="flask_table">{{SIZE_FILES}}</td>
+                    <td class="flask_table">
+                        <button name="download" value="True">Download</button>
+                    </td>
+                    <td class="flask_table">
+                        <button name="delete" value="True">Delete</button>
+                    </td>
+                </tr>
+            </thead>
+        </table>
+        <li>=====</li>
+        <table class="flask_table">
+            <caption class="flask_table">Orders</caption>
+            <thead>
+                <tr>
+                    <td class="flask_table">URL?query</td>
+                    <td class="flask_table">timestamp</td>
+                </tr>
+            </thead>
+            <tbody>{{ORDERS}}</tbody>
+        </table>
+        <li>=====</li>
+        <table class="flask_table">
+            <caption class="flask_table">the subprocess management console (for Debug)</caption>
+            <tbody>
+                <tr>
+                    <td class="flask_table">
+                        <li>the subprocess fetches data </li>
+                        <li>from URLs recorded in the DB. </li>
+                        <li>dont push the buttons repeatedly. </li>
+                    </td>
+                    <td class="flask_table" style="text-align:center">
+                        <li><button name="nicoapigostatus" value="True">Get Status</button></li>
+                        <li>Status</li>
+                        <li>{{NICOAPIGO_S}}</li>
+                    </td>
+                    <td class="flask_table" style="text-align:center">
+                        <li><button name="nicoapigo" value="True">Rerun</button></li>
+                        <li>=Debug=</li>
+                        <li><button name="nicoapigokill" value="True">Terminate</button></li>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <li>=====</li>
+    </form>
+
+    <li><a class="contents_link" href="./">Flask_Indexへ</a></li>
+</body>
+
+</html>

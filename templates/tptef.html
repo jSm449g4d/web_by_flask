@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>Flaskなチャットルーム</title>
+    <style type="text/css">
+        .flask_table {
+            font-size: 14px;
+            border: 2px solid darkolivegreen;
+            border-collapse: collapse;
+            background-color: azure;
+            font-weight: border;
+            color: black;
+        }
+
+        #comment {
+            background-color: azure;
+            border: 1px solid darkblue;
+            color: black;
+            display: inline-block;
+            padding:2px;
+        }
+
+        li {
+            list-style: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Chat_room for Flask+HTML+SQLite3 study</h2>
+    <h4 style="color:firebrick">=Please use freely at your own risk=</h4>
+    <div id=comment>
+        <li>ニコニコAPI操作アプリを作る途中で、副産物的に出来たチャットアプリです。</li>
+        <li>Roomを指定すると、身内でチャットができます</li>
+        <li>Userはユーザーネームで、Pass(英数字)でトリップ(sha256)を生成</li>
+        <li>Remarkに入力して、Remarkボタンを押すと書き込みます</li>
+        <li>Clear_your_Remarksボタンで、Pass入力欄に該当するトリップ発言を全削除します</li>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" style="display:inline;">
+        <li><input type="submit" value="Reload"></li>
+        <li>
+            <input type="text" name="room" placeholder="Room" value="{{ROOM}}">
+            <input type="text" name="user" placeholder="User" value="{{USER}}">
+            <input type="text" name="pass" placeholder="Pass" value="{{PASS}}">
+        </li>
+        <textarea name="remark" cols="80" rows="5" placeholder="Remark"></textarea>
+        <li>
+            <button name="launch" value="True">Remark</button>
+        </li>
+        <li>=====</li>
+        <table class="flask_table">
+            <caption class="flask_table">Room:{{ROOM}}</caption>
+            <thead>
+                <tr>
+                    <td class="flask_table">user_name</td>
+                    <td class="flask_table">remark</td>
+                    <td class="flask_table">sha256</td>
+                    <td class="flask_table">timestamp</td>
+                </tr>
+            </thead>
+            <tbody>{{ORDERS}}</tbody>
+        </table>
+        <li>=====</li>
+        <button name="clear" value="True">Clear_your_Remarks</button>
+        <li>=====</li>
+    </form>
+
+    <li><a class="contents_link" href="./">Flask_Indexへ</a></li>
+</body>
+
+</html>
