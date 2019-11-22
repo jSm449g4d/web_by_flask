@@ -15,29 +15,36 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func gethttp(urls string, interval time.Duration) string { //get string by http from url
+func gethttp(urls string, interval time.Duration) (string, string) { //get string by http from url
 	if interval < 3 {
-		return ""
+		return "", ""
 	}
 	time.Sleep(time.Second * interval)
 	if 1 < len(strings.Split(urls, "?")) { //encode query
 		r := strings.NewReplacer("%26", "&", "%3D", "=")
 		urls = strings.Split(urls, "?")[0] + "?" + r.Replace(url.QueryEscape(strings.Split(urls, "?")[1]))
-
 	}
 	println(urls)
 	req, _ := http.NewRequest("GET", urls, nil)
 	req.Header.Set("User-Agent", "wrapper_for_NicoNicoAPI")
 	client := new(http.Client)
 	resp, err := client.Do(req)
+
+	fname := resp.Header.Get("Content-Disposition")
+	if 1 < len(strings.Split(fname, "filename=")) { //get downloading filename
+		fname = strings.Split(strings.Split(fname, "filename=")[1], " ")[0]
+	} else {
+		fname = strconv.FormatInt(time.Now().Unix(), 10) //get Unix time
+	}
+
 	if err == nil {
 		defer resp.Body.Close()
 		byteArray, err := ioutil.ReadAll(resp.Body)
 		if err == nil {
-			return string(byteArray)
+			return string(byteArray), fname
 		}
 	}
-	return ""
+	return "", ""
 }
 
 func checkdup() int { //prevent duplication
@@ -85,21 +92,22 @@ func main() {
 			//fetch_data
 			for i := 0; i < len(urls); i++ {
 				db.Exec("delete from nicoapi where url=? and sha256=?", urls[i], sha256s[i])
-				text := gethttp(urls[i], 3)
+				text, fname := gethttp(urls[i], 3)
 				os.MkdirAll("nicoapi/"+sha256s[i], 0777)
 				err := os.Chmod("nicoapi/"+sha256s[i], 0777)
 				if err == nil {
-					cfname := "nicoapi/" + sha256s[i] + "/" + strconv.FormatInt(time.Now().Unix(), 10)
-					file, err := os.Create(cfname)
+					fname = "nicoapi/" + sha256s[i] + "/" + fname
+					fp, err := os.Create(fname)
 					if err == nil {
-						file.Write(([]byte)(text))
+						defer fp.Close()
+						fp.Write(([]byte)(text))
 					}
-					os.Chmod(cfname, 0777)
+					os.Chmod(fname, 0777)
 				}
 			}
 
 		}
-		time.Sleep(time.Second * 10)
+		time.Sleep(time.Second * 5)
 	}
 	println("nicoapi.go->timeout")
 }
