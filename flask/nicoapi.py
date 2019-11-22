@@ -83,39 +83,43 @@ def check_nicoapigo_status():
         if 'nicoapi' in proc.name():return "Running"
     return "Stopping"
 
-def fields_to_html_text_forms(id,prm="",val=""):
+def fields_to_html_text_forms(id,prm="",val="",readonly="False"):
     html="<tr>"
-    html+="<td><input type=\"text\" name=\"field1_"+str(id)+"\" value=\""+prm+"\"></td>"
-    html+="<td><input type=\"text\" name=\"field2_"+str(id)+"\" value=\""+val+"\" size=\"80\"></td>"
+    html+="<td><input type=\"text\" name=\"field1_"+str(id)+"\" value=\""+prm+"\""
+    if readonly=="True":
+        html+=" class=\"unwrite\" readonly"
+    html+="></td>"
+    html+="<td><input type=\"text\" name=\"field2_"+str(id)+"\" value=\""+val+"\" size=\"120\">"
+    html+="<input type=\"hidden\" name=\"field3_"+str(id)+"\" value=\""+readonly+"\"></td>"
     html+="</tr>"
     return html
 
 def fill_default_fields(url=""):
     if "https://api.search.nicovideo.jp/api/v2/video/contents/search" in url:
-        html="<tr>"
-        html+="<td><input type=\"text\" name=\"field1_0\" value=\"q\" "\
-            "readonly=\"readonly\" class=\"unwrite\"></td>"
-        html+="<td><input type=\"text\" name=\"field2_0\" value=\"ゆっくり解説\" size=\"80\"></td>"
-        html+="</tr>""<tr>"
-        html+="<td><input type=\"text\" name=\"field1_1\" value=\"targets\" "\
-            "readonly=\"readonly\" class=\"unwrite\"></td>"
-        html+="<td><input type=\"text\" name=\"field2_1\" value=\"title,description,tags\" size=\"80\"></td>"
-        html+="</tr>""<tr>"
-        html+="<td><input type=\"text\" name=\"field1_2\" value=\"fields\" "\
-            "readonly=\"readonly\" class=\"unwrite\"></td>"
-        html+="<td><input type=\"text\" name=\"field2_2\" value=\"contentId,title,description,tags\" size=\"80\"></td>"
-        html+="</tr>""<tr>"
-        html+="<td><input type=\"text\" name=\"field1_3\" value=\"_sort\" "\
-            "readonly=\"readonly\" class=\"unwrite\"></td>"
-        html+="<td><input type=\"text\" name=\"field2_3\" value=\"viewCounter\" size=\"80\"></td>"
-        html+="</tr>""<tr>"
-        html+="<td><input type=\"text\" name=\"field1_4\" value=\"_limit\"></td>"
-        html+="<td><input type=\"text\" name=\"field2_4\" value=100 size=\"80\"></td>"
-        html+="</tr>""<tr>"
-        html+="<td><input type=\"text\" name=\"field1_5\" value=\"_offset\"></td>"
-        html+="<td><input type=\"text\" name=\"field2_5\" value=\"xatoffset\" size=\"80\"></td>"
-        html+="</tr>"
-        fields_command="xatoffset_0_1601_100"
+        html =fields_to_html_text_forms(0,"q","ゆっくり解説","True")
+        html+=fields_to_html_text_forms(1,"targets","title,description,tags","True")
+        html+=fields_to_html_text_forms(2,"fields","contentId,title,description,tags","True")
+        html+=fields_to_html_text_forms(3,"_sort","viewCounter","True")
+        html+=fields_to_html_text_forms(4,"_limit","100")
+        html+=fields_to_html_text_forms(5,"_offset","AAAAAX")
+        fields_command="AAAAAX_0_1601_100"
+
+    elif "https://api.search.nicovideo.jp/api/v2/live/contents/search" in url:
+        html =fields_to_html_text_forms(0,"q","ゆっくり解説","True")
+        html+=fields_to_html_text_forms(1,"targets","title,description,tags","True")
+        html+=fields_to_html_text_forms(2,"fields","contentId,title,description,tags","True")
+        html+=fields_to_html_text_forms(3,"_sort","viewCounter","True")
+        html+=fields_to_html_text_forms(4,"_limit","100")
+        html+=fields_to_html_text_forms(5,"_offset","AAAAAX")
+        fields_command="AAAAAX_0_1601_100"
+    
+    elif "https://api.syosetu.com/novelapi/api" in url:
+        html =fields_to_html_text_forms(0,"gzip","5")
+        html+=fields_to_html_text_forms(1,"out","json")
+        html+=fields_to_html_text_forms(2,"lim","499")
+        html+=fields_to_html_text_forms(3,"st","AAAAAX")
+        fields_command="AAAAAX_1_2000_499"
+
     else :
         html=fields_to_html_text_forms(0)
         fields_command=""
@@ -127,6 +131,7 @@ def fill_default_fields(url=""):
 #Development is frozen
 def show(req):
     os.chdir(os.path.dirname(__file__))
+    if not os.path.exists(DataDir):os.mkdir(DataDir)
     urls="https://api.search.nicovideo.jp/api/v2/video/contents/search"
     query=""
     passwd=""
@@ -142,29 +147,30 @@ def show(req):
             passwd=secure_filename(req.form['pass'])
         if 'fields_c' in req.form:
             fields_c=secure_filename(req.form["fields_c"])
-
+        #read_query_forms
         f1=[req.form[j].translate(str.maketrans("\"\'\\/<>%`?;",'__________')) for j in req.form if "field1_" in j]#Not_secure_filename!
         f2=[req.form[j].translate(str.maketrans("\"\'\\/<>%`?;",'__________')) for j in req.form if "field2_" in j]#Not_secure_filename!
+        f3=[secure_filename(req.form[j]) for j in req.form if "field3_" in j]
         if "fields_ad" in req.form:
             if secure_filename(req.form['fields_ad'])=="add":
-                f1.append("");f2.append("")
-            if secure_filename(req.form['fields_ad'])=="del" and 1<len(f1):
-                f1.pop(-1);f2.pop(-1)
+                f1.append("");f2.append("");f3.append("False")
+            if secure_filename(req.form['fields_ad'])=="del" and 1<len(f1) and f3[-1]!="True":
+                f1.pop(-1);f2.pop(-1);f3.pop(-1)
         for i in range(len(f1)):
-            fields+=fields_to_html_text_forms(i,f1[i],f2[i])
+            fields+=fields_to_html_text_forms(i,f1[i],f2[i],f3[i])
             query+="&"+f1[i]+"="+f2[i]
         if "launch" in req.form and secure_filename(req.form["launch"])=="True":
             try:
                 for x in fields_c.split():
                     if len(x.split("_"))==4:#a_b_c_d → [a for a in range(b,c,d)]
-                        if (int(x.split("_")[2])-int(x.split("_")[1]))/int(x.split("_")[3])>10000:
+                        if (int(x.split("_")[2])-int(x.split("_")[1]))/int(x.split("_")[3])>5000:
                             print("\nerror:Too many order");continue
                         for Y in [y for y in range(int(x.split("_")[1]),int(x.split("_")[2]),int(x.split("_")[3]))]:
                             Order_Into_SQL(passwd,urls+"?"+query.replace(x.split("_")[0],str(Y)))
                 #If there is no command.
                 if len(fields_c.split())==0:
                     Order_Into_SQL(passwd,urls+"?"+query)
-            except:print("Order_Into_SQL:error")
+            except:print("Order_Into_SQL:error")        
         #Reload query for clearing query's params which ware added by html_text_forms
         if 'query' in req.form:
             query=req.form['query'].translate(str.maketrans("\"\'<>`?;",'_______'))#Not_secure_filename!
@@ -186,6 +192,10 @@ def show(req):
             nicoapigo_s=check_nicoapigo_status()
         if "nicoapigostatus" in req.form and secure_filename(req.form["nicoapigostatus"])=="True":
             nicoapigo_s=check_nicoapigo_status()
+        #select_API_endpoint is a command which cause to reset forms as like no POST
+        if "select_API_endpoint" in req.form:
+            urls=req.form["select_API_endpoint"].translate(str.maketrans("\"\'<>`?;",'_______'))#Not_secure_filename!
+            fields,fields_c=fill_default_fields(urls)
     else :
         fields,fields_c=fill_default_fields(urls)
     

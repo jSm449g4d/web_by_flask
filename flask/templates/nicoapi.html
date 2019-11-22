@@ -19,17 +19,26 @@
             border: 1px solid darkblue;
             color: black;
             display: inline-block;
-            padding:2px;
+            padding: 2px;
         }
 
         li {
             list-style: none;
         }
-        .unwrite{
-            background-color:greenyellow;
+
+        .li_textform {
+            background-color: seashell;
+            border: 1px solid orange;
+            color: black;
+            display: inline-block;
+            padding: 2px;
         }
 
+        .unwrite {
+            background-color: greenyellow;
+        }
     </style>
+
 </head>
 
 <body>
@@ -37,33 +46,92 @@
     <h4 style="color:firebrick">=Please use freely at your own risk=</h4>
 
     <div id=comment>
-        <li>ニコニコAPIを手軽に使うために作ったWebアプリです。近日中に、なろうAPIとかにも使用可能にするつもりです。</li>
+        <li>ニコニコAPIを手軽に使うために作ったWebアプリです。</li>
         <li>VPSの容量につき、DL後は出来るだけ早くDeleteしてください。</li>
-        <li>簡単な使い方</li>
+        <li style="color:darkslateblue; font-weight: bolder;">簡単な使い方</li>
         <li>userに適当なアルファベットor英数字を入力してください(内部的にはパスワード扱い)。Reloadボタンを押してください。</li>
         <li>APIのリファレンス片手に、直感で適当にQuery欄を埋めてください。</li>
         <li>Launchボタンを押すとニコニコAPIを叩き始めます。(全ユーザ共有で)3秒に1回しかリクエストしないので気長にお待ちください。</li>
         <li>Reloadボタンを押して、Ordersテーブルが空になったらDownloadボタンを押してください。その後忘れずにDeleteボタンを押してください。</li>
-        <li>=====</li>
-        <li>ニコニコAPIのリファレンスページはこちらになります(2019/11/21現在)</li>
-        <li>
-            <a href="https://site.nicovideo.jp/search-api-docs/search.html">
-                https://site.nicovideo.jp/search-api-docs/search.html
-            </a>
-        </li>
     </div>
     <form method="post" enctype="multipart/form-data" style="display:inline;">
-        <li>URL(API_endpoint):<input type="text" name="url" size="80" value="{{URL}}" readonly></li>
-        <li>query:?<input type="text" name="query" size="100" value="{{QUERY}}" placeholder="no input required"></li>
+
         <li>=====</li>
         <li>
             user:<input type="text" name="pass" value="{{PASS}}">
             <input type="submit" value="Reload">
         </li>
         <li>=====</li>
-        <li>
+        <table class="flask_table">
+            <caption class="flask_table">API_Endpoint</caption>
+            <thead>
+                <tr>
+                    <td class="flask_table">
+                        API_endpoint
+                    </td>
+                    <td class="flask_table">
+                        API_reference
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="flask_table">
+                        <button name="select_API_endpoint"
+                            value="https://api.search.nicovideo.jp/api/v2/video/contents/search">ニコニコ動画
+                        </button>
+                    </td>
+                    <td class="flask_table">
+                        <a href="https://site.nicovideo.jp/search-api-docs/search.html">
+                            https://site.nicovideo.jp/search-api-docs/search.html
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="flask_table">
+                        <button name="select_API_endpoint"
+                            value="https://api.search.nicovideo.jp/api/v2/live/contents/search">ニコニコ生放送
+                        </button>
+                    </td>
+                    <td class="flask_table">
+                        <a href="https://site.nicovideo.jp/search-api-docs/search.html">
+                            https://site.nicovideo.jp/search-api-docs/search.html
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="flask_table">
+                        <button name="select_API_endpoint" value="https://api.syosetu.com/novelapi/api/">なろう小説
+                        </button>
+                    </td>
+                    <td class="flask_table">
+                        <a href="https://dev.syosetu.com/man/api/">
+                            https://dev.syosetu.com/man/api/
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="flask_table">
+                        <li><button name="select_API_endpoint" value="">other</button></li>
+                    </td>
+                    <td class="flask_table">
+                        None
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <li class="li_textform">
+            URL(API_endpoint):<br>
+            <input type="text" name="url" size="120" value="{{URL}}" id="API_endpoint">
+        </li>
+        <li class="li_textform">
+            query:<br>
+            <input type="text" name="query" size="120" value="{{QUERY}}" placeholder="no input required">
+        </li>
+        <li>=====</li>
+        <li class="li_textform">
             Command a_b_c_d → [a for a in range(b,c,d)]<br>
-            <input type="text" name="fields_c" size="100" value="{{FIELDS_C}}">
+            <input type="text" name="fields_c" size="120" value="{{FIELDS_C}}">
         </li>
         <table class="flask_table">
             <caption class="flask_table">Query</caption>

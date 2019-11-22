@@ -57,6 +57,7 @@ def render_template_2(dir,**kwargs):
 
 def show(req):    
     os.chdir(os.path.dirname(__file__))
+    if not os.path.exists(DataDir):os.mkdir(DataDir)
     passwd=""
     #GET
     if req.args.get('dl')!=None:
