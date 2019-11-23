@@ -132,11 +132,6 @@ def fill_default_fields(url=""):
 def show(req):
     os.chdir(os.path.dirname(__file__))
     if not os.path.exists(DataDir):os.mkdir(DataDir)
-    #cleate table for nicoapi
-    con=sqlite3.connect(os.path.join("./flask.sqlite"),isolation_level = None)
-    cur=con.cursor()
-    cur.execute("create table if not exists nicoapi (sha256 text,url text,date datetime)")
-    cur.close();con.close()
     #declare
     urls="https://api.search.nicovideo.jp/api/v2/video/contents/search"
     query=""
