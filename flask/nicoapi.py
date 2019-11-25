@@ -181,18 +181,20 @@ def show(req):
             delete_files(passwd)
         if "download" in req.form and secure_filename(req.form["download"])=="True":
             return download_files(passwd)
-        if "nicoapigo" in req.form and secure_filename(req.form["nicoapigo"])=="True":
-            try:subprocess.run(['go','run',os.path.join(os.getcwd(),'nicoapi.go')])
-            except:print("Faild to launch nicoapi.go")
-            nicoapigo_s=check_nicoapigo_status()
-        if "nicoapigokill" in req.form and secure_filename(req.form["nicoapigokill"])=="True":
-            try:
-                for proc in psutil.process_iter():
-                    if 'nicoapi' in proc.name():proc.terminate()
-            except:print("Faild to Terminate nicoapi.go")
-            nicoapigo_s=check_nicoapigo_status()
+            #Frozen
+        #if "nicoapigo" in req.form and secure_filename(req.form["nicoapigo"])=="True":
+        #    try:subprocess.run(['go','run',os.path.join(os.getcwd(),'nicoapi.go')])
+        #    except:print("Faild to launch nicoapi.go")
+        #    nicoapigo_s=check_nicoapigo_status()
+        #if "nicoapigokill" in req.form and secure_filename(req.form["nicoapigokill"])=="True":
+        #    try:
+        #        for proc in psutil.process_iter():
+        #            if 'nicoapi' in proc.name():proc.terminate()
+        #    except:print("Faild to Terminate nicoapi.go")
+        #    nicoapigo_s=check_nicoapigo_status()
         if "nicoapigostatus" in req.form and secure_filename(req.form["nicoapigostatus"])=="True":
             nicoapigo_s=check_nicoapigo_status()
+        
         #select_API_endpoint is a command which cause to reset forms as like no POST
         if "select_API_endpoint" in req.form:
             urls=req.form["select_API_endpoint"].translate(str.maketrans("\"\'<>`?;",'_______'))#Not_secure_filename!
