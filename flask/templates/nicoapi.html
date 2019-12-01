@@ -1,203 +1,215 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
     <title>FlaskなニコニコAPIラッパー</title>
-    <style type="text/css">
-        .flask_table {
-            font-size: 18px;
-            border: 2px solid darkolivegreen;
-            border-collapse: collapse;
-            background-color: azure;
-            font-weight: border;
-            color: black;
-        }
 
-        #comment {
-            background-color: azure;
-            border: 1px solid darkblue;
-            color: black;
-            display: inline-block;
-            padding: 2px;
-        }
-
-        li {
-            list-style: none;
-        }
-
-        .li_textform {
-            background-color: seashell;
-            border: 1px solid orange;
-            color: black;
-            display: inline-block;
-            padding: 2px;
-        }
-
-        .unwrite {
-            background-color: greenyellow;
-        }
-    </style>
+    <!--Bootstrap CSS -->
+    <!--CDN-->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"
+        onload="window.bs4css= 1;">
+    <!--fallback by Flask-->
+    <script>window.bs4css || document.write(
+            "<link rel=\"stylesheet\" href=\"{{ url_for('static', filename='bootstrap-4.4.1-dist/css/bootstrap.min.css') }}\"\
+    crossorigin=\"anonymous\">");
+    </script>
+    <!--/Bootstrap CSS -->
 
 </head>
 
 <body>
-    <h2>wrapper for NicoNicoAPI</h2>
-    <h4 style="color:firebrick">=Please use freely at your own risk=</h4>
+    <h2 style="color:black;font-family:serif;">wrapper for NicoNicoAPI</h2>
+    <h5 style="color:red;font-family:'';">=Please use freely at your own risk=</h5>
 
-    <div id=comment>
-        <li>ニコニコAPIを手軽に使うために作ったWebアプリです。VPSの容量につき、DL後は出来るだけ早くDeleteしてください。</li>
-        <a href="https://huxiin.ga/wordpress/?p=499">本アプリの解説記事はこちら</a>
-        <li style="color:darkslateblue; font-weight: bolder;">使い方</li>
-        <li>userに適当なアルファベットor英数字を入力してください(内部的にはパスワード扱い)。Reloadボタンを押してください。</li>
-        <li>APIのリファレンス片手に、直感で適当にQuery欄を埋めてください。</li>
-        <li>Launchボタンを押すとニコニコAPIを叩き始めます。(全ユーザ共有で)3秒に1回しかリクエストしないので気長にお待ちください。</li>
-        <li>Reloadボタンを押して、Ordersテーブルが空になったらDownloadボタンを押してください。その後忘れずにDeleteボタンを押してください。</li>
-    </div>
-    <form method="post" enctype="multipart/form-data" style="display:inline;">
+    <form method="post" enctype="multipart/form-data">
+        <nav>
+            <div class="navbar navbar-default p-0 m-0 form-inline">
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link" id="nav-1-tab" data-toggle="tab" href="#nav-1" role="tab"
+                        aria-controls="nav-1" aria-selected="true">Front</a>
+                    <a class="nav-item nav-link active" id="nav-2-tab" data-toggle="tab" href="#nav-2" role="tab"
+                        aria-controls="nav-2" aria-selected="false">How_to_use</a>
+                    <a class="nav-item nav-link" id="nav-3-tab" data-toggle="tab" href="#nav-3" role="tab"
+                        aria-controls="nav-3" aria-selected="false">Description</a>
+                </div>
+                <div>
+                    <input class="form-control mr-1" placeholder="User" aria-label="Search" type="text" name="pass"
+                        value="{{PASS}}">
+                    <input class="btn btn-outline-success mr-1" type="submit" value="Reload">
+                </div>
+            </div>
+            <div class="tab-content alert-info m-0" id="nav-tabContent">
+                <div class="tab-pane fade" id="nav-1" role="tabpanel" aria-labelledby="nav-1-tab">
+                    ニコニコAPI等を手軽に叩いて情報を収集するために作ったWebアプリです。<br>
+                    VPSの容量につき、DL後は出来るだけ早く<b>Delete</b>してください。<br>
+                    <b><a href="https://huxiin.ga/wordpress/?p=499">本アプリの解説記事はこちら</a></b><br>
+                </div>
+                <div class="tab-pane fade show active" id="nav-2" role="tabpanel" aria-labelledby="nav-2-tab">
+                    <ol start="0">
+                        <li><b>user</b>に適当なアルファベットor英数字を入力して、<b>Reload</b>ボタンを押してください
+                            <b>(この手順は省略して大丈夫です)</b>。</li>
+                        <li><b>API_endpoint</b>ボタンを押して、目的のAPIを選択してください</li>
+                        <li>APIのリファレンス片手に、直感で<b>Query_Table</b>を埋めてみてください。</li>
+                        <li><b>Launch</b>ボタンを押すとAPIを叩き始めます。頻度は3[s/req]ですので気長にお待ちください。</li>
+                        <li><b>Show_Orders</b>ボタンで、リクエスト前のURL一覧を表示できます</li>
+                        <li><b>Reload</b>ボタンを押して一覧の消化を確認できましたら、<b>Download</b>ボタンを押してください。</li>
+                        <li><b>Delete</b>ボタンを押してください。</li>
+                    </ol>
+                </div>
+                <div class="tab-pane fade" id="nav-3" role="tabpanel" aria-labelledby="nav-3-tab">
+                    <img src="{{ url_for('static', filename='assets/nicoapi.png') }}" class="img-fluid  mx-auto d-block"
+                        alt="nicoapi" />
+                    <b><a href="https://huxiin.ga/wordpress/?p=499">本アプリの解説記事はこちら</a></b><br>
+                </div>
+            </div>
+        </nav>
 
-        <li>=====</li>
-        <li>
-            user:<input type="text" name="pass" value="{{PASS}}">
-            <input type="submit" value="Reload">
-        </li>
-        <li>=====</li>
-        <table class="flask_table">
-            <caption class="flask_table">API_Endpoint</caption>
-            <thead>
-                <tr>
-                    <td class="flask_table">
-                        API_endpoint
-                    </td>
-                    <td class="flask_table">
-                        API_reference
-                    </td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="flask_table">
-                        <button name="select_API_endpoint"
-                            value="https://api.search.nicovideo.jp/api/v2/video/contents/search">ニコニコ動画
-                        </button>
-                    </td>
-                    <td class="flask_table">
-                        <a href="https://site.nicovideo.jp/search-api-docs/search.html">
-                            https://site.nicovideo.jp/search-api-docs/search.html
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="flask_table">
-                        <button name="select_API_endpoint"
-                            value="https://api.search.nicovideo.jp/api/v2/live/contents/search">ニコニコ生放送
-                        </button>
-                    </td>
-                    <td class="flask_table">
-                        <a href="https://site.nicovideo.jp/search-api-docs/search.html">
-                            https://site.nicovideo.jp/search-api-docs/search.html
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="flask_table">
-                        <button name="select_API_endpoint" value="https://api.syosetu.com/novelapi/api/">なろう小説
-                        </button>
-                    </td>
-                    <td class="flask_table">
-                        <a href="https://dev.syosetu.com/man/api/">
-                            https://dev.syosetu.com/man/api/
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="flask_table">
-                        <li><button name="select_API_endpoint" value="">other</button></li>
-                    </td>
-                    <td class="flask_table">
-                        None
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <li class="li_textform">
-            URL(API_endpoint):<br>
-            <input type="text" name="url" size="120" value="{{URL}}" id="API_endpoint">
-        </li>
-        <li class="li_textform">
-            query:<br>
-            <input type="text" name="query" size="120" value="{{QUERY}}" placeholder="no input required">
-        </li>
-        <li>=====</li>
-        <li class="li_textform">
+        <div class="pos-f-t bg-dark">
+            <div class="collapse" id="navbarToggleExternalContent_1">
+                <table class="table table-sm text-white">
+                    <thead>
+                        <tr>
+                            <th>API_endpoint</th>
+                            <th>API_reference</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td scope="row">
+                                <button name="select_API_endpoint"
+                                    value="https://api.search.nicovideo.jp/api/v2/video/contents/search">ニコニコ動画
+                                </button>
+                            </td>
+                            <td scope="row">
+                                <a href="https://site.nicovideo.jp/search-api-docs/search.html">
+                                    <b>https://site.nicovideo.jp/search-api-docs/search.html</b>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row">
+                                <button name="select_API_endpoint"
+                                    value="https://api.search.nicovideo.jp/api/v2/live/contents/search">ニコニコ生放送
+                                </button>
+                            </td>
+                            <td scope="row">
+                                <a href="https://site.nicovideo.jp/search-api-docs/search.html">
+                                    <b>https://site.nicovideo.jp/search-api-docs/search.html</b>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row">
+                                <button name="select_API_endpoint" value="https://api.syosetu.com/novelapi/api/">なろう小説
+                                </button>
+                            </td>
+                            <td scope="row">
+                                <a href="https://dev.syosetu.com/man/api/">
+                                    <b>https://dev.syosetu.com/man/api/</b>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row">
+                                <li><button name="select_API_endpoint" value="">other</button></li>
+                            </td>
+                            <td scope="row">
+                                None
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="collapse mt-2 mx-3 bg-secondary" id="navbarToggleExternalContent_2">
+                <button name="nicoapigostatus" value="True" class="btn btn-warning mt-1">Get Status</button>
+                <span class="text-white">Status: <b>{{NICOAPIGO_S}}</b></span><br>
+                <input type="text" name="query" class="form-control mt-1" value="{{QUERY}}"
+                    placeholder="query (no input required)">
+                <button name="clear" value="True" class="btn btn-outline-danger mt-1 bg-light">Clear_Orders</button>
+            </div>
+            <nav class="navbar navbar-dark bg-dark text-white">
+                <button class="btn btn-primary mb-1" type="button" data-toggle="collapse"
+                    data-target="#navbarToggleExternalContent_1" aria-controls="navbarToggleExternalContent_1"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    API_endpoint</button>
+                <button class="btn btn-warning mb-1" type="button" data-toggle="collapse"
+                    data-target="#navbarToggleExternalContent_2" aria-controls="navbarToggleExternalContent_2"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    Debug</button>
+                <input type="text" name="url" class="form-control" value="{{URL}}" id="API_endpoint">
+            </nav>
+        </div>
+
+        <div class="mt-2 mx-2 bg-light">
+            <h5 style="color:darkblue;font-family:'';text-align: center;">=Query_Table=</h5>
             Command a_b_c_d → [a for a in range(b,c,d)]<br>
-            <input type="text" name="fields_c" size="120" value="{{FIELDS_C}}">
-        </li>
-        <table class="flask_table">
-            <caption class="flask_table">Query</caption>
-            <thead>
-                <tr>
-                    <td class="flask_table">Field</td>
-                    <td class="flask_table">Value</td>
-                </tr>
-            </thead>
-            <tbody>{{FIELDS}}</tbody>
-        </table>
-        <li>
-            <button name="fields_ad" value="add">Add_Field</button>
-            <button name="fields_ad" value="del">Del_Field</button>
-        </li>
-        <li>=====</li>
-        <button name="launch" value="True">Launch</button>
-        <button name="clear" value="True">Clear_Orders</button>
-        <li>=====</li>
-        <table class="flask_table">
-            <caption class="flask_table">About your download files</caption>
-            <thead>
-                <tr>
-                    <td class="flask_table">{{SIZE_FILES}}</td>
-                    <td class="flask_table">
-                        <button name="download" value="True">Download</button>
-                    </td>
-                    <td class="flask_table">
-                        <button name="delete" value="True">Delete</button>
-                    </td>
-                </tr>
-            </thead>
-        </table>
-        <li>=====</li>
-        <table class="flask_table">
-            <caption class="flask_table">Orders</caption>
-            <thead>
-                <tr>
-                    <td class="flask_table">URL?query</td>
-                    <td class="flask_table">timestamp</td>
-                </tr>
-            </thead>
-            <tbody>{{ORDERS}}</tbody>
-        </table>
-        <li>=====</li>
-        <table class="flask_table">
-            <caption class="flask_table">the subprocess management console (for Debug)</caption>
-            <tbody>
-                <tr>
-                    <td class="flask_table">
-                        <li>the subprocess fetches data </li>
-                        <li>from URLs recorded in the DB. </li>
-                        <li>dont push the buttons repeatedly. </li>
-                    </td>
-                    <td class="flask_table" style="text-align:center">
-                        <li><button name="nicoapigostatus" value="True">Get Status</button></li>
-                        <li>Status</li>
-                        <li>{{NICOAPIGO_S}}</li>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <li>=====</li>
+            <input type="text" name="fields_c" class="form-control mt-1" value="{{FIELDS_C}}"
+                placeholder="Command a_b_c_d → [a for a in range(b,c,d)]">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th style="width:15%;">Field</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>{{FIELDS}}</tbody>
+            </table>
+            <nav class="navbar">
+                <div>
+                    <button name="fields_ad" value="del" class="btn btn-dark mx-1 rounded-pill">
+                        <b>Del</b>_Field</button>
+                    <button name="fields_ad" value="add" class="btn btn-outline-dark mx-1 rounded-pill">
+                        <b>Add</b>_Field</button>
+                </div>
+                <div>
+                    <button name="launch" value="True" class="btn btn-success mx-1">Launch</button>
+                </div>
+            </nav>
+            <h5 style="color:darkblue;font-family:'';text-align: center;">=Download_Status=</h5>
+            <nav class="navbar">
+                <div>
+                    <button class="btn btn-info mb-1" type="button" data-toggle="collapse"
+                        data-target="#navbarToggleExternalContent_Orders"
+                        aria-controls="navbarToggleExternalContent_Orders" aria-expanded="false"
+                        aria-label="Toggle navigation">Show_Orders</button>
+                    <b>{{SIZE_FILES}}</b>
+                </div>
+                <div>
+                    <button name="download" value="True" class="btn btn-primary mx-1">Download</button>
+                    <button name="delete" value="True" class="btn btn-outline-danger mx-1">Delete</button>
+                </div>
+            </nav>
+            <div class="collapse" id="navbarToggleExternalContent_Orders">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>URL?query</th>
+                            <th>timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody>{{ORDERS}}</tbody>
+                </table>
+            </div>
+        </div>
     </form>
+    <p><a class="contents_link" href="./">Flask_Indexへ</a></p>
 
-    <li><a class="contents_link" href="./">Flask_Indexへ</a></li>
+    <!--Bootstrap and jQuery JS -->
+    <!--CDN-->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"
+        integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
+        crossorigin="anonymous"></script>
+    <!--fallback by Flask-->
+    <script>window.jQuery || document.write(
+            "<script src=\"{{ url_for('static', filename='bootstrap-4.4.1-dist/js/jquery-3.4.1.min.js') }}\"\
+        crossorigin=\"anonymous\"><\/script>")</script>
+    <script>$.fn.modal || document.write(
+            "<script src=\"{{ url_for('static', filename='bootstrap-4.4.1-dist/js/bootstrap.bundle.min.js') }}\"\
+    crossorigin=\"anonymous\"><\/script>")</script>
+    <!--/Bootstrap and jQuery JS -->
 </body>
 
 </html>

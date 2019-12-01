@@ -22,8 +22,8 @@ def Display_Current_SQL(passwd=""):
     cur.close();con.close()
     #add_texts_into_html
     for order in orders:
-        html+="<tr><td class=\"flask_table\">"+str(order[1])+"</td>"
-        html+="<td class=\"flask_table\">"+str(order[2]).split(".")[0]+"</td></tr>"
+        html+="<tr><td>"+str(order[1])+"</td>"
+        html+="<td>"+str(order[2]).split(".")[0]+"</td></tr>"
     return html
 
 def Order_Into_SQL(passwd="",order=""):
@@ -85,11 +85,10 @@ def check_nicoapigo_status():
 
 def fields_to_html_text_forms(id,prm="",val="",readonly="False"):
     html="<tr>"
-    html+="<td><input type=\"text\" name=\"field1_"+str(id)+"\" value=\""+prm+"\""
-    if readonly=="True":
-        html+=" class=\"unwrite\" readonly"
+    html+="<td><input type=\"text\" name=\"field1_"+str(id)+"\" value=\""+prm+"\" class=\"form-control form-control-sm\""
+    if readonly=="True":html+=" readonly"
     html+="></td>"
-    html+="<td><input type=\"text\" name=\"field2_"+str(id)+"\" value=\""+val+"\" size=\"120\">"
+    html+="<td><input type=\"text\" name=\"field2_"+str(id)+"\" value=\""+val+"\" class=\"form-control form-control-sm\">"
     html+="<input type=\"hidden\" name=\"field3_"+str(id)+"\" value=\""+readonly+"\"></td>"
     html+="</tr>"
     return html
