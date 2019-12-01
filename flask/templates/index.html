@@ -4,67 +4,91 @@
 <head>
     <meta charset="utf-8">
     <title>Flaskなお部屋</title>
-    <style type="text/css">
-        .contents_link {
-            border: 2px solid green;
-            background-color: khaki;
-            color: navy;
-            transition: color 5s linear;
-            padding: 1px;
-            font-size: 18px;
-            line-height: 2;
-        }
-
-        .contents_link:hover {
-            border: 2px solid purple;
-            font-size: 20px;
-        }
-
-        .versions {
-            color: darkslateblue;
-            font-size: 16px;
-            font-weight: bolder;
-            background-color: azure;
-            border: 2px solid #666000;
-            border-collapse: collapse;
-        }
-
-        li {
-            list-style: none;
-        }
-    </style>
+    <!--Bootstrap CSS -->
+    <!--CDN-->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"
+        onload="window.bs4css= 1;">
+    <!--fallback by Flask-->
+    <script>window.bs4css || document.write(
+            "<link rel=\"stylesheet\" href=\"{{ url_for('static', filename='bootstrap-4.4.1-dist/css/bootstrap.min.css') }}\"\
+    crossorigin=\"anonymous\">");
+    </script>
+    <!--/Bootstrap CSS -->
 </head>
 
 <body>
     <h1 style="color:#001900;font-family:serif">Flask_Index</h1>
-    <h3 style="color:darkgreen">Apache2+WSGI+Flask+SQLite3</h3>
-    <table class="versions">
-        <caption class="versions">versions</caption>
-        <tbody>
-            <tr>
-                <td class="versions">Python</td>
-                <td class="versions">{{used_python}}</td>
-            </tr>
-            <tr>
-                <td class="versions">Flask</td>
-                <td class="versions">{{used_flask}}</td>
-            </tr>
-            <tr>
-                <td class="versions">SQLite3</td>
-                <td class="versions">{{used_sqlite3}}</td>
-            </tr>
-        </tbody>
+    <h5 style="color:darkgreen;font-family:''">Apache2+WSGI+Flask+SQLite3+Bootstrap4</h5>
+    <div class="mx-3">
+        <table class="table table-sm table-bordered" style="color: #555000;background-color: azure;">
+            <thead>
+                <tr>
+                    <th class="text-center" colspan="2">versions</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Python</td>
+                    <td>{{used_python}}</td>
+                </tr>
+                <tr>
+                    <td>Flask</td>
+                    <td>{{used_flask}}</td>
+                </tr>
+                <tr>
+                    <td>SQLite3</td>
+                    <td>{{used_sqlite3}}</td>
+                </tr>
+            </tbody>
+        </table>
 
-    </table>
+        <table class="table table-sm table-bordered mt-2 table-success" style="color: navy;background-color: khaki;">
+            <thead>
+                <tr>
+                    <th class="text-center">Link</td>
+                    <th class="text-center">Brief explanation</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="./22.py">Flaskで示す「鯖のスペック」</a></td>
+                    <td>Hello World 的なアプリ</td>
+                </tr>
+                <tr>
+                    <td><a href="./fud.py">Flaskなファイルストレージ</a></td>
+                    <td>勉強用に作ったファイル置き場です</td>
+                </tr>
+                <tr>
+                    <td><a href="./tptef.py">Flaskなチャットルーム</a></td>
+                    <td>↓を作ってる途中で、偶然出来たアプリです</td>
+                </tr>
+                <tr style="font-weight: bold;">
+                    <td><a href="./nicoapi.py">FlaskなニコニコAPIラッパー</a></td>
+                    <td>ニコニコAPIやなろうAPIとかを気軽に叩いて情報収集出来ます</td>
+                </tr>
+                <tr>
+                    <td><a href="/">戻る</a></td>
+                    <td>Index_Pageへ戻ります</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-    <ul>
-        <li><a class="contents_link" href="./22.py">Flaskで示す「鯖のスペック」</a></li>
-        <li><a class="contents_link" href="./fud.py">Flaskなファイルストレージへ</a></li>
-        <li><a class="contents_link" href="./tptef.py">Flaskなチャットルームへ</a></li>
-        <li><a class="contents_link" href="./nicoapi.py">FlaskなニコニコAPIラッパーへ</a></li>
-        <li><a class="contents_link" href="./bootstraptest.py">工事中</a></li>
-        <li><a class="contents_link" href="/">戻る</a></li>
-    </ul>
+    <!--Bootstrap and jQuery JS -->
+    <!--CDN-->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"
+        integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
+        crossorigin="anonymous"></script>
+    <!--fallback by Flask-->
+    <script>window.jQuery || document.write(
+            "<script src=\"{{ url_for('static', filename='bootstrap-4.4.1-dist/js/jquery-3.4.1.min.js') }}\"\
+        crossorigin=\"anonymous\"><\/script>")</script>
+    <script>$.fn.modal || document.write(
+            "<script src=\"{{ url_for('static', filename='bootstrap-4.4.1-dist/js/bootstrap.bundle.min.js') }}\"\
+    crossorigin=\"anonymous\"><\/script>")</script>
+    <!--/Bootstrap and jQuery JS -->
 </body>
 
 </html>
