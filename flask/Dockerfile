@@ -1,0 +1,10 @@
+
+FROM python:3.7
+
+COPY . .
+WORKDIR /
+
+RUN pip install -r requirements.txt
+
+CMD waitress-serve --port=8080 wsgi:app
+#CMD python app.py

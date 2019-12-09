@@ -24,7 +24,6 @@ func gethttp(urls string, interval time.Duration) (string, string) { //get strin
 		r := strings.NewReplacer("%26", "&", "%3D", "=")
 		urls = strings.Split(urls, "?")[0] + "?" + r.Replace(url.QueryEscape(strings.Split(urls, "?")[1]))
 	}
-	println(urls)
 	req, _ := http.NewRequest("GET", urls, nil)
 	req.Header.Set("User-Agent", "wrapper_for_NicoNicoAPI")
 	client := new(http.Client)
@@ -58,7 +57,6 @@ func checkdup() int { //prevent duplication
 					return 1
 				}
 			}
-			println("Non_duplication")
 			return 0
 		}
 	}
@@ -66,15 +64,15 @@ func checkdup() int { //prevent duplication
 }
 
 func main() {
-	for tm := time.Now().Unix(); time.Now().Unix()-tm < 10750; {
+	for tm := time.Now().Unix(); time.Now().Unix()-tm < 30000; {
 
 		if checkdup() != 0 {
 			return
 		}
 
 		db, err := sql.Open("sqlite3", "flask.sqlite")
+		defer db.Close()
 		if err == nil {
-			defer db.Close()
 			urls, sha256s, dates := make([]string, 0), make([]string, 0), make([]time.Time, 0)
 
 			//read_SQL
