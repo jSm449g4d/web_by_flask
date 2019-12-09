@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Janome doe</title>
+    <title>YMM3toYMM4</title>
 
     <!--Bootstrap CSS -->
     <!--CDN-->
@@ -20,11 +20,11 @@
 </head>
 
 <body>
-    <div class="mt-2 mx-2">
-        <h2 style="color:black;font-family:serif;">Janome doe</h2>
-        <h5 style="color:red;font-family:'';">=Please use freely at your own risk=</h5>
+    <form method="post" enctype="multipart/form-data">
+        <div class="mt-2 mx-2">
+            <h2 style="color:black;font-family:serif;">YMM3toYMM4</h2>
+            <h5 style="color:red;font-family:'';">=Please use freely at your own risk=</h5>
 
-        <form method="post" enctype="multipart/form-data">
             <nav>
                 <div class="navbar navbar-default p-0 m-0 form-inline">
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -36,7 +36,7 @@
                 </div>
                 <div class="tab-content alert-info m-0" id="nav-tabContent">
                     <div class="tab-pane fade" id="nav-1" role="tabpanel" aria-labelledby="nav-1-tab">
-                        形態素解析Janomeを使って色々実験している最中です
+                        YMM3用の素材をYMM4に変換します
                     </div>
                     <div class="tab-pane fade show active" id="nav-2" role="tabpanel" aria-labelledby="nav-2-tab">
                         工事中です
@@ -44,21 +44,26 @@
                 </div>
             </nav>
 
-            <div class="form-group mt-2">
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="text"></textarea>
+            <div class="form-inline mt-1">
+                <label for="exampleFormControlFile1 mx-1">YMM4_Material→</label>
+                <input type="file" id="exampleFormControlFile1" name="upload_1" webkitdirectory multiple="multiple">
+                <button name="submit_1" value="True" class="btn btn-success rounded-pill mx-1">Submit</button>
             </div>
-            <div class="mt-1">
-                <button name="submit" value="True" class="btn btn-outline-success mr-1">submit</button>
-                <button name="change" value="True" class="btn btn-warning mr-1">change</button>
-            </div>
-            <div class="alert-dark p-2 mt-2">
-                <h5 class="text-center">==Result==</h5>
-                <p>{{OUTPUT}}</p>
-            </div>
-        </form>
 
-        <p><a class="contents_link" href="./">Flask_Indexへ</a></p>
-    </div>
+            <div class="form-inline mt-1">
+                <label for="exampleFormControlFile1 mx-1">YMM4_Zip→</label>
+                <input type="file" id="exampleFormControlFile1" name="upload_2">
+                <button name="submit_2" value="True" class="btn btn-success rounded-pill mx-1">Submit</button>
+            </div>
+
+            <button name="download" value="True" class="btn btn-danger rounded-pill mx-1">Download</button>
+
+
+        </div>
+    </form>
+    <p><a class="contents_link" href="./">Flask_Indexへ</a></p>
+
+
     <!--Bootstrap and jQuery JS -->
     <!--CDN-->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
