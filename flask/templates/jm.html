@@ -32,20 +32,43 @@
                             aria-controls="nav-1" aria-selected="true">Front</a>
                         <a class="nav-item nav-link active" id="nav-2-tab" data-toggle="tab" href="#nav-2" role="tab"
                             aria-controls="nav-2" aria-selected="false">How_to_use</a>
+                        <a class="nav-item nav-link" id="nav-3-tab" data-toggle="tab" href="#nav-3" role="tab"
+                            aria-controls="nav-3" aria-selected="false">Description</a>
+                        <a class="nav-item nav-link btn-warning" id="nav-4-tab" data-toggle="tab" href="#nav-4"
+                            role="tab" aria-controls="nav-4" aria-selected="false">Config</a>
                     </div>
                 </div>
                 <div class="tab-content alert-info m-0" id="nav-tabContent">
-                    <div class="tab-pane fade" id="nav-1" role="tabpanel" aria-labelledby="nav-1-tab">
-                        形態素解析Janomeを使って色々実験している最中です
+                    <div class="tab-pane fade p-1" id="nav-1" role="tabpanel" aria-labelledby="nav-1-tab">
+                        サーバーレス(FaaS,CaaS)について勉強する為に開発しているWebアプリです<br>
+                        形態素解析Janomeを使ったサービスを検討中です
                     </div>
-                    <div class="tab-pane fade show active" id="nav-2" role="tabpanel" aria-labelledby="nav-2-tab">
-                        工事中です
+                    <div class="tab-pane fade show active p-1" id="nav-2" role="tabpanel" aria-labelledby="nav-2-tab">
+                        <ol start="1">
+                            <li>下のテキストボックスに文章を入力してください</li>
+                            <li>submitボタンを押してください</li>
+                            <li>分かち書き、品詞分解、読み等を出力します</li>
+                        </ol>
+                    </div>
+                    <div class="tab-pane fade show p-1" id="nav-3" role="tabpanel" aria-labelledby="nav-3-tab">
+                        <img src="{{ url_for('static', filename='assets/jm.png') }}" class="img-fluid  mx-auto d-block"
+                            alt="jm" />
+                        <a class="btn btn-primary mt-1" href="{{ url_for('static', filename='assets/jm.zip') }}">
+                            download_API(Provided_by_Cloud_Functions(FaaS))_source_code</a>
+                    </div>
+                    <div class="tab-pane fade show p-1" id="nav-4" role="tabpanel" aria-labelledby="nav-4-tab">
+                        <h5>API_ENDPOINT for Janome</h5>
+                        <input class="form-control form-control-sm" placeholder="Fallback" type="text" name="endpoint"
+                            value="{{ENDPOINT}}">
+                        <input class="btn btn-success mt-1" type="submit" value="Reload">
+                        <a class="btn btn-primary mt-1" href="{{ url_for('static', filename='assets/jm.zip') }}">
+                            download_API(Provided_by_Cloud_Functions(FaaS))_source_code</a>
                     </div>
                 </div>
             </nav>
 
             <div class="form-group mt-2">
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="text"></textarea>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="10" name="text"></textarea>
             </div>
             <div class="mt-1">
                 <button name="submit" value="True" class="btn btn-outline-success mr-1">submit</button>
@@ -57,7 +80,7 @@
             </div>
         </form>
 
-        <p><a class="contents_link" href="./">Flask_Indexへ</a></p>
+        <p><a href="./">Flask_Indexへ</a></p>
     </div>
     <!--Bootstrap and jQuery JS -->
     <!--CDN-->
