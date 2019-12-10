@@ -41,12 +41,13 @@
                 </div>
             </div>
             <div class="tab-content alert-info m-0" id="nav-tabContent">
-                <div class="tab-pane fade" id="nav-1" role="tabpanel" aria-labelledby="nav-1-tab">
+                <div class="tab-pane fade  p-1" id="nav-1" role="tabpanel" aria-labelledby="nav-1-tab">
                     ニコニコAPI等を手軽に叩いて情報を収集するために作ったWebアプリです。<br>
                     VPSの容量につき、DL後は出来るだけ早く<b>Delete</b>してください。<br>
-                    <b><a href="https://huxiin.ga/wordpress/?p=499">本アプリの解説記事はこちら</a></b><br>
+                    <a class="btn btn-success mt-1" href="https://huxiin.ga/wordpress/?p=499">
+                        本アプリの解説記事はこちら</a>
                 </div>
-                <div class="tab-pane fade show active" id="nav-2" role="tabpanel" aria-labelledby="nav-2-tab">
+                <div class="tab-pane fade show active  p-1" id="nav-2" role="tabpanel" aria-labelledby="nav-2-tab">
                     <ol start="0">
                         <li><b>user</b>に適当なアルファベットor英数字を入力して、<b>Reload</b>ボタンを押してください
                             <b>(この手順は省略して大丈夫です)</b>。</li>
@@ -58,10 +59,11 @@
                         <li><b>Delete</b>ボタンを押してください。</li>
                     </ol>
                 </div>
-                <div class="tab-pane fade" id="nav-3" role="tabpanel" aria-labelledby="nav-3-tab">
+                <div class="tab-pane fade p-1" id="nav-3" role="tabpanel" aria-labelledby="nav-3-tab">
                     <img src="{{ url_for('static', filename='assets/nicoapi.png') }}" class="img-fluid  mx-auto d-block"
                         alt="nicoapi" />
-                    <b><a href="https://huxiin.ga/wordpress/?p=499">本アプリの解説記事はこちら</a></b><br>
+                    <a class="btn btn-success mt-1" href="https://huxiin.ga/wordpress/?p=499">
+                        本アプリの解説記事はこちら</a>
                 </div>
             </div>
         </nav>
