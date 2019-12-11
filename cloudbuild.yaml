@@ -2,6 +2,8 @@ steps:
     - name: "ubuntu"
       args: ['dir']
     - name: "ubuntu"
+      args: ['ls -la']
+    - name: "ubuntu"
       args: ['cd','flask']
 
     - name: "gcr.io/cloud-builders/docker"
