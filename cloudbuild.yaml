@@ -1,11 +1,10 @@
 steps:
     - name: "ubuntu"
       args: ['ls']
-
     - name: "gcr.io/cloud-builders/docker"
       args: ["build", "-t", "gcr.io/crack-atlas-251509/flask:latest", "."]
       dir: 'flask'
     - name: "gcr.io/cloud-builders/gcloud"
-      args: ["docker -- push gcr.io/crack-atlas-251509/flask"]
+      args: ["docker","--","push","gcr.io/crack-atlas-251509/flask"]
 
 
