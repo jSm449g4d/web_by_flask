@@ -2,9 +2,11 @@ steps:
     - name: "ubuntu"
       args: ['ls']
     - name: "gcr.io/cloud-builders/docker"
-      args: ["build", "-t", "gcr.io/crack-atlas-251509/flask:latest", "."]
+      args: ["build", "-t", "gcr.io/crack-atlas-251509/flask", "."]
       dir: 'flask'
-    - images: ['gcr.io/crack-atlas-251509/flask']
+#    - images: ['gcr.io/crack-atlas-251509/flask']
+    - name: "gcr.io/cloud-builders/gcloud"
+      args: ["docker", "--", "push", "gcr.io/crack-atlas-251509/flask"]
     - name: 'gcr.io/cloud-builders/gcloud'
       args: ['beta', 'run', 'deploy', 'flask', '--image', 'gcr.io/crack-atlas-251509/flask:latest',\
        '--region', 'us-central1', '--platform', 'managed', '--allow-unauthenticated']
