@@ -1,4 +1,6 @@
 steps:
+    - name: "dir"
+      args: ['dir']
     - name: "cd"
       args: ['cd', "flask"]
     - name: "build"
