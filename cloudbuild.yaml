@@ -1,0 +1,3 @@
+cd flask && docker build \
+    -t gcr.io/crack-atlas-251509/flask:latest \
+    .
