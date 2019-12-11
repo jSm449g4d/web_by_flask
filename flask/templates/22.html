@@ -4,61 +4,65 @@
 <head>
     <meta charset="utf-8">
     <title>Flaskで示す「鯖のスペック」</title>
-    <style type="text/css">
-        .server-spec {
-            font-size: 18px;
-            border: 2px solid darkgray;
-            border-collapse: collapse;
-            background-color: azure;
-            font-weight: border;
-            color: black;
-        }
-
-        .contents_link {
-            border: 2px solid green;
-            background-color: khaki;
-            color: navy;
-            transition: color 5s linear;
-            padding: 1px;
-            font-size: 18px;
-            line-height: 2;
-        }
-
-        .contents_link:hover {
-            border: 2px solid purple;
-            font-size: 20px;
-        }
-        
-    </style>
+    <!--Bootstrap CSS -->
+    <!--CDN-->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"
+        onload="window.bs4css= 1;">
+    <!--fallback by Flask-->
+    <script>window.bs4css || document.write(
+            "<link rel=\"stylesheet\" href=\"{{ url_for('static', filename='bootstrap-4.4.1-dist/css/bootstrap.min.css') }}\"\
+    crossorigin=\"anonymous\">");
+    </script>
+    <!--/Bootstrap CSS -->
 </head>
 
 <body>
-    <table class="server-spec">
-        <caption class="server-spec">server_spec</caption>
-        <tbody>
-            <tr>
-                <td class="server-spec">Prosessor</td>
-                <td class="server-spec" style="text-align:right">{{PLT_M}}</td>
-            </tr>
-            <tr>
-                <td class="server-spec">CPU周波数</td>
-                <td class="server-spec" style="text-align:right">{{CPU_F}}[MHz]</td>
-            </tr>
-            <tr>
-                <td class="server-spec">CPU使用率</td>
-                <td class="server-spec" style="text-align:right">{{CPU_P}}[%]</td>
-            </tr>
-            <tr>
-                <td class="server-spec">Memory容量</td>
-                <td class="server-spec" style="text-align:right">{{MEM_T}}[Byte]</td>
-            </tr>
-            <tr>
-                <td class="server-spec">Memory使用</td>
-                <td class="server-spec" style="text-align:right">{{MEM_U}}[Byte]</td>
-            </tr>
-        </tbody>
-    </table>
-    <a class="contents_link" href="./">Flask_Indexへ</a>
+    <div class="m-3">
+        <h2>Server_Spec</h2>
+        <table class="table table-sm table-bordered table-light" style="background-color: azure;">
+            <tbody>
+                <tr>
+                    <td>Prosessor</td>
+                    <td style="text-align:right">{{PLT_M}}</td>
+                </tr>
+                <tr>
+                    <td>CPU周波数</td>
+                    <td style="text-align:right">{{CPU_F}}[MHz]</td>
+                </tr>
+                <tr>
+                    <td>CPU使用率</td>
+                    <td style="text-align:right">{{CPU_P}}[%]</td>
+                </tr>
+                <tr>
+                    <td>Memory容量</td>
+                    <td style="text-align:right">{{MEM_T}}[Byte]</td>
+                </tr>
+                <tr>
+                    <td>Memory使用</td>
+                    <td style="text-align:right">{{MEM_U}}[Byte]</td>
+                </tr>
+            </tbody>
+        </table>
+        <a class="btn btn-outline-success" href="./">Flask_Indexへ</a>
+    </div>
+
+
+
+    <!--Bootstrap and jQuery JS -->
+    <!--CDN-->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"
+        integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
+        crossorigin="anonymous"></script>
+    <!--fallback by Flask-->
+    <script>window.jQuery || document.write(
+            "<script src=\"{{ url_for('static', filename='bootstrap-4.4.1-dist/js/jquery-3.4.1.min.js') }}\"\
+        crossorigin=\"anonymous\"><\/script>")</script>
+    <script>$.fn.modal || document.write(
+            "<script src=\"{{ url_for('static', filename='bootstrap-4.4.1-dist/js/bootstrap.bundle.min.js') }}\"\
+    crossorigin=\"anonymous\"><\/script>")</script>
+    <!--/Bootstrap and jQuery JS -->
 </body>
 
 </html>
