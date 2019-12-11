@@ -4,8 +4,10 @@ steps:
     - name: "gcr.io/cloud-builders/docker"
       args: ["build", "-t", "gcr.io/crack-atlas-251509/flask:latest", "."]
       dir: 'flask'
-images: ['gcr.io/crack-atlas-251509/flask:latest']
-    #- name: "gcr.io/cloud-builders/gcloud"
-    #  args: ["docker","--","push","gcr.io/crack-atlas-251509/flask"]
+images: ['gcr.io/crack-atlas-251509/flask']
+
+steps:
+    - name: "gcr.io/cloud-builders/gcloud"
+      args: ["container images delete gcr.io/crack-atlas-251509/flask --force-delete-tags"]
 
 
