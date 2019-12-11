@@ -1,6 +1,9 @@
 steps:
-    - name: "cd"
-      args: ["flask"]
+
+    - name: 'gcr.io/cloud-builders/gcloud'
+      entrypoint: cd
+      args: ['flask']
+
     - name: "gcr.io/cloud-builders/docker"
       args: ["build", "-t", "gcr.io/crack-atlas-251509/flask:latest", "."]
     - name: "gcr.io/cloud-builders/gcloud"
