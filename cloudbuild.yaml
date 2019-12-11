@@ -1,6 +1,6 @@
 steps:
-    - name: 'ubuntu'
-      args: ['cd','./flask']
+    - name: "gcr.io/cloud-builders/docker"
+      args: [exec -i ubuntu /bin/bash -c "cd flask"]
 
     - name: "gcr.io/cloud-builders/docker"
       args: ["build", "-t", "gcr.io/crack-atlas-251509/flask:latest", "."]
