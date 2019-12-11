@@ -18,4 +18,4 @@ steps:
       #delete past revisions
     - name: "gcr.io/cloud-builders/gcloud"
       args: ['beta',"run", "revisions", "delete", 'flask*',
-       '--region', 'us-central1', '--platform', 'managed']
+       '--region', 'us-central1', '--platform', 'managed',"--quiet"]
