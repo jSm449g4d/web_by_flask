@@ -16,6 +16,6 @@ steps:
     - name: "gcr.io/cloud-builders/gcloud"
       args: ["container", "images", "delete", "gcr.io/crack-atlas-251509/flask", "--force-delete-tags"]
       #delete past revisions
-    - name: "gcr.io/cloud-builders/gcloud"
-      args: ['beta',"run", "revisions", "delete", 'flask-\^',
-       '--region', 'us-central1', '--platform', 'managed',"--quiet"]
+#    - name: "gcr.io/cloud-builders/gcloud"
+#      args: ['beta',"run", "revisions", "delete", 'flask-^',
+#       '--region', 'us-central1', '--platform', 'managed',"--quiet"]
