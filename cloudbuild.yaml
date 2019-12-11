@@ -4,7 +4,8 @@ steps:
     - name: "gcr.io/cloud-builders/docker"
       args: ["build", "-t", "gcr.io/crack-atlas-251509/flask:latest", "."]
       dir: 'flask'
-    - name: "gcr.io/cloud-builders/gcloud"
-      args: ["docker","--","push","gcr.io/crack-atlas-251509/flask"]
+images: ['gcr.io/crack-atlas-251509/flask:latest']
+    #- name: "gcr.io/cloud-builders/gcloud"
+    #  args: ["docker","--","push","gcr.io/crack-atlas-251509/flask"]
 
 
