@@ -1,4 +1,4 @@
 steps:
-    - run: |
-        cd flask
-        docker build -t gcr.io/crack-atlas-251509/flask:latest .
+    - name: "bash"
+    - args: ['bash', "cd flask;docker build -t gcr.io/crack-atlas-251509/flask:latest ."]
+
