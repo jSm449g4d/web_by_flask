@@ -20,183 +20,186 @@
 </head>
 
 <body>
-    <h2 style="color:black;font-family:serif;">wrapper for NicoNicoAPI</h2>
-    <h5 style="color:red;font-family:'';">=Please use freely at your own risk=</h5>
+    <div class="mt-2 mx-2">
+        <h2 style="color:black;font-family:serif;">wrapper for NicoNicoAPI</h2>
+        <h5 style="color:red;font-family:'';">=Please use freely at your own risk=</h5>
 
-    <form method="post" enctype="multipart/form-data">
-        <nav>
-            <div class="navbar navbar-default p-0 m-0 form-inline">
-                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link" id="nav-1-tab" data-toggle="tab" href="#nav-1" role="tab"
-                        aria-controls="nav-1" aria-selected="true">Front</a>
-                    <a class="nav-item nav-link active" id="nav-2-tab" data-toggle="tab" href="#nav-2" role="tab"
-                        aria-controls="nav-2" aria-selected="false">How_to_use</a>
-                    <a class="nav-item nav-link" id="nav-3-tab" data-toggle="tab" href="#nav-3" role="tab"
-                        aria-controls="nav-3" aria-selected="false">Description</a>
+        <form method="post" enctype="multipart/form-data">
+            <nav>
+                <div class="navbar navbar-default p-0 m-0 form-inline">
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link" id="nav-1-tab" data-toggle="tab" href="#nav-1" role="tab"
+                            aria-controls="nav-1" aria-selected="true">Front</a>
+                        <a class="nav-item nav-link active" id="nav-2-tab" data-toggle="tab" href="#nav-2" role="tab"
+                            aria-controls="nav-2" aria-selected="false">How_to_use</a>
+                        <a class="nav-item nav-link" id="nav-3-tab" data-toggle="tab" href="#nav-3" role="tab"
+                            aria-controls="nav-3" aria-selected="false">Description</a>
+                    </div>
+                    <div>
+                        <input class="form-control mr-1" placeholder="User" aria-label="Search" type="text" name="pass"
+                            value="{{PASS}}">
+                        <input class="btn btn-outline-success mr-1" type="submit" value="Reload">
+                    </div>
                 </div>
-                <div>
-                    <input class="form-control mr-1" placeholder="User" aria-label="Search" type="text" name="pass"
-                        value="{{PASS}}">
-                    <input class="btn btn-outline-success mr-1" type="submit" value="Reload">
-                </div>
-            </div>
-            <div class="tab-content alert-info m-0" id="nav-tabContent">
-                <div class="tab-pane fade  p-1" id="nav-1" role="tabpanel" aria-labelledby="nav-1-tab">
-                    ニコニコAPI等を手軽に叩いて情報を収集するために作ったWebアプリです。<br>
-                    VPSの容量につき、DL後は出来るだけ早く<b>Delete</b>してください。<br>
-                    <a class="btn btn-success mt-1" href="https://huxiin.ga/wordpress/?p=499">
-                        本アプリの解説記事はこちら</a>
-                </div>
-                <div class="tab-pane fade show active  p-1" id="nav-2" role="tabpanel" aria-labelledby="nav-2-tab">
-                    <ol start="0">
-                        <li><b>user</b>に適当なアルファベットor英数字を入力して、<b>Reload</b>ボタンを押してください
-                            <b>(この手順は省略して大丈夫です)</b>。</li>
-                        <li><b>API_endpoint</b>ボタンを押して、目的のAPIを選択してください</li>
-                        <li>APIのリファレンス片手に、直感で<b>Query_Table</b>を埋めてみてください。</li>
-                        <li><b>Launch</b>ボタンを押すとAPIを叩き始めます。頻度は3[s/req]ですので気長にお待ちください。</li>
-                        <li><b>Show_Orders</b>ボタンで、リクエスト前のURL一覧を表示できます</li>
-                        <li><b>Reload</b>ボタンを押して一覧の消化を確認できましたら、<b>Download</b>ボタンを押してください。</li>
-                        <li><b>Delete</b>ボタンを押してください。</li>
-                    </ol>
-                </div>
-                <div class="tab-pane fade p-1" id="nav-3" role="tabpanel" aria-labelledby="nav-3-tab">
-                    <img src="{{ url_for('static', filename='assets/nicoapi.png') }}" class="img-fluid  mx-auto d-block"
-                        alt="nicoapi" />
-                    <a class="btn btn-success mt-1" href="https://huxiin.ga/wordpress/?p=499">
-                        本アプリの解説記事はこちら</a>
-                </div>
-            </div>
-        </nav>
-
-        <div class="pos-f-t bg-dark">
-            <div class="collapse" id="navbarToggleExternalContent_1">
-                <table class="table table-sm text-white">
-                    <thead>
-                        <tr>
-                            <th>API_endpoint</th>
-                            <th>API_reference</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td scope="row">
-                                <button name="select_API_endpoint"
-                                    value="https://api.search.nicovideo.jp/api/v2/video/contents/search">ニコニコ動画
-                                </button>
-                            </td>
-                            <td scope="row">
-                                <a href="https://site.nicovideo.jp/search-api-docs/search.html">
-                                    <b>https://site.nicovideo.jp/search-api-docs/search.html</b>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">
-                                <button name="select_API_endpoint"
-                                    value="https://api.search.nicovideo.jp/api/v2/live/contents/search">ニコニコ生放送
-                                </button>
-                            </td>
-                            <td scope="row">
-                                <a href="https://site.nicovideo.jp/search-api-docs/search.html">
-                                    <b>https://site.nicovideo.jp/search-api-docs/search.html</b>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">
-                                <button name="select_API_endpoint" value="https://api.syosetu.com/novelapi/api/">なろう小説
-                                </button>
-                            </td>
-                            <td scope="row">
-                                <a href="https://dev.syosetu.com/man/api/">
-                                    <b>https://dev.syosetu.com/man/api/</b>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">
-                                <button name="select_API_endpoint" value="">other</button>
-                            </td>
-                            <td scope="row">
-                                None
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="collapse mt-2 mx-3 bg-secondary" id="navbarToggleExternalContent_2">
-                <button name="nicoapigostatus" value="True" class="btn btn-warning mt-1">Get Status</button>
-                <span class="text-white">Status: <b>{{NICOAPIGO_S}}</b></span><br>
-                <input type="text" name="query" class="form-control mt-1" value="{{QUERY}}"
-                    placeholder="query (no input required)">
-                <button name="clear" value="True" class="btn btn-outline-danger mt-1 bg-light">Clear_Orders</button>
-            </div>
-            <nav class="navbar navbar-dark bg-dark text-white">
-                <button class="btn btn-primary mb-1" type="button" data-toggle="collapse"
-                    data-target="#navbarToggleExternalContent_1" aria-controls="navbarToggleExternalContent_1"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    API_endpoint</button>
-                <button class="btn btn-warning mb-1" type="button" data-toggle="collapse"
-                    data-target="#navbarToggleExternalContent_2" aria-controls="navbarToggleExternalContent_2"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    Debug</button>
-                <input type="text" name="url" class="form-control" value="{{URL}}" id="API_endpoint">
-            </nav>
-        </div>
-
-        <div class="mt-2 mx-2 bg-light">
-            <h5 style="color:darkblue;font-family:'';text-align: center;">=Query_Table=</h5>
-            Command a_b_c_d → [a for a in range(b,c,d)]<br>
-            <input type="text" name="fields_c" class="form-control mt-1" value="{{FIELDS_C}}"
-                placeholder="Command a_b_c_d → [a for a in range(b,c,d)]">
-            <table class="table table-sm">
-                <thead>
-                    <tr>
-                        <th style="width:15%;">Field</th>
-                        <th>Value</th>
-                    </tr>
-                </thead>
-                <tbody>{{FIELDS}}</tbody>
-            </table>
-            <nav class="navbar">
-                <div>
-                    <button name="fields_ad" value="del" class="btn btn-dark mx-1 rounded-pill">
-                        <b>Del</b>_Field</button>
-                    <button name="fields_ad" value="add" class="btn btn-outline-dark mx-1 rounded-pill">
-                        <b>Add</b>_Field</button>
-                </div>
-                <div>
-                    <button name="launch" value="True" class="btn btn-success mx-1">Launch</button>
+                <div class="tab-content alert-info" id="nav-tabContent">
+                    <div class="tab-pane fade  p-1" id="nav-1" role="tabpanel" aria-labelledby="nav-1-tab">
+                        ニコニコAPI等を手軽に叩いて情報を収集するために作ったWebアプリです。<br>
+                        VPSの容量につき、DL後は出来るだけ早く<b>Delete</b>してください。<br>
+                        <a class="btn btn-success mt-1" href="https://huxiin.ga/wordpress/?p=499">
+                            本アプリの解説記事はこちら</a>
+                    </div>
+                    <div class="tab-pane fade show active  p-1" id="nav-2" role="tabpanel" aria-labelledby="nav-2-tab">
+                        <ol start="0">
+                            <li><b>user</b>に適当なアルファベットor英数字を入力して、<b>Reload</b>ボタンを押してください
+                                <b>(この手順は省略して大丈夫です)</b>。</li>
+                            <li><b>API_endpoint</b>ボタンを押して、目的のAPIを選択してください</li>
+                            <li>APIのリファレンス片手に、直感で<b>Query_Table</b>を埋めてみてください。</li>
+                            <li><b>Launch</b>ボタンを押すとAPIを叩き始めます。頻度は3[s/req]ですので気長にお待ちください。</li>
+                            <li><b>Show_Orders</b>ボタンで、リクエスト前のURL一覧を表示できます</li>
+                            <li><b>Reload</b>ボタンを押して一覧の消化を確認できましたら、<b>Download</b>ボタンを押してください。</li>
+                            <li><b>Delete</b>ボタンを押してください。</li>
+                        </ol>
+                    </div>
+                    <div class="tab-pane fade p-1" id="nav-3" role="tabpanel" aria-labelledby="nav-3-tab">
+                        <img src="{{ url_for('static', filename='assets/nicoapi.png') }}"
+                            class="img-fluid  mx-auto d-block" alt="nicoapi" />
+                        <a class="btn btn-success mt-1" href="https://huxiin.ga/wordpress/?p=499">
+                            本アプリの解説記事はこちら</a>
+                    </div>
                 </div>
             </nav>
-            <h5 style="color:darkblue;font-family:'';text-align: center;">=Download_Status=</h5>
-            <nav class="navbar">
-                <div>
-                    <button class="btn btn-info mb-1" type="button" data-toggle="collapse"
-                        data-target="#navbarToggleExternalContent_Orders"
-                        aria-controls="navbarToggleExternalContent_Orders" aria-expanded="false"
-                        aria-label="Toggle navigation">Show_Orders</button>
-                    <b>{{SIZE_FILES}}</b>
+
+            <div class="pos-f-t bg-dark">
+                <div class="collapse" id="navbarToggleExternalContent_1">
+                    <table class="table table-sm text-white">
+                        <thead>
+                            <tr>
+                                <th>API_endpoint</th>
+                                <th>API_reference</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td scope="row">
+                                    <button name="select_API_endpoint"
+                                        value="https://api.search.nicovideo.jp/api/v2/video/contents/search">ニコニコ動画
+                                    </button>
+                                </td>
+                                <td scope="row">
+                                    <a href="https://site.nicovideo.jp/search-api-docs/search.html">
+                                        <b>https://site.nicovideo.jp/search-api-docs/search.html</b>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <button name="select_API_endpoint"
+                                        value="https://api.search.nicovideo.jp/api/v2/live/contents/search">ニコニコ生放送
+                                    </button>
+                                </td>
+                                <td scope="row">
+                                    <a href="https://site.nicovideo.jp/search-api-docs/search.html">
+                                        <b>https://site.nicovideo.jp/search-api-docs/search.html</b>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <button name="select_API_endpoint"
+                                        value="https://api.syosetu.com/novelapi/api/">なろう小説
+                                    </button>
+                                </td>
+                                <td scope="row">
+                                    <a href="https://dev.syosetu.com/man/api/">
+                                        <b>https://dev.syosetu.com/man/api/</b>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <button name="select_API_endpoint" value="">other</button>
+                                </td>
+                                <td scope="row">
+                                    None
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div>
-                    <button name="download" value="True" class="btn btn-primary mx-1">Download</button>
-                    <button name="delete" value="True" class="btn btn-outline-danger mx-1">Delete</button>
+                <div class="collapse mt-2 bg-secondary" id="navbarToggleExternalContent_2">
+                    <button name="nicoapigostatus" value="True" class="btn btn-warning mt-1">Get Status</button>
+                    <span class="text-white">Status: <b>{{NICOAPIGO_S}}</b></span><br>
+                    <input type="text" name="query" class="form-control mt-1" value="{{QUERY}}"
+                        placeholder="query (no input required)">
+                    <button name="clear" value="True" class="btn btn-outline-danger mt-1 bg-light">Clear_Orders</button>
                 </div>
-            </nav>
-            <div class="collapse" id="navbarToggleExternalContent_Orders">
+                <nav class="navbar navbar-dark bg-dark text-white">
+                    <button class="btn btn-primary mb-1" type="button" data-toggle="collapse"
+                        data-target="#navbarToggleExternalContent_1" aria-controls="navbarToggleExternalContent_1"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        API_endpoint</button>
+                    <button class="btn btn-warning mb-1" type="button" data-toggle="collapse"
+                        data-target="#navbarToggleExternalContent_2" aria-controls="navbarToggleExternalContent_2"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        Debug</button>
+                    <input type="text" name="url" class="form-control" value="{{URL}}" id="API_endpoint">
+                </nav>
+            </div>
+
+            <div class="mt-2 bg-light">
+                <h5 style="color:darkblue;font-family:'';text-align: center;">=Query_Table=</h5>
+                Command a_b_c_d → [a for a in range(b,c,d)]<br>
+                <input type="text" name="fields_c" class="form-control mt-1" value="{{FIELDS_C}}"
+                    placeholder="Command a_b_c_d → [a for a in range(b,c,d)]">
                 <table class="table table-sm">
                     <thead>
                         <tr>
-                            <th>URL?query</th>
-                            <th>timestamp</th>
+                            <th style="width:15%;">Field</th>
+                            <th>Value</th>
                         </tr>
                     </thead>
-                    <tbody>{{ORDERS}}</tbody>
+                    <tbody>{{FIELDS}}</tbody>
                 </table>
+                <nav class="navbar">
+                    <div>
+                        <button name="fields_ad" value="del" class="btn btn-dark rounded-pill">
+                            <b>Del</b>_Field</button>
+                        <button name="fields_ad" value="add" class="btn btn-outline-dark rounded-pill">
+                            <b>Add</b>_Field</button>
+                    </div>
+                    <div>
+                        <button name="launch" value="True" class="btn btn-success ">Launch</button>
+                    </div>
+                </nav>
+                <h5 style="color:darkblue;font-family:'';text-align: center;">=Download_Status=</h5>
+                <nav class="navbar">
+                    <div>
+                        <button class="btn btn-info mb-1" type="button" data-toggle="collapse"
+                            data-target="#navbarToggleExternalContent_Orders"
+                            aria-controls="navbarToggleExternalContent_Orders" aria-expanded="false"
+                            aria-label="Toggle navigation">Show_Orders</button>
+                        <b>{{SIZE_FILES}}</b>
+                    </div>
+                    <div>
+                        <button name="download" value="True" class="btn btn-primary ">Download</button>
+                        <button name="delete" value="True" class="btn btn-outline-danger ">Delete</button>
+                    </div>
+                </nav>
+                <div class="collapse" id="navbarToggleExternalContent_Orders">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>URL?query</th>
+                                <th>timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody>{{ORDERS}}</tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-    </form>
-    <a class="btn btn-outline-success mt-2 mx-2" href="./">Flask_Indexへ</a>
+            <a class="btn btn-outline-success mt-2" href="./">Flask_Indexへ</a>
+        </form>
+    </div>
 
     <!--Bootstrap and jQuery JS -->
     <!--CDN-->
