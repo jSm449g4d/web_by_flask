@@ -1,4 +1,4 @@
 steps:
     - name: "bash"
-    - args: ['bash', "cd flask;docker build -t gcr.io/crack-atlas-251509/flask:latest ."]
+      args: ['bash', "cd flask;docker build -t gcr.io/crack-atlas-251509/flask:latest ."]
 
