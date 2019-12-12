@@ -1,20 +1,19 @@
+APPNAME="flask"
 steps:
-    - name: "ubuntu"
-      args: ['ls']
       #build
     - name: "gcr.io/cloud-builders/docker"
-      args: ["build", "-t", "gcr.io/crack-atlas-251509/flask", "."]
-      dir: 'flask'
+      args: ["build", "-t", "gcr.io/crack-atlas-251509/$APPNAME", "."]
+      dir: '$APPNAME'
       #push image to Container Registry
     - name: "gcr.io/cloud-builders/docker"
-      args: ['push',"gcr.io/crack-atlas-251509/flask"]
+      args: ['push',"gcr.io/crack-atlas-251509/$APPNAME"]
       #deploy
     - name: 'gcr.io/cloud-builders/gcloud'
-      args: ['beta','run', 'deploy', 'flask', '--image', 'gcr.io/crack-atlas-251509/flask:latest',
+      args: ['beta','run', 'deploy', '$APPNAME', '--image', 'gcr.io/crack-atlas-251509/$APPNAME:latest',
        '--region', 'us-central1', '--platform', 'managed', '--allow-unauthenticated']
       #delete image from Container Registry
     - name: "gcr.io/cloud-builders/gcloud"
-      args: ["container", "images", "delete", "gcr.io/crack-atlas-251509/flask", "--force-delete-tags"]
+      args: ["container", "images", "delete", "gcr.io/crack-atlas-251509/$APPNAME", "--force-delete-tags"]
       #delete past revisions
 #    - name: "gcr.io/cloud-builders/gcloud"
 #      args: ['beta',"run", "revisions", "delete", 'flask-^',
