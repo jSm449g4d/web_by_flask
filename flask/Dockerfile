@@ -21,8 +21,5 @@ RUN pip install -U flask waitress janome werkzeug psutil urllib3 certifi
 RUN go get github.com/mitchellh/go-ps
 RUN go get github.com/mattn/go-sqlite3
 
-#crontab
-RUN echo "*/5 * * * * root go run nicoapi.go\n" > /etc/cron.d/cron_nicoapi
-
 CMD bash -c "waitress-serve --port=8080 wsgi:app;go run nicoapi.go"
 #CMD python app.py
