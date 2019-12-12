@@ -1,5 +1,7 @@
+#plz set env "Cloud Build→trigger→env→'_APPNAME'"
+
 steps:
-      #build
+      #build      
     - name: "gcr.io/cloud-builders/docker"
       args: ["build", "-t", "gcr.io/crack-atlas-251509/$_APPNAME", "."]
       dir: '$_APPNAME'
