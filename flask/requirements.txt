@@ -1,7 +1,0 @@
-flask
-waitress
-janome
-werkzeug
-psutil
-urllib3
-certifi
