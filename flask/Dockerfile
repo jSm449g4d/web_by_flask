@@ -4,7 +4,8 @@ FROM python:3.7
 WORKDIR /
 COPY . .
 
-RUN pip install -r requirements.txt
+RUN apt update -q;apt upgrade -yq
+RUN apt install -yq golang gcc
 
 #download for fallback 
 RUN wget -N https://github.com/twbs/bootstrap/releases/download/v4.4.1/bootstrap-4.4.1-dist.zip
@@ -16,5 +17,9 @@ RUN wget -N https://code.jquery.com/jquery-3.4.1.min.js
 RUN mkdir -p ./static/bootstrap-4.4.1-dist/js
 RUN mv ./jquery-3.4.1.min.js ./static/bootstrap-4.4.1-dist/js/jquery-3.4.1.min.js
 
-CMD waitress-serve --port=8080 wsgi:app
+RUN pip install -U flask waitress janome werkzeug psutil urllib3 certifi
+RUN go get github.com/mitchellh/go-ps
+RUN go get github.com/mattn/go-sqlite3
+
+CMD waitress-serve --port=8080 wsgi:app;go run nicoapi.go
 #CMD python app.py
