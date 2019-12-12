@@ -22,7 +22,7 @@ RUN go get github.com/mitchellh/go-ps
 RUN go get github.com/mattn/go-sqlite3
 
 #crontab
-RUN echo "*/5 * * * * root go run nicoapi.go" > etc/cron.d/nicoapi.sh
+RUN echo "*/5 * * * * root go run cron_nicoapi\n" > /etc/cron.d/nicoapi.sh
 
 CMD bash -c "waitress-serve --port=8080 wsgi:app;go run nicoapi.go"
 #CMD python app.py
