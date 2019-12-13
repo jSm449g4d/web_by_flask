@@ -3,7 +3,7 @@ FROM python:3.7
 
 RUN mkdir -p /flask
 WORKDIR /flask
-COPY / /
+COPY . .
 
 RUN apt update -q;apt upgrade -yq
 RUN apt install -yq golang gcc cron
