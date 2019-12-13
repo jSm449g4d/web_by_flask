@@ -5,6 +5,7 @@ import flask
 from flask import  render_template,redirect,request
 import importlib
 import sqlite3
+import zipfile
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
@@ -12,6 +13,9 @@ app = flask.Flask(__name__)
 
 #prevent uploading too large file
 app.config['MAX_CONTENT_LENGTH'] = 100000000
+
+#unzip CDN contents for fallback
+zipfile.ZipFile(os.path.join("./static/","bootstrap-4.4.1-dist.zip")).extractall("./static/")
 
 @app.route("/")
 def indexpage_show():
