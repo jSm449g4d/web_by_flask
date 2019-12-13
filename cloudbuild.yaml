@@ -1,21 +1,22 @@
-#plz set env "Cloud Build→trigger→env→'_APPNAME'"
+#plz set appname to env "Cloud Build→trigger→env→'_APPNAME'"
+#plz set GCP_project_dicetry to env "Cloud Build→trigger→env→'_PROJECT'"
 
 steps:
       #build      
     - name: "gcr.io/cloud-builders/docker"
-      args: ["build", "-t", "gcr.io/crack-atlas-251509/$_APPNAME", "."]
+      args: ["build", "-t", "$_PROJECT/$_APPNAME", "."]
       dir: '$_APPNAME'
       #push image to Container Registry
     - name: "gcr.io/cloud-builders/docker"
-      args: ['push',"gcr.io/crack-atlas-251509/$_APPNAME"]
+      args: ['push',"$_PROJECT/$_APPNAME"]
       #deploy
     - name: 'gcr.io/cloud-builders/gcloud'
-      args: ['beta','run', 'deploy', '$_APPNAME', '--image', 'gcr.io/crack-atlas-251509/$_APPNAME:latest',
+      args: ['beta','run', 'deploy', '$_APPNAME', '--image', '$_PROJECT/$_APPNAME:latest',
        '--region', 'us-central1', '--platform', 'managed', '--allow-unauthenticated']
       #delete image from Container Registry
     - name: "gcr.io/cloud-builders/gcloud"
-      args: ["container", "images", "delete", "gcr.io/crack-atlas-251509/$_APPNAME", "--force-delete-tags"]
+      args: ["container", "images", "delete", "$_PROJECT/$_APPNAME", "--force-delete-tags"]
       #delete past revisions
-#    - name: "gcr.io/cloud-builders/gcloud"
+#    - name: "$_PROJECT/gcloud"
 #      args: ['beta',"run", "revisions", "delete", 'flask-^',
 #       '--region', 'us-central1', '--platform', 'managed',"--quiet"]
