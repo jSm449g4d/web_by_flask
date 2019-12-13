@@ -64,7 +64,7 @@ func checkdup() int { //prevent duplication
 }
 
 func main() {
-	for tm := time.Now().Unix(); time.Now().Unix()-tm < 30000; {
+	for tm := time.Now().Unix(); time.Now().Unix()-tm < 65000; {
 
 		if checkdup() != 0 {
 			return

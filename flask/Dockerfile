@@ -12,5 +12,7 @@ RUN pip install -U flask waitress janome werkzeug psutil urllib3 certifi
 RUN go get github.com/mitchellh/go-ps
 RUN go get github.com/mattn/go-sqlite3
 
-CMD bash -c "waitress-serve --port=8080 wsgi:app;go run nicoapi.go"
+RUN go build -o nicoapi.elf nicoapi.go
+
+CMD bash -c "waitress-serve --port=8080 wsgi:app;./nicoapi.elf"
 #CMD python app.py
