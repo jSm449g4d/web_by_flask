@@ -8,6 +8,7 @@ import sqlite3
 import zipfile
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+os.chdir(os.path.dirname(__file__))
 
 app = flask.Flask(__name__)
 
@@ -15,7 +16,8 @@ app = flask.Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 100000000
 
 #unzip CDN contents for fallback
-zipfile.ZipFile(os.path.join("./static/","bootstrap-4.4.1-dist.zip")).extractall("./static/")
+try:zipfile.ZipFile(os.path.join("./static/","bootstrap-4.4.1-dist.zip")).extractall("./static/")
+except:print("cant unzip CDN contents")
 
 @app.route("/")
 def indexpage_show():
