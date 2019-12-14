@@ -9,6 +9,9 @@ import json
 import asyncio
 import threading
 import random
+from urllib import parse
+import re
+import neologdn
 
 jmloop = asyncio.new_event_loop()
 
@@ -61,13 +64,14 @@ def web_rand(url="",fields={}):
     headers={"User-Agent":"Janome_doe"})
     try:html=https.request('GET',str(url).split("?")[0]+"?"+parse.quote(str(url).split("?")[1],safe="=&-"))
     except: print("err");return "ERROR:invalid endpoint"
-    return html.data.decode('utf-8').translate(str.maketrans("\"\'\\/<>%`?;",'__________'))#Not_secure_filename!
+    html=html.data.decode('utf-8').translate(str.maketrans("\"\'\\/<>%`?;",'__________'))#Not_secure_filename!    
+    return neologdn.normalize(html)
 
 def show(req):
     os.chdir(os.path.join("./",os.path.dirname(__file__)))
     output=""
     endpoint="https://us-central1-crack-atlas-251509.cloudfunctions.net/janome_banilla"
-    random_art="https://api.syosetu.com/novelapi/api?of=t-w-s&lin=50"
+    random_art="https://api.syosetu.com/novelapi/api?of=t-w-s&lin=100"
 
     #FaaS wakeup
     threading.Thread(name='t1', target=FaaS_wakeup, kwargs={'url': endpoint}).start()
@@ -88,7 +92,6 @@ def show(req):
         if 'change' in req.form and secure_filename(req.form['change'])=="True":
             if 'text' in req.form:
                 rand_text=web_rand(random_art)
-
                 target=req.form['text'].translate(str.maketrans("\"\'\\/<>%`?;",'__________'))#Not_secure_filename!
                 rand_text_surface=FaaS_janome(endpoint,fields={"surface":rand_text})
                 rand_text_speech=FaaS_janome(endpoint,fields={"speech":rand_text})
@@ -98,6 +101,6 @@ def show(req):
                     if rand_text_speech.split(",")[i]=="名詞":rand_noun.append(rand_text_surface.split(",")[i])
                     if rand_text_speech.split(",")[i]=="動詞":rand_verb.append(rand_text_surface.split(",")[i])
                 for _ in range(15):
-                    output+=random.choice(rand_noun)
+                    output+=random.choice(rand_noun)+" "
 
     return render_template_2("jm.html",OUTPUT=output,ENDPOINT=endpoint,RANDOM_ART=random_art)
