@@ -71,7 +71,7 @@ def show(req):
     os.chdir(os.path.join("./",os.path.dirname(__file__)))
     output=""
     endpoint="https://us-central1-crack-atlas-251509.cloudfunctions.net/janome_banilla"
-    random_art="https://api.syosetu.com/novelapi/api?of=t-w-s&lin=100"
+    random_art="https://api.syosetu.com/novelapi/api?of=t-w-s&lin=30"
 
     #FaaS wakeup
     threading.Thread(name='t1', target=FaaS_wakeup, kwargs={'url': endpoint}).start()
