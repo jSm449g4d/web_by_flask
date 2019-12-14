@@ -41,6 +41,7 @@
                 <div class="tab-content alert-info m-0" id="nav-tabContent">
                     <div class="tab-pane fade p-1" id="nav-1" role="tabpanel" aria-labelledby="nav-1-tab">
                         サーバーレス(FaaS,CaaS)について勉強する為に開発しているWebアプリです<br>
+                        DevOps(Docker+CI/CD)の経験値稼ぎにも使われています<br>
                         形態素解析Janomeを使ったサービスを検討中です<br>
                         <a class="btn btn-primary mt-1" href="https://huxiin.ga/wordpress/?p=609">
                             本アプリの解説記事はこちら</a>
@@ -54,6 +55,14 @@
                             <li><b style="color:red;">Janome用API鯖はFaaSで、コールドスタートゆえ初動に数十秒程かかります。</b></li>
                             <li>分かち書き、品詞分解、読み等を出力します</li>
                         </ol>
+
+                        <ol start="1">
+                            <h5>途中段階の機能</h5>
+                            <li><b>noun</b>ボタンを押してください</li>
+                            <li><b>なろうAPI(デフォルト)</b>からランダムで作品やあらすじを引っ張ってきて、形態素解析します</li>
+                            <li>上の行に名詞、下の行に動詞を出力します</li>
+                        </ol>
+
                     </div>
                     <div class="tab-pane fade show p-1" id="nav-3" role="tabpanel" aria-labelledby="nav-3-tab">
                         <img src="{{ url_for('static', filename='assets/jm.png') }}" class="img-fluid  mx-auto d-block"
@@ -86,6 +95,7 @@
             </div>
             <div class="mt-1">
                 <button name="submit" value="True" class="btn btn-outline-success mr-1">submit</button>
+                <button name="noun" value="True" class="btn btn-outline-success mr-1">noun</button>
                 <button name="change" value="True" class="btn btn-warning mr-1">change</button>
             </div>
             <div class="alert-dark p-2 mt-2">
