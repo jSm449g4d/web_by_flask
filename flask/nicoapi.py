@@ -7,7 +7,6 @@ import datetime
 import zipfile
 import subprocess
 import shutil
-import psutil
 import time
 import threading
 from urllib import parse
@@ -82,11 +81,6 @@ def delete_files(passwd=""):
     sha256=hashlib.sha256(passwd.encode('utf-8')).hexdigest()
     try:shutil.rmtree(os.path.join(DataDir,sha256))
     except:return
-    
-def check_nicoapigo_status():
-    for proc in psutil.process_iter():
-        if 'nicoapi' in proc.name():return "Running"
-    return "Stopping"
 
 def fields_to_html_text_forms(id,prm="",val="",readonly="False"):
     html="<tr>"
@@ -131,7 +125,7 @@ def fill_default_fields(url=""):
 
 
 def qrawler():
-    for _ in range(30000):#86400[s]/3
+    while True:
         time.sleep(5)
         #sqlite3
         con=sqlite3.connect(os.path.join("./flask.sqlite"),isolation_level = None)
@@ -165,7 +159,6 @@ def show(req):
     urls="https://api.search.nicovideo.jp/api/v2/video/contents/search"
     query=""
     passwd=""
-    nicoapigo_s="non check"
     fields=""
     fields_c=""#fields_command
     if req.method == 'POST':
@@ -210,8 +203,6 @@ def show(req):
             delete_files(passwd)
         if "download" in req.form and secure_filename(req.form["download"])=="True":
             return download_files(passwd)
-        if "nicoapigostatus" in req.form and secure_filename(req.form["nicoapigostatus"])=="True":
-            nicoapigo_s=check_nicoapigo_status()
         
         #select_API_endpoint is a command which cause to reset forms as like no POST
         if "select_API_endpoint" in req.form:
@@ -224,4 +215,4 @@ def show(req):
     orders=Display_Current_SQL(passwd)
     _,size_files=about_files(passwd)
     return render_template_2("nicoapi.html",ORDERS=orders,URL=urls,QUERY=query,PASS=passwd,\
-    SIZE_FILES=size_files,NICOAPIGO_S=nicoapigo_s,FIELDS=fields,FIELDS_C=fields_c)
+    SIZE_FILES=size_files,FIELDS=fields,FIELDS_C=fields_c)
