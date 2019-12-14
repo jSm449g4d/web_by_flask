@@ -58,7 +58,7 @@ def FaaS_wakeup(url=""):
 def web_rand(url="",fields={}):
     https = urllib3.PoolManager(cert_reqs='CERT_REQUIRED',ca_certs=certifi.where(),
     headers={"User-Agent":"Janome_doe"})
-    try:html=https.request('GET',url)
+    try:html=https.request('GET',str(url).split("?")[0]+"?"+parse.quote(str(url).split("?")[1],safe="=&"))
     except: print("err");return "ERROR:invalid endpoint"
     return html.data.decode('utf-8').translate(str.maketrans("\"\'\\/<>%`?;",'__________'))#Not_secure_filename!
 
@@ -90,9 +90,7 @@ def show(req):
 
                 target=req.form['text'].translate(str.maketrans("\"\'\\/<>%`?;",'__________'))#Not_secure_filename!
                 ret=FaaS_janome(endpoint,fields={"surface":rand_text})
+                ret=FaaS_janome(endpoint,fields={"speech":rand_text})
                 output+=ret
-        
-        #if 'dlsource' in req.form and secure_filename(req.form['dlsource'])=="True":
-        #    return send_file(os.path.join(DataDir,target),as_attachment = True)
 
     return render_template_2("jm.html",OUTPUT=output,ENDPOINT=endpoint,RANDOM_ART=random_art)
