@@ -65,7 +65,7 @@ def web_rand(url="",fields={}):
     try:html=https.request('GET',str(url).split("?")[0]+"?"+parse.quote(str(url).split("?")[1],safe="=&-"))
     except: print("err");return "ERROR:invalid endpoint"
     html=html.data.decode('utf-8').translate(str.maketrans("\"\'\\/<>%`?;",'__________'))#Not_secure_filename!    
-    return neologdn.normalize(html).translate(str.maketrans("","","_:| ～"))
+    return neologdn.normalize(html).translate(str.maketrans("","","_:| ～-"))
 
 def show(req):
     os.chdir(os.path.join("./",os.path.dirname(__file__)))
@@ -78,13 +78,13 @@ def show(req):
 
     if req.method == 'POST':
         if 'endpoint' in req.form:
-            endpoint=req.form['endpoint'].translate(str.maketrans("\"\'<>`;",'______'))#Not_secure_filename!
+            endpoint=req.form['endpoint'].translate(str.maketrans("","","\"\'<>`;"))#Not_secure_filename!
         if 'random_art' in req.form:
-            random_art=req.form['random_art'].translate(str.maketrans("\"\'<>`;",'______'))#Not_secure_filename!
+            random_art=req.form['random_art'].translate(str.maketrans("","","\"\'<>`;"))#Not_secure_filename!
 
         if 'submit' in req.form and secure_filename(req.form['submit'])=="True":
             if 'text' in req.form:
-                target=req.form['text'].translate(str.maketrans("\"\'\\/<>%`?;",'__________'))#Not_secure_filename!
+                target=req.form['text'].translate(str.maketrans("","","\"\'\\/<>%`?;"))#Not_secure_filename!
                 output+=FaaS_janome(endpoint,fields={"surface":target})+"<br>"
                 output+=FaaS_janome(endpoint,fields={"speech":target})+"<br>"
                 output+=FaaS_janome(endpoint,fields={"phonetic":target})
@@ -92,7 +92,7 @@ def show(req):
         if 'change' in req.form and secure_filename(req.form['change'])=="True":
             if 'text' in req.form:
                 rand_text=web_rand(random_art)
-                target=req.form['text'].translate(str.maketrans("\"\'\\/<>%`?;",'__________'))#Not_secure_filename!
+                target=req.form['text'].translate(str.maketrans("","","\"\'\\/<>%`?;"))#Not_secure_filename!
                 rand_text_surface=FaaS_janome(endpoint,fields={"surface":rand_text})
                 rand_text_speech=FaaS_janome(endpoint,fields={"speech":rand_text})
                 rand_noun=set(["佐藤"])
