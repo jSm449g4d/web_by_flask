@@ -59,7 +59,7 @@ def FaaS_wakeup(url=""):
 def web_rand(url="",fields={}):
     https = urllib3.PoolManager(cert_reqs='CERT_REQUIRED',ca_certs=certifi.where(),
     headers={"User-Agent":"Janome_doe"})
-    try:html=https.request('GET',str(url).split("?")[0]+"?"+parse.quote(str(url).split("?")[1],safe="=&"))
+    try:html=https.request('GET',str(url).split("?")[0]+"?"+parse.quote(str(url).split("?")[1],safe="=&-"))
     except: print("err");return "ERROR:invalid endpoint"
     return html.data.decode('utf-8').translate(str.maketrans("\"\'\\/<>%`?;",'__________'))#Not_secure_filename!
 
