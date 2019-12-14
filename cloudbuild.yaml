@@ -15,7 +15,7 @@ steps:
        '--region', 'us-central1', '--platform', 'managed', '--allow-unauthenticated']
       #delete image from Container Registry
     - name: "gcr.io/cloud-builders/gcloud"
-      args: ["container", "images", "delete", "$_PROJECT/$_APPNAME:<none>"]
+      args: ["container", "images", "delete", "$_PROJECT/$_APPNAME", "--force-delete-tags"]
       #delete past revisions
 #    - name: "$_PROJECT/gcloud"
 #      args: ['beta',"run", "revisions", "delete", 'flask-^',
