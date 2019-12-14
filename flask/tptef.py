@@ -49,7 +49,7 @@ def render_template_2(dir,**kwargs):
     return render_template_string(html)
 
 def show(req):
-    os.chdir(os.path.dirname(__file__))
+    os.chdir(os.path.join("./",os.path.dirname(__file__)))
     room=""
     user=""
     remark=""

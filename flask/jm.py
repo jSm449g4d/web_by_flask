@@ -6,6 +6,10 @@ import gc
 import certifi
 import urllib3
 import json
+import asyncio
+import threading
+
+jmloop = asyncio.new_event_loop()
 
 def render_template_2(dir,**kwargs):
     html=""
@@ -38,14 +42,26 @@ def FaaS_janome(url="",fields={}):
                 ret+=token.phonetic+","
             del t;gc.collect();return ret.strip(',')
     https = urllib3.PoolManager(cert_reqs='CERT_REQUIRED',ca_certs=certifi.where(),headers={})
-    html=https.request('POST',url,
+    try:html=https.request('POST',url,
     body=json.dumps(fields),headers={'Content-Type': 'application/json'})
+    except: return "ERROR:invalid endpoint"
     return html.data.decode('utf-8').translate(str.maketrans("\"\'\\/<>%`?;",'__________'))#Not_secure_filename!
 
+def FaaS_wakeup(url=""):
+    https = urllib3.PoolManager(cert_reqs='CERT_REQUIRED',ca_certs=certifi.where(),headers={})
+    try:https.request('GET',url)
+    except: 0
+    return 
+
 def show(req):
-    os.chdir(os.path.dirname(__file__))
+    os.chdir(os.path.join("./",os.path.dirname(__file__)))
     output=""
     endpoint="https://us-central1-crack-atlas-251509.cloudfunctions.net/janome_banilla"
+
+    #FaaS wakeup
+    t1 = threading.Thread(name='t1', target=FaaS_wakeup, kwargs={'url': endpoint})
+    t1.start()
+
     if req.method == 'POST':
         if 'endpoint' in req.form:
             endpoint=req.form['endpoint'].translate(str.maketrans("\"\'<>`?;",'_______'))#Not_secure_filename!

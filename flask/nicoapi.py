@@ -129,7 +129,7 @@ def fill_default_fields(url=""):
 
 #Development is frozen
 def show(req):
-    os.chdir(os.path.dirname(__file__))
+    os.chdir(os.path.join("./",os.path.dirname(__file__)))
     if not os.path.exists(DataDir):os.mkdir(DataDir)
     #declare
     urls="https://api.search.nicovideo.jp/api/v2/video/contents/search"

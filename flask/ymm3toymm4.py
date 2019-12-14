@@ -23,7 +23,7 @@ def render_template_2(dir,**kwargs):
     return render_template_string(html)
 
 def show(req):
-    os.chdir(os.path.dirname(__file__))
+    os.chdir(os.path.join("./",os.path.dirname(__file__)))
     if not os.path.exists(DataDir):os.mkdir(DataDir)
     if req.method == 'POST':
         if 'submit_1' in req.form and secure_filename(req.form['submit_1'])=="True":
