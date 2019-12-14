@@ -140,7 +140,6 @@ def qrawler():
                 time.sleep(3)
                 html=https.request('GET',str(order[1]).split("?")[0]+"?"+
                 parse.quote(str(order[1]).split("?")[1],safe="=&"))
-                print(parse.quote(str(order[1]).split("?")[1],safe="=&"))
                 os.makedirs(os.path.join(DataDir,str(order[0])), exist_ok=True) 
                 filename=str(datetime.datetime.now().timestamp()).split(".")[0]
                 if "Content-Disposition" in html.headers:
