@@ -8,6 +8,11 @@ import zipfile
 import subprocess
 import shutil
 import psutil
+import time
+import threading
+from urllib import parse
+import urllib3
+import certifi
 
 DataDir="./nicoapi"
 
@@ -125,12 +130,37 @@ def fill_default_fields(url=""):
     return html,fields_command
 
 
+def qrawler():
+    for _ in range(30000):#86400[s]/3
+        time.sleep(5)
+        #sqlite3
+        con=sqlite3.connect(os.path.join("./flask.sqlite"),isolation_level = None)
+        cur=con.cursor()
+        cur.execute("create table if not exists nicoapi (sha256 text,url text,date datetime)")
+        orders=cur.execute("select sha256,url,date from nicoapi").fetchall()
+        for order in orders:
+            cur.execute("delete from nicoapi where url=? and sha256=?",[str(order[1]), str(order[0])])
+            https = urllib3.PoolManager(cert_reqs='CERT_REQUIRED',ca_certs=certifi.where(),
+            headers={"User-Agent":"wrapper_for_NicoNicoAPI"})
+            try:
+                time.sleep(3)
+                html=https.request('GET',str(order[1]).split("?")[0]+"?"+
+                parse.quote(str(order[1]).split("?")[1],safe="=&"))
+                print(parse.quote(str(order[1]).split("?")[1],safe="=&"))
+                os.makedirs(os.path.join(DataDir,str(order[0])), exist_ok=True) 
+                filename=str(datetime.datetime.now().timestamp()).split(".")[0]
+                if "Content-Disposition" in html.headers:
+                    if 1<len(html.headers["Content-Disposition"].split("filename=")):
+                        filename=html.headers["Content-Disposition"].split("filename=")[1].split()[0]
+                with open(os.path.join(DataDir,str(order[0]),filename),"wb") as f:
+                    f.write(html.data)
+            except: continue
+        cur.close();con.close()
 
+threading.Thread(name='qrawler', target=qrawler).start()
 
-#Development is frozen
 def show(req):
     os.chdir(os.path.join("./",os.path.dirname(__file__)))
-    if not os.path.exists(DataDir):os.mkdir(DataDir)
     #declare
     urls="https://api.search.nicovideo.jp/api/v2/video/contents/search"
     query=""
@@ -180,17 +210,6 @@ def show(req):
             delete_files(passwd)
         if "download" in req.form and secure_filename(req.form["download"])=="True":
             return download_files(passwd)
-            #Frozen
-        #if "nicoapigo" in req.form and secure_filename(req.form["nicoapigo"])=="True":
-        #    try:subprocess.run(['go','run',os.path.join(os.getcwd(),'nicoapi.go')])
-        #    except:print("Faild to launch nicoapi.go")
-        #    nicoapigo_s=check_nicoapigo_status()
-        #if "nicoapigokill" in req.form and secure_filename(req.form["nicoapigokill"])=="True":
-        #    try:
-        #        for proc in psutil.process_iter():
-        #            if 'nicoapi' in proc.name():proc.terminate()
-        #    except:print("Faild to Terminate nicoapi.go")
-        #    nicoapigo_s=check_nicoapigo_status()
         if "nicoapigostatus" in req.form and secure_filename(req.form["nicoapigostatus"])=="True":
             nicoapigo_s=check_nicoapigo_status()
         

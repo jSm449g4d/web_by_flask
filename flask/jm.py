@@ -69,8 +69,7 @@ def show(req):
     random_art="https://api.syosetu.com/novelapi/api?of=t-w-s&lin=50"
 
     #FaaS wakeup
-    t1 = threading.Thread(name='t1', target=FaaS_wakeup, kwargs={'url': endpoint})
-    t1.start()
+    threading.Thread(name='t1', target=FaaS_wakeup, kwargs={'url': endpoint}).start()
 
     if req.method == 'POST':
         if 'endpoint' in req.form:
