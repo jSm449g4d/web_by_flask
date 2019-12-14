@@ -8,6 +8,7 @@ import urllib3
 import json
 import asyncio
 import threading
+import random
 
 jmloop = asyncio.new_event_loop()
 
@@ -89,8 +90,14 @@ def show(req):
                 rand_text=web_rand(random_art)
 
                 target=req.form['text'].translate(str.maketrans("\"\'\\/<>%`?;",'__________'))#Not_secure_filename!
-                ret=FaaS_janome(endpoint,fields={"surface":rand_text})
-                ret=FaaS_janome(endpoint,fields={"speech":rand_text})
-                output+=ret
+                rand_text_surface=FaaS_janome(endpoint,fields={"surface":rand_text})
+                rand_text_speech=FaaS_janome(endpoint,fields={"speech":rand_text})
+                rand_noun=["佐藤"]
+                rand_verb=["送る"]
+                for i in range(len(rand_text_speech.split(","))):
+                    if rand_text_speech.split(",")[i]=="名詞":rand_noun.append(rand_text_surface.split(",")[i])
+                    if rand_text_speech.split(",")[i]=="動詞":rand_verb.append(rand_text_surface.split(",")[i])
+                for _ in range(15):
+                    output+=random.choice(rand_noun)
 
     return render_template_2("jm.html",OUTPUT=output,ENDPOINT=endpoint,RANDOM_ART=random_art)
