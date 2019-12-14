@@ -114,7 +114,7 @@ def fill_default_fields(url=""):
     
     elif "https://api.syosetu.com/novelapi/api" in url:
         html =fields_to_html_text_forms(0,"gzip","5")
-        html+=fields_to_html_text_forms(1,"out","json")
+        html+=fields_to_html_text_forms(1,"out","yaml")
         html+=fields_to_html_text_forms(2,"lim","499")
         html+=fields_to_html_text_forms(3,"st","AAAAAX")
         fields_command="AAAAAX_1_2000_499"

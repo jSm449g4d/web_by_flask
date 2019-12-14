@@ -48,15 +48,25 @@ def FaaS_janome(url="",fields={}):
     return html.data.decode('utf-8').translate(str.maketrans("\"\'\\/<>%`?;",'__________'))#Not_secure_filename!
 
 def FaaS_wakeup(url=""):
-    https = urllib3.PoolManager(cert_reqs='CERT_REQUIRED',ca_certs=certifi.where(),headers={})
+    https = urllib3.PoolManager(cert_reqs='CERT_REQUIRED',ca_certs=certifi.where(),headers={
+        "User-Agent":"Janome_doe"})
     try:https.request('GET',url)
-    except: 0
+    except: return ""
     return 
+
+
+def web_rand(url="",fields={}):
+    https = urllib3.PoolManager(cert_reqs='CERT_REQUIRED',ca_certs=certifi.where(),
+    headers={"User-Agent":"Janome_doe"})
+    try:html=https.request('GET',url)
+    except: print("err");return "ERROR:invalid endpoint"
+    return html.data.decode('utf-8').translate(str.maketrans("\"\'\\/<>%`?;",'__________'))#Not_secure_filename!
 
 def show(req):
     os.chdir(os.path.join("./",os.path.dirname(__file__)))
     output=""
     endpoint="https://us-central1-crack-atlas-251509.cloudfunctions.net/janome_banilla"
+    random_art="https://api.syosetu.com/novelapi/api?of=t-w-s&lin=50"
 
     #FaaS wakeup
     t1 = threading.Thread(name='t1', target=FaaS_wakeup, kwargs={'url': endpoint})
@@ -64,7 +74,9 @@ def show(req):
 
     if req.method == 'POST':
         if 'endpoint' in req.form:
-            endpoint=req.form['endpoint'].translate(str.maketrans("\"\'<>`?;",'_______'))#Not_secure_filename!
+            endpoint=req.form['endpoint'].translate(str.maketrans("\"\'<>`;",'______'))#Not_secure_filename!
+        if 'random_art' in req.form:
+            random_art=req.form['random_art'].translate(str.maketrans("\"\'<>`;",'______'))#Not_secure_filename!
 
         if 'submit' in req.form and secure_filename(req.form['submit'])=="True":
             if 'text' in req.form:
@@ -75,11 +87,13 @@ def show(req):
 
         if 'change' in req.form and secure_filename(req.form['change'])=="True":
             if 'text' in req.form:
+                rand_text=web_rand(random_art)
+
                 target=req.form['text'].translate(str.maketrans("\"\'\\/<>%`?;",'__________'))#Not_secure_filename!
-                ret=FaaS_janome(endpoint,fields={"surface":target})
+                ret=FaaS_janome(endpoint,fields={"surface":rand_text})
                 output+=ret
         
         #if 'dlsource' in req.form and secure_filename(req.form['dlsource'])=="True":
         #    return send_file(os.path.join(DataDir,target),as_attachment = True)
 
-    return render_template_2("jm.html",OUTPUT=output,ENDPOINT=endpoint)
+    return render_template_2("jm.html",OUTPUT=output,ENDPOINT=endpoint,RANDOM_ART=random_art)
