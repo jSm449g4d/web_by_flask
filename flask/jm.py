@@ -65,7 +65,7 @@ def web_rand(url="",fields={}):
     try:html=https.request('GET',str(url).split("?")[0]+"?"+parse.quote(str(url).split("?")[1],safe="=&-"))
     except: print("err");return "ERROR:invalid endpoint"
     html=html.data.decode('utf-8').translate(str.maketrans("\"\'\\/<>%`?;",'__________'))#Not_secure_filename!    
-    return neologdn.normalize(html)
+    return neologdn.normalize(html).translate(str.maketrans("","","_:| ～"))
 
 def show(req):
     os.chdir(os.path.join("./",os.path.dirname(__file__)))
@@ -95,12 +95,12 @@ def show(req):
                 target=req.form['text'].translate(str.maketrans("\"\'\\/<>%`?;",'__________'))#Not_secure_filename!
                 rand_text_surface=FaaS_janome(endpoint,fields={"surface":rand_text})
                 rand_text_speech=FaaS_janome(endpoint,fields={"speech":rand_text})
-                rand_noun=["佐藤"]
-                rand_verb=["送る"]
+                rand_noun=set(["佐藤"])
+                rand_verb=set(["送る"])
                 for i in range(len(rand_text_speech.split(","))):
-                    if rand_text_speech.split(",")[i]=="名詞":rand_noun.append(rand_text_surface.split(",")[i])
-                    if rand_text_speech.split(",")[i]=="動詞":rand_verb.append(rand_text_surface.split(",")[i])
+                    if rand_text_speech.split(",")[i]=="名詞":rand_noun.add(rand_text_surface.split(",")[i])
+                    if rand_text_speech.split(",")[i]=="動詞":rand_verb.add(rand_text_surface.split(",")[i])
                 for _ in range(15):
-                    output+=random.choice(rand_noun)+" "
+                    output+=random.choice(list(rand_noun))+" "
 
     return render_template_2("jm.html",OUTPUT=output,ENDPOINT=endpoint,RANDOM_ART=random_art)
