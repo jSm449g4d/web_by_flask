@@ -13,4 +13,4 @@ _____
 ![2](https://github.com/jSm449g4d/web_by_flask/blob/master/assets/chat.png)
  
 ## how to use
-plz read `/flaks/Dockerfile`
+plz read `./flaks/Dockerfile`
