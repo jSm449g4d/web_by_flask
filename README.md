@@ -7,10 +7,6 @@ Cloud_Run(GCP): https://flask-uvutu72eta-uc.a.run.app/
 ![3](https://github.com/jSm449g4d/web_by_flask/blob/master/assets/nicoapi.png)
 
 ![4](https://github.com/jSm449g4d/web_by_flask/blob/master/assets/janomedoe.png)
-
-![1](https://github.com/jSm449g4d/web_by_flask/blob/master/assets/aa.png)
-_____
-![2](https://github.com/jSm449g4d/web_by_flask/blob/master/assets/chat.png)
  
 ## how to use
 plz read `./flask/Dockerfile`
