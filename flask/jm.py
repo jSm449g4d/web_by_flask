@@ -52,18 +52,17 @@ def FaaS_janome(url="",fields={}):
     except: return "ERROR:invalid endpoint"
     return html.data.decode('utf-8').translate(str.maketrans("","","\"\'\\/<>%`?;"))#Not_secure_filename!
 
-def FaaS_wakeup(url=""):
+def FaaS_wakeup(url="",q="warmup=True"):
     https = urllib3.PoolManager(cert_reqs='CERT_REQUIRED',ca_certs=certifi.where(),headers={
         "User-Agent":"Janome_doe"})
-    try:https.request('GET',url)
+    try:https.request('GET',url+"?"+q)
     except: return ""
     return 
-
 
 def web_rand(url="",fields={}):
     https = urllib3.PoolManager(cert_reqs='CERT_REQUIRED',ca_certs=certifi.where(),
     headers={"User-Agent":"Janome_doe"})
-    try:html=https.request('GET',str(url).split("?")[0]+"?"+parse.quote(str(url).split("?")[1],safe="=&-"))
+    try:html=https.request('POST',str(url).split("?")[0]+"?"+parse.quote(str(url).split("?")[1],safe="=&-"))
     except: print("err");return "ERROR:invalid endpoint"
     html=html.data.decode('utf-8').translate(str.maketrans("","","\"\'\\/<>%`?;"))#Not_secure_filename!
     return neologdn.normalize(html).translate(str.maketrans("","","_:| ～-#"))
