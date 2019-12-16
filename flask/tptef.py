@@ -15,13 +15,13 @@ def Display_Current_SQL(room=""):
     cur.close();con.close()
     #add_texts_into_html
     for order in orders:
-        html+="<tr><td class=\"flask_table\">"+str(order[1])+"</td>"
-        html+="<td class=\"flask_table\">"+str(order[2])+"</td>"
+        html+="<tr><td>"+str(order[1])+"</td>"
+        html+="<td>"+str(order[2])+"</td>"
         #Display 48 characters of sha256
-        html+="<td class=\"flask_table\" style=\"font-size: 12px;\">"+str(order[3])[:16]+"<br>"+str(order[3])[16:32]+\
+        html+="<td style=\"font-size: 12px;\">"+str(order[3])[:16]+"<br>"+str(order[3])[16:32]+\
         "<br>"+str(order[3])[32:48]+"<br>"+str(order[3])[48:]+"</td>"
         #timestamp
-        html+="<td class=\"flask_table\" style=\"font-size: 12px;\">"+str(order[4]).split(".")[0]+"</td></tr>"
+        html+="<td style=\"font-size: 12px;\">"+str(order[4]).split(".")[0]+"</td></tr>"
     return html
 
 def Order_Into_SQL(room="",user="",remark="",passwd=""):
