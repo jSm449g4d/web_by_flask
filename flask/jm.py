@@ -12,6 +12,7 @@ import random
 from urllib import parse
 import re
 import neologdn
+import random
 
 jmloop = asyncio.new_event_loop()
 
@@ -72,6 +73,7 @@ def show(req):
     output=""
     endpoint="https://us-central1-crack-atlas-251509.cloudfunctions.net/janome_banilla"
     random_art="https://api.syosetu.com/novelapi/api?of=t-w-s&lin=20&st=_RANDINT2000_"
+    change_prob=0.1
 
     #FaaS wakeup
     threading.Thread(name='t1', target=FaaS_wakeup, kwargs={'url': endpoint}).start()
@@ -81,6 +83,8 @@ def show(req):
             endpoint=req.form['endpoint'].translate(str.maketrans("","","\"\'<>`;"))#Not_secure_filename!
         if 'random_art' in req.form:
             random_art=req.form['random_art'].translate(str.maketrans("","","\"\'<>`;"))#Not_secure_filename!
+        if 'change_prob' in req.form:
+            change_prob=float(secure_filename(req.form['change_prob']))
         if 'submit' in req.form and secure_filename(req.form['submit'])=="True":
             if 'text' in req.form:
                 target=req.form['text'].translate(str.maketrans("","","\"\'\\/<>%`?;"))#Not_secure_filename!
@@ -129,10 +133,8 @@ def show(req):
                     if rand_text_speech.split(",")[i]=="動詞":rand_verb.add(rand_text_surface.split(",")[i])
 
                 for i in range(len(text_surface.split(","))):
-                    if text_speech.split(",")[i]=="名詞":
+                    if text_speech.split(",")[i]=="名詞" and change_prob>random.random():
                         output+=random.choice(list(rand_noun));continue
                     output+=text_surface.split(",")[i]
 
-
-
-    return render_template_2("jm.html",OUTPUT=output,ENDPOINT=endpoint,RANDOM_ART=random_art)
+    return render_template_2("jm.html",OUTPUT=output,ENDPOINT=endpoint,RANDOM_ART=random_art,CHANGE_PROB=change_prob)
