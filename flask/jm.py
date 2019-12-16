@@ -77,7 +77,6 @@ def show(req):
 
     #FaaS wakeup
     threading.Thread(name='t1', target=FaaS_wakeup, kwargs={'url': endpoint}).start()
-
     if req.method == 'POST':
         if 'endpoint' in req.form:
             endpoint=req.form['endpoint'].translate(str.maketrans("","","\"\'<>`;"))#Not_secure_filename!
@@ -136,5 +135,5 @@ def show(req):
                     if text_speech.split(",")[i]=="名詞" and change_prob>random.random():
                         output+=random.choice(list(rand_noun));continue
                     output+=text_surface.split(",")[i]
-
-    return render_template_2("jm.html",OUTPUT=output,ENDPOINT=endpoint,RANDOM_ART=random_art,CHANGE_PROB=change_prob)
+        
+    return render_template_2("jm.html",OUTPUT=output,ENDPOINT=endpoint,RANDOM_ART=random_art,CHANGE_PROB=str(change_prob))
