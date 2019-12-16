@@ -41,7 +41,7 @@ def py_show(name):
 def test_show():
     pyfiles=os.listdir('./')
     for pyfile in pyfiles:
-        if ".py" in pyfile:
+        if ".py" in pyfile and "wsgi.py" in pyfile:
             pyfile="".join(pyfile.split(".")[:-1])
             try:importlib.import_module(pyfile).show(request)
             except:return "False"
