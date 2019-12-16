@@ -89,29 +89,30 @@ def show(req):
                 output+=FaaS_janome(endpoint,fields={"phonetic":target})
 
         if 'noun' in req.form and secure_filename(req.form['noun'])=="True":
-            if 'text' in req.form:
-                tmp=""#_RANDINTxxx_ → randint(1,xxx) on url
-                for i,txt in enumerate(random_art.split("_RANDINT")):
-                    if i==0:tmp=txt;continue
-                    tmp+=str(random.randint(1,int(txt.split("_")[0])))
-                    if 1<len(txt.split("_")):tmp+=''.join(txt.split("_")[1:])
-                rand_text=web_rand(tmp)
-                target=req.form['text'].translate(str.maketrans("","","\"\'\\/<>%`?;"))#Not_secure_filename!
-                rand_text_surface=FaaS_janome(endpoint,fields={"surface":rand_text})
-                rand_text_speech=FaaS_janome(endpoint,fields={"speech":rand_text})
-                rand_noun=set(["佐藤"])
-                rand_verb=set(["送る"])
-                for i in range(len(rand_text_speech.split(","))):
-                    if rand_text_speech.split(",")[i]=="名詞":rand_noun.add(rand_text_surface.split(",")[i])
-                    if rand_text_speech.split(",")[i]=="動詞":rand_verb.add(rand_text_surface.split(",")[i])
-                for _ in range(15):output+=random.choice(list(rand_noun))+" "
-                output+="<br>"
-                for _ in range(15):output+=random.choice(list(rand_verb))+" "
-                output+="<br>"
+            tmp=""#_RANDINTxxx_ → randint(1,xxx) on url
+            for i,txt in enumerate(random_art.split("_RANDINT")):
+                if i==0:tmp=txt;continue
+                tmp+=str(random.randint(1,int(txt.split("_")[0])))
+                if 1<len(txt.split("_")):tmp+=''.join(txt.split("_")[1:])
+            rand_text=web_rand(tmp)
+            rand_text_surface=FaaS_janome(endpoint,fields={"surface":rand_text})
+            rand_text_speech=FaaS_janome(endpoint,fields={"speech":rand_text})
+            rand_noun=set(["佐藤"])
+            rand_verb=set(["送る"])
+            for i in range(len(rand_text_speech.split(","))):
+                if rand_text_speech.split(",")[i]=="名詞":rand_noun.add(rand_text_surface.split(",")[i])
+                if rand_text_speech.split(",")[i]=="動詞":rand_verb.add(rand_text_surface.split(",")[i])
+            for _ in range(15):output+=random.choice(list(rand_noun))+" "
+            output+="<br>"
+            for _ in range(15):output+=random.choice(list(rand_verb))+" "
+            output+="<br>"
                     
         if 'change' in req.form and secure_filename(req.form['change'])=="True":
             if 'text' in req.form:
-                
+                target=req.form['text'].translate(str.maketrans("","","\"\'\\/<>%`?;"))#Not_secure_filename!
+                text_surface=FaaS_janome(endpoint,fields={"surface":target})
+                text_speech=FaaS_janome(endpoint,fields={"speech":target})
+
                 tmp=""#_RANDINTxxx_ → randint(1,xxx) on url
                 for i,txt in enumerate(random_art.split("_RANDINT")):
                     if i==0:tmp=txt;continue
@@ -119,7 +120,6 @@ def show(req):
                     if 1<len(txt.split("_")):tmp+=''.join(txt.split("_")[1:])
                 
                 rand_text=web_rand(tmp)
-                target=req.form['text'].translate(str.maketrans("","","\"\'\\/<>%`?;"))#Not_secure_filename!
                 rand_text_surface=FaaS_janome(endpoint,fields={"surface":rand_text})
                 rand_text_speech=FaaS_janome(endpoint,fields={"speech":rand_text})
                 rand_noun=set(["佐藤"])
@@ -127,7 +127,12 @@ def show(req):
                 for i in range(len(rand_text_speech.split(","))):
                     if rand_text_speech.split(",")[i]=="名詞":rand_noun.add(rand_text_surface.split(",")[i])
                     if rand_text_speech.split(",")[i]=="動詞":rand_verb.add(rand_text_surface.split(",")[i])
-                for _ in range(15):
-                    output+=random.choice(list(rand_noun))+" "
+
+                for i in range(len(text_surface.split(","))):
+                    if text_speech.split(",")[i]=="名詞":
+                        output+=random.choice(list(rand_noun));continue
+                    output+=text_surface.split(",")[i]
+
+
 
     return render_template_2("jm.html",OUTPUT=output,ENDPOINT=endpoint,RANDOM_ART=random_art)
