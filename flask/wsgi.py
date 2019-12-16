@@ -38,12 +38,12 @@ def py_show(name):
 
 #test
 @app.route("/test",methods=['GET','POST'])
-def test_show(name):
+def test_show():
     pyfiles=os.listdir('./')
     for pyfile in pyfiles:
         if ".py" in pyfile:
-            pyfile.split(".")[:-1]
-            try :importlib.import_module(name).show(request)
+            pyfile="".join(pyfile.split(".")[:-1])
+            try:importlib.import_module(pyfile).show(request)
             except:return "False"
     return "True"
 
