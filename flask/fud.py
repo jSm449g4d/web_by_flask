@@ -11,7 +11,7 @@ DataDir="./fud"
 
 def htmlwalk():
     #sqlite3 
-    con=sqlite3.connect(os.path.join("./flask.sqlite"),isolation_level = None)
+    con=sqlite3.connect(os.path.join("./flask.sqlite3"),isolation_level = None)
     cur=con.cursor()
     cur.execute("create table if not exists fub (name text unique,sha256 text)")
     wlks="\""+"\",\"".join(os.listdir(DataDir))+"\""#[A,B,C,...] -> "A","B","C",...
@@ -31,7 +31,7 @@ def htmlwalk():
 
 def sql_reg(name,passwd,mode=0):#confirmation->registration
     passwd=hashlib.sha256(passwd.encode('utf-8')).hexdigest()
-    con=sqlite3.connect(os.path.join("./flask.sqlite"),isolation_level = None)
+    con=sqlite3.connect(os.path.join("./flask.sqlite3"),isolation_level = None)
     cur=con.cursor()
     sha256=cur.execute("select sha256 from fub where name=\"%s\""%name).fetchone()
     #confirmation_mode

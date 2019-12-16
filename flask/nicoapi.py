@@ -18,7 +18,7 @@ DataDir="./nicoapi"
 def Display_Current_SQL(passwd=""):
     html=""
     #sqlite3
-    con=sqlite3.connect(os.path.join("./flask.sqlite"),isolation_level = None)
+    con=sqlite3.connect(os.path.join("./flask.sqlite3"),isolation_level = None)
     cur=con.cursor()
     cur.execute("create table if not exists nicoapi (sha256 text,url text,date datetime)")
     sha256=hashlib.sha256(passwd.encode('utf-8')).hexdigest()
@@ -32,7 +32,7 @@ def Display_Current_SQL(passwd=""):
 
 def Order_Into_SQL(passwd="",order=""):
     #sqlite3
-    con=sqlite3.connect(os.path.join("./flask.sqlite"),isolation_level = None)
+    con=sqlite3.connect(os.path.join("./flask.sqlite3"),isolation_level = None)
     cur=con.cursor()
     sha256=hashlib.sha256(passwd.encode('utf-8')).hexdigest()
     if cur.execute("select * from nicoapi where sha256=? and url=?",[sha256,order]).fetchone()==None:
@@ -41,7 +41,7 @@ def Order_Into_SQL(passwd="",order=""):
 
 def Clear_Order_SQL(passwd=""):
     #sqlite3
-    con=sqlite3.connect(os.path.join("./flask.sqlite"),isolation_level = None)
+    con=sqlite3.connect(os.path.join("./flask.sqlite3"),isolation_level = None)
     cur=con.cursor()
     sha256=hashlib.sha256(passwd.encode('utf-8')).hexdigest()
     cur.execute("delete from nicoapi where sha256=\"%s\""%sha256)
@@ -128,7 +128,7 @@ def qrawler():
     while True:
         time.sleep(5)
         #sqlite3
-        con=sqlite3.connect(os.path.join("./flask.sqlite"),isolation_level = None)
+        con=sqlite3.connect(os.path.join("./flask.sqlite3"),isolation_level = None)
         cur=con.cursor()
         cur.execute("create table if not exists nicoapi (sha256 text,url text,date datetime)")
         orders=cur.execute("select sha256,url,date from nicoapi").fetchall()

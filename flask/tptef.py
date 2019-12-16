@@ -8,7 +8,7 @@ import datetime
 def Display_Current_SQL(room=""):
     html=""
     #sqlite3
-    con=sqlite3.connect(os.path.join("./flask.sqlite"),isolation_level = None)
+    con=sqlite3.connect(os.path.join("./flask.sqlite3"),isolation_level = None)
     cur=con.cursor()
     cur.execute("create table if not exists tptef (room text,user text,remark text,sha256 text,date datetime)")
     orders=cur.execute("select * from tptef where room=\"%s\""%room).fetchall()
@@ -26,7 +26,7 @@ def Display_Current_SQL(room=""):
 
 def Order_Into_SQL(room="",user="",remark="",passwd=""):
     #sqlite3
-    con=sqlite3.connect(os.path.join("./flask.sqlite"),isolation_level = None)
+    con=sqlite3.connect(os.path.join("./flask.sqlite3"),isolation_level = None)
     cur=con.cursor()
     sha256=hashlib.sha256(passwd.encode('utf-8')).hexdigest()
     cur.execute("insert into tptef values(?,?,?,?,?)",[room,user,remark,sha256,datetime.datetime.now()])
@@ -34,7 +34,7 @@ def Order_Into_SQL(room="",user="",remark="",passwd=""):
 
 def Clear_Order_SQL(passwd=""):
     #sqlite3
-    con=sqlite3.connect(os.path.join("./flask.sqlite"),isolation_level = None)
+    con=sqlite3.connect(os.path.join("./flask.sqlite3"),isolation_level = None)
     cur=con.cursor()
     sha256=hashlib.sha256(passwd.encode('utf-8')).hexdigest()
     cur.execute("delete from tptef where sha256=\"%s\""%sha256)
