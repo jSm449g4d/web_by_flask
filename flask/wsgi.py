@@ -35,7 +35,18 @@ def html_show(name):
 def py_show(name):
     try :return importlib.import_module(name).show(request)
     except:return redirect('./')
-    
+
+#test
+@app.route("/test",methods=['GET','POST'])
+def test_show(name):
+    pyfiles=os.listdir('./')
+    for pyfile in pyfiles:
+        if ".py" in pyfile:
+            pyfile.split(".")[:-1]
+            try :importlib.import_module(name).show(request)
+            except:return "False"
+    return "True"
+
 application=app
 
 if __name__ == "__main__":
