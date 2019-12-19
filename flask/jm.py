@@ -71,7 +71,7 @@ def show(req):
     os.chdir(os.path.join("./",os.path.dirname(__file__)))
     output=""
     endpoint="https://us-central1-crack-atlas-251509.cloudfunctions.net/janome_banilla"
-    random_art="https://api.syosetu.com/novelapi/api?of=t-w-s&lin=20&st=_RANDINT2000_"
+    random_art="https://api.syosetu.com/novelapi/api?of=t-w-s&lin=10&st=_RANDINT2000_"
     change_prob=0.2
 
     #FaaS wakeup
@@ -88,7 +88,8 @@ def show(req):
                 target=req.form['text'].translate(str.maketrans("","","\"\'\\/<>%`?;"))#Not_secure_filename!
                 output+=FaaS_janome(endpoint,fields={"surface":target})+"<br>"
                 output+=FaaS_janome(endpoint,fields={"speech":target})+"<br>"
-                output+=FaaS_janome(endpoint,fields={"phonetic":target})
+                output+=FaaS_janome(endpoint,fields={"phonetic":target})"<br>"
+                output+=FaaS_janome(endpoint,fields={"speech2":target})"<br>"
 
         if 'noun' in req.form and secure_filename(req.form['noun'])=="True":
             tmp=""#_RANDINTxxx_ → randint(1,xxx) on url
