@@ -1,20 +1,16 @@
 from flask import  render_template_string,send_file
 from werkzeug.utils import secure_filename
-import os 
+import os
 from janome.tokenizer import Tokenizer
 import gc
 import certifi
 import urllib3
 import json
-import asyncio
 import threading
 import random
 from urllib import parse
 import re
 import neologdn
-import random
-
-jmloop = asyncio.new_event_loop()
 
 def render_template_2(dir,**kwargs):
     html=""
@@ -73,7 +69,6 @@ def show(req):
     endpoint="https://us-central1-crack-atlas-251509.cloudfunctions.net/janome_banilla"
     random_art="https://api.syosetu.com/novelapi/api?of=t-w-s&lin=10&st=_RANDINT2000_"
     change_prob=0.2
-
     #FaaS wakeup
     threading.Thread(name='t1', target=FaaS_wakeup, kwargs={'url': endpoint}).start()
     if req.method == 'POST':
@@ -88,8 +83,8 @@ def show(req):
                 target=req.form['text'].translate(str.maketrans("","","\"\'\\/<>%`?;"))#Not_secure_filename!
                 output+=FaaS_janome(endpoint,fields={"surface":target})+"<br>"
                 output+=FaaS_janome(endpoint,fields={"speech":target})+"<br>"
-                output+=FaaS_janome(endpoint,fields={"phonetic":target})"<br>"
-                output+=FaaS_janome(endpoint,fields={"speech2":target})"<br>"
+                output+=FaaS_janome(endpoint,fields={"phonetic":target})+"<br>"
+                output+=FaaS_janome(endpoint,fields={"speech2":target})
 
         if 'noun' in req.form and secure_filename(req.form['noun'])=="True":
             tmp=""#_RANDINTxxx_ → randint(1,xxx) on url
