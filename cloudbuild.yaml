@@ -1,5 +1,6 @@
 #plz set appname to env "Cloud Build→trigger→env→'_APPNAME'"
 #plz set GCP_project_dicetry to env "Cloud Build→trigger→env→'_PROJECT'"
+#plz set CI_test_Command to env "Cloud Build→trigger→env→'_CICOMMAND'"
 
 steps:
       #build      
@@ -8,7 +9,8 @@ steps:
       dir: '$_APPNAME'
       #test
     - name: "gcr.io/cloud-builders/docker"
-      args: ['run','--rm',"$_PROJECT/$_APPNAME"]
+      args: ['run','--rm',"$_PROJECT/$_APPNAME","$_CICOMMAND"]
+      timeout: 180
       #push image to Container Registry
     - name: "gcr.io/cloud-builders/docker"
       args: ['push',"$_PROJECT/$_APPNAME"]
