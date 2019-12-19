@@ -6,9 +6,6 @@ steps:
     - name: "gcr.io/cloud-builders/docker"
       args: ["build", "-t", "$_PROJECT/$_APPNAME", "."]
       dir: '$_APPNAME
-      #test
-    - name: "gcr.io/cloud-builders/docker"
-      args: ["run","-rm", "$_PROJECT/$_APPNAME", "bash"]
       #push image to Container Registry
     - name: "gcr.io/cloud-builders/docker"
       args: ['push',"$_PROJECT/$_APPNAME"]
