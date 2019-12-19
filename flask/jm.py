@@ -72,7 +72,7 @@ def show(req):
     output=""
     endpoint="https://us-central1-crack-atlas-251509.cloudfunctions.net/janome_banilla"
     random_art="https://api.syosetu.com/novelapi/api?of=t-w-s&lin=20&st=_RANDINT2000_"
-    change_prob=0.1
+    change_prob=0.2
 
     #FaaS wakeup
     threading.Thread(name='t1', target=FaaS_wakeup, kwargs={'url': endpoint}).start()
