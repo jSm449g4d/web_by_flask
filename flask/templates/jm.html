@@ -1,133 +1,124 @@
 <!DOCTYPE html>
 <html lang="ja">
 
-<head>
-    <meta charset="utf-8">
-    <title>Janome doe</title>
+    <head>
+        <meta charset="utf-8">
+        <title>Janome doe</title>
 
-    <!--Bootstrap CSS -->
-    <!--CDN-->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"
-        onload="window.bs4css= 1;">
-    <!--fallback by Flask-->
-    <script>window.bs4css || document.write(
-            "<link rel=\"stylesheet\" href=\"{{ url_for('static', filename='bootstrap-4.4.1-dist/css/bootstrap.min.css') }}\"\
+        <!--Bootstrap CSS -->
+        <!--CDN-->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" onload="window.bs4css= 1;">
+        <!--fallback by Flask-->
+        <script>
+            window.bs4css || document.write(
+                "<link rel=\"stylesheet\" href=\"{{ url_for('static', filename='bootstrap-4.4.1-dist/css/bootstrap.min.css') }}\"\
     crossorigin=\"anonymous\">");
-    </script>
-    <!--/Bootstrap CSS -->
+        </script>
+        <!--/Bootstrap CSS -->
 
-</head>
+    </head>
 
-<body>
-    <div class="mt-2 mx-2">
-        <h2 style="color:black;font-family:serif;">Janome doe</h2>
-        <h5 style="color:red;font-family:'';">=Please use freely at your own risk=</h5>
+    <body>
+        <div class="mt-2 mx-2">
+            <h2 style="color:black;font-family:serif;">Janome doe</h2>
+            <h5 style="color:red;font-family:'';">=Please use freely at your own risk=</h5>
 
-        <form method="post" enctype="multipart/form-data">
-            <nav>
-                <div class="navbar navbar-default p-0 m-0 form-inline">
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link" id="nav-1-tab" data-toggle="tab" href="#nav-1" role="tab"
-                            aria-controls="nav-1" aria-selected="true">Front</a>
-                        <a class="nav-item nav-link active" id="nav-2-tab" data-toggle="tab" href="#nav-2" role="tab"
-                            aria-controls="nav-2" aria-selected="false">How_to_use</a>
-                        <a class="nav-item nav-link" id="nav-3-tab" data-toggle="tab" href="#nav-3" role="tab"
-                            aria-controls="nav-3" aria-selected="false">Description</a>
-                        <a class="nav-item nav-link btn-warning" id="nav-4-tab" data-toggle="tab" href="#nav-4"
-                            role="tab" aria-controls="nav-4" aria-selected="false">Config</a>
+            <form method="post" enctype="multipart/form-data">
+                <nav>
+                    <div class="navbar navbar-default p-0 m-0 form-inline">
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link" id="nav-1-tab" data-toggle="tab" href="#nav-1" role="tab" aria-controls="nav-1" aria-selected="true">Front</a>
+                            <a class="nav-item nav-link active" id="nav-2-tab" data-toggle="tab" href="#nav-2" role="tab" aria-controls="nav-2" aria-selected="false">How_to_use</a>
+                            <a class="nav-item nav-link" id="nav-3-tab" data-toggle="tab" href="#nav-3" role="tab" aria-controls="nav-3" aria-selected="false">Description</a>
+                            <a class="nav-item nav-link btn-warning" id="nav-4-tab" data-toggle="tab" href="#nav-4" role="tab" aria-controls="nav-4" aria-selected="false">Config</a>
+                        </div>
                     </div>
-                </div>
-                <div class="tab-content alert-info m-0" id="nav-tabContent">
-                    <div class="tab-pane fade p-1" id="nav-1" role="tabpanel" aria-labelledby="nav-1-tab">
-                        サーバーレス(FaaS,CaaS)について勉強する為に開発しているWebアプリです<br>
-                        DevOps(Docker+CI/CD)の実験にも使用されています<br>
-                        形態素解析Janomeを使ったサービスを検討中です<br>
-                        (同じ品詞どうしを入れ替えたら面白そうかなぁって思ってます<br>
-                        <a class="btn btn-primary mt-1" href="https://huxiin.ga/wordpress/?p=609">
+                    <div class="tab-content alert-info m-0" id="nav-tabContent">
+                        <div class="tab-pane fade p-1" id="nav-1" role="tabpanel" aria-labelledby="nav-1-tab">
+                            サーバーレス(FaaS,CaaS)について勉強する為に開発しているWebアプリです<br> DevOps(Docker+CI/CD)の実験にも使用されています
+                            <br> 形態素解析Janomeを使ったサービスを検討中です
+                            <br> (同じ品詞どうしを入れ替えたら面白そうかなぁって思ってます
+                            <br>
+                            <a class="btn btn-primary mt-1" href="https://huxiin.ga/wordpress/?p=609">
                             本アプリの解説記事はこちら</a>
-                        <a class="btn btn-success mt-1" href="https://github.com/jSm449g4d/web_by_flask">
+                            <a class="btn btn-success mt-1" href="https://github.com/jSm449g4d/web_by_flask">
                             本アプリの実装はこちら</a>
-                        <a class="btn btn-success mt-1" href="https://github.com/jSm449g4d/API_for_Janome_doe">
+                            <a class="btn btn-success mt-1" href="https://github.com/jSm449g4d/API_for_Janome_doe">
                             形態素解析API by FaaSの実装はこちら</a>
-                    </div>
-                    <div class="tab-pane fade show active p-1" id="nav-2" role="tabpanel" aria-labelledby="nav-2-tab">
-                        <h5>共通事項:<b style="color:red;">Janome用WebAPIはFaaSで、コールドスタートゆえ初動に数十秒程かかります。</b></h5>
-                        <div style="color:#111111;font-weight:bold;">形態素解析</div>
-                        <ol start="1">
-                            <li>下のテキストボックスに文章入力して、<b>submit</b>ボタンを押してください</li>
-                        </ol>
-                        <div style="color:#111111;font-weight:bold;">ランダムな単語を表示</div>
-                        <ol start="1">
-                            <li><b>noun</b>ボタンを押してください</li>
-                            <li><b>なろうAPI(デフォルト)</b>からランダムで作品やあらすじを引っ張ってきて、<b>形態素解析</b>します</li>
-                            <li>上の行に名詞、下の行に動詞をランダムに選んで出力します</li>
-                        </ol>
-                        <div style="color:#111111;font-weight:bold;">ランダムな単語に置換</div>
-                        <ol start="1">
-                            <li>下のテキストボックスに文章入力して、<b>change</b>ボタンを押してください。<b>形態素解析</b>します</li>
-                            <li><b>なろうAPI(デフォルト)</b>からランダムで作品やあらすじを引っ張ってきて、<b>形態素解析</b>します</li>
-                            <li><b>同じ品詞(名詞)の単語を置換</b>し、出力します</li>
-                        </ol>
+                        </div>
+                        <div class="tab-pane fade show active p-1" id="nav-2" role="tabpanel" aria-labelledby="nav-2-tab">
+                            <h5>共通事項:<b style="color:red;">Janome用WebAPIはFaaSで、コールドスタートゆえ初動に数十秒程かかります。</b></h5>
+                            <div style="color:#111111;font-weight:bold;">形態素解析</div>
+                            <ol start="1">
+                                <li>下のテキストボックスに文章入力して、<b>submit</b>ボタンを押してください</li>
+                            </ol>
+                            <div style="color:#111111;font-weight:bold;">ランダムな単語を表示</div>
+                            <ol start="1">
+                                <li><b>noun</b>ボタンを押してください</li>
+                                <li><b>なろうAPI(デフォルト)</b>からランダムで作品やあらすじを引っ張ってきて、<b>形態素解析</b>します</li>
+                                <li>上の行に名詞、下の行に動詞をランダムに選んで出力します</li>
+                            </ol>
+                            <div style="color:#111111;font-weight:bold;">ランダムな単語に置換</div>
+                            <ol start="1">
+                                <li>下のテキストボックスに文章入力して、<b>change</b>ボタンを押してください。<b>形態素解析</b>します</li>
+                                <li><b>なろうAPI(デフォルト)</b>からランダムで作品やあらすじを引っ張ってきて、<b>形態素解析</b>します</li>
+                                <li><b>同じ品詞(名詞)の単語を置換</b>し、出力します</li>
+                            </ol>
 
-                    </div>
-                    <div class="tab-pane fade show p-1" id="nav-3" role="tabpanel" aria-labelledby="nav-3-tab">
-                        <img src="{{ url_for('static', filename='assets/jm.png') }}" class="img-fluid  mx-auto d-block"
-                            alt="jm" />
-                        フォーム画面を開いた段階でFaaSのAPIに対して非同期にGETリクエストをすることにより、
-                        起動時間の遅さをある程度カバーしています。<br>
-                        <a class="btn btn-primary mt-1" href="https://huxiin.ga/wordpress/?p=609">
+                        </div>
+                        <div class="tab-pane fade show p-1" id="nav-3" role="tabpanel" aria-labelledby="nav-3-tab">
+                            <img src="{{ url_for('static', filename='assets/jm.png') }}" class="img-fluid  mx-auto d-block" alt="jm" /> フォーム画面を開いた段階でFaaSのAPIに対して非同期にGETリクエストをすることにより、 起動時間の遅さをある程度カバーしています。
+                            <br>
+                            <a class="btn btn-primary mt-1" href="https://huxiin.ga/wordpress/?p=609">
                             本アプリの解説記事はこちら</a>
-                        <a class="btn btn-success mt-1" href="https://github.com/jSm449g4d/web_by_flask">
+                            <a class="btn btn-success mt-1" href="https://github.com/jSm449g4d/web_by_flask">
                             本アプリの実装はこちら</a>
-                        <a class="btn btn-success mt-1" href="https://github.com/jSm449g4d/API_for_Janome_doe">
+                            <a class="btn btn-success mt-1" href="https://github.com/jSm449g4d/API_for_Janome_doe">
                             形態素解析API by FaaSの実装はこちら</a>
+                        </div>
+                        <div class="tab-pane fade show p-1" id="nav-4" role="tabpanel" aria-labelledby="nav-4-tab">
+                            <h5>API_ENDPOINT for Janome</h5>
+                            <input class="form-control form-control-sm" placeholder="Fallback" type="text" name="endpoint" value="{{ENDPOINT}}">
+                            <h5>API_ENDPOINT for Random_Article</h5>
+                            <input class="form-control form-control-sm" placeholder="Fallback" type="text" name="random_art" value="{{RANDOM_ART}}">
+                            <input class="btn btn-success mt-1" type="submit" value="Reload">
+                        </div>
                     </div>
-                    <div class="tab-pane fade show p-1" id="nav-4" role="tabpanel" aria-labelledby="nav-4-tab">
-                        <h5>API_ENDPOINT for Janome</h5>
-                        <input class="form-control form-control-sm" placeholder="Fallback" type="text" name="endpoint"
-                            value="{{ENDPOINT}}">
-                        <h5>API_ENDPOINT for Random_Article</h5>
-                        <input class="form-control form-control-sm" placeholder="Fallback" type="text" name="random_art"
-                            value="{{RANDOM_ART}}">
-                        <input class="btn btn-success mt-1" type="submit" value="Reload">
-                    </div>
+                </nav>
+
+                <div class="form-group mt-2">
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="10" name="text"></textarea>
                 </div>
-            </nav>
+                <div class="mt-1 form-inline">
+                    <button name="submit" value="True" class="btn btn-outline-success mx-1">submit</button>
+                    <button name="noun" value="True" class="btn btn-outline-success mx-1">noun</button>
+                    <button name="change" value="True" class="btn btn-warning mx-1 ml-5">change</button> 置換確率→
+                    <input class="form-control mr-1" style="width:8%;" aria-label="Search" type="text" name="change_prob" value="{{CHANGE_PROB}}">
+                </div>
+                <div class="alert-dark p-2 mt-2">
+                    <h5 class="text-center">==Result==</h5>
+                    <p>{{OUTPUT}}</p>
+                </div>
 
-            <div class="form-group mt-2">
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="10" name="text"></textarea>
-            </div>
-            <div class="mt-1 form-inline">
-                <button name="submit" value="True" class="btn btn-outline-success mx-1">submit</button>
-                <button name="noun" value="True" class="btn btn-outline-success mx-1">noun</button>
-                <button name="change" value="True" class="btn btn-warning mx-1 ml-5">change</button>
-                置換確率→
-                <input class="form-control mr-1" style="width:8%;" aria-label="Search" type="text" name="change_prob"
-                    value="{{CHANGE_PROB}}">
-            </div>
-            <div class="alert-dark p-2 mt-2">
-                <h5 class="text-center">==Result==</h5>
-                <p>{{OUTPUT}}</p>
-            </div>
-
-            <a class="btn btn-outline-success mt-2" href="./">Flask_Indexへ</a>
-        </form>
-    </div>
-    <!--Bootstrap and jQuery JS -->
-    <!--CDN-->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"
-        integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
-        crossorigin="anonymous"></script>
-    <!--fallback by Flask-->
-    <script>window.jQuery || document.write(
-            "<script src=\"{{ url_for('static', filename='bootstrap-4.4.1-dist/js/jquery-3.4.1.min.js') }}\"\
-        crossorigin=\"anonymous\"><\/script>")</script>
-    <script>$.fn.modal || document.write(
-            "<script src=\"{{ url_for('static', filename='bootstrap-4.4.1-dist/js/bootstrap.bundle.min.js') }}\"\
-    crossorigin=\"anonymous\"><\/script>")</script>
-    <!--/Bootstrap and jQuery JS -->
-</body>
+                <a class="btn btn-outline-success mt-2" href="./">Flask_Indexへ</a>
+            </form>
+        </div>
+        <!--Bootstrap and jQuery JS -->
+        <!--CDN-->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
+        <!--fallback by Flask-->
+        <script>
+            window.jQuery || document.write(
+                "<script src=\"{{ url_for('static', filename='bootstrap-4.4.1-dist/js/jquery-3.4.1.min.js') }}\"\
+        crossorigin=\"anonymous\"><\/script>")
+        </script>
+        <script>
+            $.fn.modal || document.write(
+                "<script src=\"{{ url_for('static', filename='bootstrap-4.4.1-dist/js/bootstrap.bundle.min.js') }}\"\
+    crossorigin=\"anonymous\"><\/script>")
+        </script>
+        <!--/Bootstrap and jQuery JS -->
+    </body>
 
 </html>

@@ -3,7 +3,7 @@
 
 from flask import  render_template_string,send_file
 from werkzeug.utils import secure_filename
-import os 
+import os
 import sqlite3
 import hashlib
 
@@ -76,4 +76,4 @@ def show(req):
             if sql_reg(target,passwd,mode=0)!=0:
                 os.remove(os.path.join(DataDir,target))
             
-    return render_template_2("fud.html",FILES=htmlwalk())
+    return render_template_2("fud.html",FILES=htmlwalk(),PASS=passwd)
