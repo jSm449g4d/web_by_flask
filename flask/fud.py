@@ -23,9 +23,9 @@ def htmlwalk():
     for wlk in wlks:
         sha256=cur.execute("select sha256 from fub where name=\"%s\""%wlk).fetchone()
         if sha256==None:continue#if not exist in table,be rejected
-        html+="<tr><td class=\"flask_table\"><button name=\"delete\" value=\""+wlk+"\">DEL</button></td>"
-        html+="<td class=\"flask_table\"><a class=\"file\" href=\"?dl="+wlk+"\">"+wlk+"</a></td>"
-        html+="<td class=\"flask_table\">"+str(sha256[0])+"</td></tr>"
+        html+="<tr><td><button name=\"delete\" value=\""+wlk+"\">DEL</button></td>"
+        html+="<td><a class=\"file\" href=\"?dl="+wlk+"\">"+wlk+"</a></td>"
+        html+="<td>"+str(sha256[0])+"</td></tr>"
     cur.close();con.close()
     return html
 
