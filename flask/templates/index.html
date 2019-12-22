@@ -73,7 +73,54 @@
                 </tbody>
             </table>
             <a class="btn btn-outline-success mt-2" href="/">戻る</a>
+
+            <div class="m-2" style="color:#AAFEFE;border:3px double silver;background:#001111;">
+                <h5 style="color:red;font-family:''">Firebaseの機能の実験</h5>
+                <input type="button" value="bauth" class="btn btn-success" onclick="bauth();" />
+                <input type="button" value="gauth" class="btn btn-success" onclick="gauth()" />
+                <input type="button" value="nauth" class="btn btn-success" onclick="firebase.auth().signInAnonymously();" />
+                <input type="button" value="glogout" class="btn btn-success" onclick="firebase.auth().signOut();" />
+                <p id="authdoc">
+                    (´・ω・｀) ～ボェェェ　なんかぼたんおしてねェェェ</p>
+            </div>
+
+
         </div>
+        <script type="text/javascript">
+            function bauth() {
+                firebase.auth().onAuthStateChanged(function(user) {
+                    if (user) {
+                        // User is signed in.
+                        var displayName = user.displayName;
+                        var email = user.email;
+                        var emailVerified = user.emailVerified;
+                        var photoURL = user.photoURL;
+                        var isAnonymous = user.isAnonymous;
+                        var uid = user.uid;
+                        var providerData = user.providerData;
+                        // ...
+                        document.getElementById("authdoc").innerHTML = displayName + "<br>" + email + "<br>" +
+                            emailVerified + "<br>" + photoURL + "<br>" +
+                            isAnonymous + "<br>" + uid + "<br>" + providerData;
+                    } else {
+                        document.getElementById("authdoc").innerHTML = "(´･ｪ･｀)～鰓ってるよぉぉぉ"
+                    }
+                });
+            }
+
+            function gauth() {
+                var provider = new firebase.auth.GoogleAuthProvider();
+                firebase.auth().signInWithPopup(provider).then(function(result) {})
+            }
+        </script>
+
+
+        <!--Firebase -->
+        <script src="/__/firebase/7.6.1/firebase-app.js"></script>
+        <script src="/__/firebase/7.6.1/firebase-auth.js"></script>
+        <script src="/__/firebase/7.6.1/firebase-analytics.js"></script>
+        <script src="/__/firebase/init.js"></script>
+        <!--Firebase -->
 
         <!--Bootstrap and jQuery JS -->
         <!--CDN-->
