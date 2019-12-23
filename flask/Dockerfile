@@ -9,7 +9,8 @@ RUN apt update -q;apt upgrade -yq
 RUN apt install -yq gcc
 
 RUN pip install -U pip
-RUN pip install -U flask waitress janome werkzeug psutil urllib3 certifi neologdn firebase-admin google-cloud-firestore
+RUN pip install -U flask waitress janome werkzeug psutil urllib3 certifi neologdn \
+firebase-admin google-cloud-firestore google-cloud-storage
 
 CMD bash -c "waitress-serve --port=8080 wsgi:app"
 #CMD python app.py

@@ -8,7 +8,8 @@ import sqlite3
 import zipfile
 import firebase_admin
 from firebase_admin import credentials
-from firebase_admin import storage
+#from firebase_admin import storage
+from google.cloud import storage
 
 ###under_construction
 FIREBASE="None"
