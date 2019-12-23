@@ -5,7 +5,7 @@
 steps:
       #insert keys
     - name: "gcr.io/cloud-builders/gsutil"
-      args: ["cp", "gs://gcp_api_keys/a.html", "b.html"]
+      args: ["cp", "gs://gcp_api_keys/a.html", "templates/b.html"]
       dir: '$_APPNAME'
       #build      
     - name: "gcr.io/cloud-builders/docker"
