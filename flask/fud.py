@@ -55,8 +55,7 @@ def render_template_2(dir,**kwargs):
             html=html.replace("{{"+kw+"}}",arg)
     return render_template_string(html)
 
-def show(req):    
-    os.chdir(os.path.join("./",os.path.dirname(__file__)))
+def show(req):
     if not os.path.exists(DataDir):os.mkdir(DataDir)
     passwd=""
     #GET

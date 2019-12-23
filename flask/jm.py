@@ -64,7 +64,6 @@ def web_rand(url="",fields={}):
     return neologdn.normalize(html).translate(str.maketrans("","","_:| ～-#"))
 
 def show(req):
-    os.chdir(os.path.join("./",os.path.dirname(__file__)))
     output=""
     endpoint="https://us-central1-crack-atlas-251509.cloudfunctions.net/janome_banilla"
     random_art="https://api.syosetu.com/novelapi/api?of=t-w-s&lin=10&st=_RANDINT2000_"

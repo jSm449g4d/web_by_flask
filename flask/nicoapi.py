@@ -153,7 +153,6 @@ def qrawler():
 threading.Thread(name='qrawler', target=qrawler).start()
 
 def show(req):
-    os.chdir(os.path.join("./",os.path.dirname(__file__)))
     #declare
     urls="https://api.search.nicovideo.jp/api/v2/video/contents/search"
     query=""

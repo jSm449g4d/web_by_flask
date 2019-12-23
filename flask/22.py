@@ -4,8 +4,6 @@ import psutil
 import platform
 import os 
 def show(req):
-    
-    os.chdir(os.path.join("./",os.path.dirname(__file__)))
     return render_template("/22.html",
     PLT_M=platform.processor(),
     CPU_F=psutil.cpu_freq(),

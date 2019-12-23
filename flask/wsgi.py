@@ -21,10 +21,10 @@ except:print("cant unzip CDN contents")
 
 @app.route("/")
 def indexpage_show():
-   return render_template("index.html",
-   used_python=sys.version,
-   used_flask=flask.__version__,
-   used_sqlite3=sqlite3.version)
+    return render_template("index.html",
+    used_python=sys.version,
+    used_flask=flask.__version__,
+    used_sqlite3=sqlite3.version)
 
 @app.route("/<name>.html")
 def html_show(name):
