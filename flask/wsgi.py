@@ -10,7 +10,22 @@ import firebase_admin
 from firebase_admin import credentials
 #from firebase_admin import storage
 from google.cloud import storage
+import threading
+import random
+from datetime import datetime
+import time
 
+#SQL_backup
+def sqlbackup():
+    while True:
+        time.sleep(3600+random.randint(0,120))
+        try:
+            bucket= storage.Client.from_service_account_json("FirebaseAdminKey.json").get_bucket("fb_gcs_bucket")
+            bucket.blob('flask.sqlite3').upload_from_filename('flask.sqlite3')
+            GCS="APP→GCS"+datetime.now().strftime(" %Y/%m/%d %H:%M:%S ")
+        except:0
+threading.Thread(name='sqlbackup', target=sqlbackup).start()
+        
 ###under_construction
 FIREBASE="None"
 GCS="None"
@@ -21,15 +36,13 @@ try:
 except:0
 try:
     storage_client = storage.Client.from_service_account_json("FirebaseAdminKey.json")
-    GCS="1"
     bucket = storage_client.get_bucket("fb_gcs_bucket")
-    GCS="2"
     blob = bucket.blob('flask.sqlite3')
-    GCS="3"
-    blob.upload_from_filename('flask.sqlite3')
-    GCS="Yes"
+    blob.download_to_filename('flask.sqlite3')
+    GCS="GCS→APP"
 except:0
 ###under_construction
+
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.chdir(os.path.join("./",os.path.dirname(__file__)))
