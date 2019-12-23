@@ -8,13 +8,24 @@ import sqlite3
 import zipfile
 import firebase_admin
 from firebase_admin import credentials
+from firebase_admin import storage
 
+###under_construction
 FIREBASE="None"
+GCS="None"
 try:
     cred = credentials.Certificate("FirebaseAdminKey.json")
     firebase_admin.initialize_app(cred)
     FIREBASE="Yes"
 except:0
+try:
+    storage_client = storage.Client.from_service_account_json("FirebaseAdminKey.json")
+    bucket = storage_client.get_bucket("fb_gcs_bucket")
+    blob = bucket.blob('flask.sqlite3')
+    blob.upload_from_filename('./flask.sqlite3')
+    GCS="Yes"
+except:0
+###under_construction
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.chdir(os.path.join("./",os.path.dirname(__file__)))
@@ -34,7 +45,8 @@ def indexpage_show():
     used_python=sys.version,
     used_flask=flask.__version__,
     used_sqlite3=sqlite3.version,
-    used_firebase=FIREBASE)
+    used_firebase=FIREBASE,
+    used_gcs=GCS)
 
 @app.route("/<name>.html")
 def html_show(name):
