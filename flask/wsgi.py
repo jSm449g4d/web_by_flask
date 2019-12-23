@@ -20,9 +20,12 @@ try:
 except:0
 try:
     storage_client = storage.Client.from_service_account_json("FirebaseAdminKey.json")
+    GCS="1"
     bucket = storage_client.get_bucket("fb_gcs_bucket")
+    GCS="2"
     blob = bucket.blob('flask.sqlite3')
-    blob.upload_from_filename('./flask.sqlite3')
+    GCS="3"
+    blob.upload_from_filename('flask.sqlite3')
     GCS="Yes"
 except:0
 ###under_construction
