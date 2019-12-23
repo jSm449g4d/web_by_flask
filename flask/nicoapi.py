@@ -126,7 +126,7 @@ def fill_default_fields(url=""):
 
 def qrawler():
     while True:
-        time.sleep(5)
+        time.sleep(3)
         #sqlite3
         con=sqlite3.connect(os.path.join("./flask.sqlite3"),isolation_level = None)
         cur=con.cursor()

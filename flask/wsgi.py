@@ -6,6 +6,14 @@ from flask import  render_template,redirect,request
 import importlib
 import sqlite3
 import zipfile
+import firebase_admin
+from firebase_admin import credentials
+
+FIREBASE="None"
+try:
+    cred = credentials.Certificate("FirebaseAdminKey.json")
+    firebase_admin.initialize_app(cred)
+    FIREBASE="Yes"
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.chdir(os.path.join("./",os.path.dirname(__file__)))
@@ -24,7 +32,8 @@ def indexpage_show():
     return render_template("index.html",
     used_python=sys.version,
     used_flask=flask.__version__,
-    used_sqlite3=sqlite3.version)
+    used_sqlite3=sqlite3.version,
+    used_firebase=FIREBASE)
 
 @app.route("/<name>.html")
 def html_show(name):
