@@ -18,38 +18,40 @@
 
     <body>
         <div class="m-2">
-            <h1 style="color:#001900;font-family:serif">Flask Config</h1>
-            <h5 style="color:red;font-family:'';">=Please use freely at your own risk=</h5>
+            <form method="post" enctype="multipart/form-data" style="display:inline;">
+                <h1 style="color:#001900;font-family:serif">Flask Config</h1>
+                <h5 style="color:red;font-family:'';">=Please use freely at your own risk=</h5>
 
-            <table class="table table-sm table-bordered mt-2 table-success" style="color: navy;background-color: lightgreen;">
-                <thead>
-                    <tr>
-                        <th class="text-center" colspan="2">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>DB:GCS</td>
-                        <td>{{STATUS_GCS}}</td>
-                    </tr>
-                    <tr>
-                        <td>Directory_DB</td>
-                        <td>{{DIR_DB}}</td>
-                    </tr>
-                    <tr>
-                        <td>GCS:bucket</td>
-                        <td>{{GCS_BUCKET}}</td>
-                    </tr>
-                    <tr>
-                        <td>GCS:bucket→blob</td>
-                        <td>{{GCS_BLOB}}</td>
-                    </tr>
-                </tbody>
-            </table>
+                <table class="table table-sm table-bordered mt-2 table-success" style="color: navy;background-color: lightgreen;">
+                    <thead>
+                        <tr>
+                            <th class="text-center" colspan="2">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>DB:GCS</td>
+                            <td>{{STATUS_GCS}}</td>
+                        </tr>
+                        <tr>
+                            <td>Directory_DB</td>
+                            <td>{{DIR_DB}}</td>
+                        </tr>
+                        <tr>
+                            <td>GCS:bucket</td>
+                            <td>{{GCS_BUCKET}}</td>
+                        </tr>
+                        <tr>
+                            <td>GCS:bucket→blob</td>
+                            <td>{{GCS_BLOB}}</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-            <button name="gcs_upload" value="True" class="btn btn-primary">GCS_UPLOAD</button>
+                <button name="gcs_upload" value="True" class="btn btn-primary">GCS_UPLOAD</button>
 
-            <br><a class="btn btn-outline-success mt-2" href="./">Flask_Indexへ</a>
+                <br><a class="btn btn-outline-success mt-2" href="./">Flask_Indexへ</a>
+            </form>
         </div>
 
 
