@@ -17,7 +17,8 @@ steps:
       #deploy
     - name: 'gcr.io/cloud-builders/gcloud'
       args: ['beta','run', 'deploy', '$_APPNAME', '--image', '$_PROJECT/$_APPNAME:latest',
-       '--region', 'us-central1', '--platform', 'managed', '--allow-unauthenticated']
+       '--region', 'us-central1', '--platform', 'managed','--timeout','300',
+       '--allow-unauthenticated']
       #delete image from Container Registry
 #    - name: "gcr.io/cloud-builders/gcloud"
 #      args: ["container", "images", "delete", "$_PROJECT/$_APPNAME", "--force-delete-tags"]
