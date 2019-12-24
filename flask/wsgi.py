@@ -43,7 +43,7 @@ if os.path.exists(DB_dir):
     try:
         bucket= storage_client.get_bucket(GCS_bucket)
         bucket.blob(GCS_blob).upload_from_filename(DB_dir)
-        GCS="APP→GCS"+datetime.now().strftime(" %Y/%m/%d %H:%M:%S ")
+        GCS="APP→GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
     except:GCS="GCS:not_available"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
 else:
     try:

@@ -10,8 +10,7 @@ from google.cloud import storage
 from datetime import datetime
 import pytz
 
-
-status_gcs="not_available"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
+config_status_gcs="not_available"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
 dir_db='./flask.sqlite3'
 GCS_bucket="fb_gcs_bucket"
 GCS_blob='flask.sqlite3'
@@ -38,6 +37,5 @@ def show(req):
                 status_gcs="APP→GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
             except:
                 status_gcs="not_available"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
-    
-    return render_template_2("config.html",STATUS_GCS=status_gcs,DIR_DB=dir_db,GCS_BUCKET=GCS_bucket,GCS_BLOB=GCS_blob)
+    return render_template_2("config.html",STATUS_GCS=config_status_gcs,DIR_DB=dir_db,GCS_BUCKET=GCS_bucket,GCS_BLOB=GCS_blob)
 
