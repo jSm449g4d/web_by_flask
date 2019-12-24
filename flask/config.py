@@ -19,6 +19,7 @@ dir_config_json='./config.json'
 config_dict={"dir_db":'flask.sqlite3',"dir_gcp_key":"FirebaseAdminKey.json",
             "GCS_bucket":"fb_gcs_bucket","GCS_blob":"flask.sqlite3"}
 iii=0
+uid=""
 
 if os.path.exists(dir_config_json):
     with open(dir_config_json,"r",encoding="utf-8") as fp:config_dict=json.load(fp)    
@@ -81,8 +82,10 @@ def show(req):
                 status_GCS="success gcs_client_reload"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
             except:
                 status_GCS="error: ×gcs_client_reload"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
+        if "uidsend" in req.form:
+            uid=secure_filename(req.form["uidsend"])
         #config_json_update(req.form)
         #↑Auth is Under construction
     return render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],GCS_BUCKET=config_dict["GCS_bucket"],
-                            GCS_BLOB=config_dict["GCS_blob"],DIR_GCP_KEY=config_dict["dir_gcp_key"],COUNTER_M=str(iii))
+                            GCS_BLOB=config_dict["GCS_blob"],DIR_GCP_KEY=config_dict["dir_gcp_key"],COUNTER_M=str(iii)+":"+uid)
 
