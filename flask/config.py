@@ -17,7 +17,7 @@ GCS_blob='flask.sqlite3'
 
 try:#get_key
     storage_clienta = storage.Client.from_service_account_json("FirebaseAdminKey.json")
-    status_gcs="access success"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
+    config_status_gcs="access success"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
 except:0
 
 def render_template_2(dir,**kwargs):
@@ -34,8 +34,8 @@ def show(req):
             try:
                 bucket= storage_clienta.get_bucket(GCS_bucket)
                 bucket.blob(GCS_blob).upload_from_filename(dir_db)
-                status_gcs="APP→GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
+                config_status_gcs="APP→GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
             except:
-                status_gcs="error: APP→×GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
+                config_status_gcs="error: APP→×GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
     return render_template_2("config.html",STATUS_GCS=config_status_gcs,DIR_DB=dir_db,GCS_BUCKET=GCS_bucket,GCS_BLOB=GCS_blob)
 
