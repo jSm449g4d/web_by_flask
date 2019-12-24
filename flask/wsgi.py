@@ -18,7 +18,7 @@ os.chdir(os.path.join("./",os.path.dirname(__file__)))
 app = flask.Flask(__name__)
 
 ###under_construction
-access_count=0
+access_counter=0
 DB_dir='./flask.sqlite3'
 if os.path.exists(DB_dir)==False:
     sqlite3.connect(DB_dir).close()
@@ -35,12 +35,12 @@ except:print("cant unzip CDN contents")
 
 @app.route("/")
 def indexpage_show():
-    global access_count;access_count+=1
+    global access_counter;access_counter+=1
     return render_template("index.html",
     used_python=sys.version,
     used_flask=flask.__version__,
     used_sqlite3=sqlite3.version,
-    access_count=str(access_count)
+    access_counter=str(access_counter)
     )
 
 @app.route("/<name>.html")

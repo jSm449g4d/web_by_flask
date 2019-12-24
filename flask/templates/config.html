@@ -131,7 +131,7 @@
 
             function auth_google() {
                 var provider = new firebase.auth.GoogleAuthProvider();
-                firebase.auth().signInWithPopup(firebase.auth.GoogleAuthProvider());
+                firebase.auth().signInWithPopup(provider).then(function(result) {}).catch(function(error) {});
             }
 
             function onsubmit_rewritevalue_fbtoken() {
