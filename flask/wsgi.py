@@ -23,12 +23,12 @@ app = flask.Flask(__name__)
 
 ###under_construction
 
-try:#get_key
-    storage_client = storage.Client.from_service_account_json("FirebaseAdminKey.json")
-except:0
 
 FIREBASE="None"
 GCS="error"
+try:#get_key
+    storage_client = storage.Client.from_service_account_json("FirebaseAdminKey.json")
+except:0
 try:
     cred = credentials.Certificate("FirebaseAdminKey.json")
     firebase_admin.initialize_app(cred)
@@ -44,7 +44,8 @@ if os.path.exists(DB_dir):
         bucket= storage_client.get_bucket(GCS_bucket)
         bucket.blob(GCS_blob).upload_from_filename(DB_dir)
         GCS="APP→GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
-    except:GCS="GCS:not_available"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
+    except:
+        GCS="GCS:not_available"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
 else:
     try:
         bucket = storage_client.get_bucket(GCS_bucket)

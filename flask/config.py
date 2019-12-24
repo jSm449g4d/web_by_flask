@@ -36,6 +36,6 @@ def show(req):
                 bucket.blob(GCS_blob).upload_from_filename(dir_db)
                 status_gcs="APP→GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
             except:
-                status_gcs="not_available"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
+                status_gcs="error: APP→×GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
     return render_template_2("config.html",STATUS_GCS=config_status_gcs,DIR_DB=dir_db,GCS_BUCKET=GCS_bucket,GCS_BLOB=GCS_blob)
 
