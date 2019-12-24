@@ -16,7 +16,7 @@ GCS_bucket="fb_gcs_bucket"
 GCS_blob='flask.sqlite3'
 
 try:#get_key
-    storage_client = storage.Client.from_service_account_json("FirebaseAdminKey.json")
+    storage_clienta = storage.Client.from_service_account_json("FirebaseAdminKey.json")
     status_gcs="access success"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
 except:0
 
@@ -32,7 +32,7 @@ def show(req):
     if req.method == 'POST':
         if "gcs_upload" in req.form and secure_filename(req.form["gcs_upload"])=="True":
             try:
-                bucket= storage_client.get_bucket(GCS_bucket)
+                bucket= storage_clienta.get_bucket(GCS_bucket)
                 bucket.blob(GCS_blob).upload_from_filename(dir_db)
                 status_gcs="APP→GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
             except:
