@@ -63,7 +63,7 @@ else:
         GCS="GCS→APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
     except:
         sqlite3.connect(DB_dir).close()
-        os.chmod(DB_dir,777)
+        os.chmod(DB_dir,0o777)
         GCS="GCS:not_available create_DB→APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
 ###under_construction
 
