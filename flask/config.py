@@ -10,11 +10,15 @@ from google.cloud import storage
 from datetime import datetime
 import pytz
 import json
+import firebase_admin
+#from firebase_admin import storage
 
 status_GCS="error"
+FIREBASE="None"
 dir_config_json='./config.json'
 config_dict={"dir_db":'flask.sqlite3',"dir_gcp_key":"FirebaseAdminKey.json",
             "GCS_bucket":"fb_gcs_bucket","GCS_blob":"flask.sqlite3"}
+iii=0
 
 if os.path.exists(dir_config_json):
     with open(dir_config_json,"r",encoding="utf-8") as fp:config_dict=json.load(fp)    
@@ -23,11 +27,16 @@ else:
     os.chmod(dir_config_json,0o777)
 
 
-try:#get_key
+try:#GCS key→client
     storage_client = storage.Client.from_service_account_json(config_dict["dir_gcp_key"])
     status_GCS="access success"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
 except:
     status_GCS="not_available"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
+try:#Firebase key→client
+    cred = firebase_admin.credentials.Certificate("FirebaseAdminKey.json")
+    firebase_admin.initialize_app(cred)
+    FIREBASE="available"
+except:0
 
 def render_template_2(dir,**kwargs):
     html=""
@@ -52,6 +61,7 @@ def config_json_update(form={}):
 
 def show(req):
     global status_GCS;global storage_client
+    global iii;iii+=1
     if req.method == 'POST':
         if "gcs_upload" in req.form and secure_filename(req.form["gcs_upload"])=="True":
             try:
@@ -74,5 +84,5 @@ def show(req):
         #config_json_update(req.form)
         #↑Auth is Under construction
     return render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],GCS_BUCKET=config_dict["GCS_bucket"],
-                            GCS_BLOB=config_dict["GCS_blob"],DIR_GCP_KEY=config_dict["dir_gcp_key"])
+                            GCS_BLOB=config_dict["GCS_blob"],DIR_GCP_KEY=config_dict["dir_gcp_key"],COUNTER_M=str(iii))
 

@@ -57,6 +57,10 @@
                                 <input type="text" name="dir_gcp_key" value="{{DIR_GCP_KEY}}" class="form-control form-control-sm">
                             </td>
                         </tr>
+                        <tr>
+                            <td>COUNTER_M</td>
+                            <td>{{COUNTER_M}}</td>
+                        </tr>
                     </tbody>
                 </table>
 
@@ -65,9 +69,42 @@
                 <button name="gcs_client_reload" value="True" class="btn btn-secondary m-1">GCS_CLIENT_LEROAD</button>
 
                 <br><a class="btn btn-outline-success mt-2" href="./">Flask_Indexへ</a>
+
+
+                <div class="m-2 p-2" style="color:#AAFEFE;border:3px double silver;background:#001111;">
+                    <h5 style="color:red;font-family:''">Firebaseの機能の実験</h5>
+                    <input type="button" value="bauth" class="btn btn-success" onclick="bauth();" />
+                    <input type="button" value="gauth" class="btn btn-success" onclick="gauth();" />
+                    <input type="button" value="nauth" class="btn btn-success" onclick="firebase.auth().signInAnonymously();" />
+                    <input type="button" value="logout" class="btn btn-success" onclick="firebase.auth().signOut();" />
+                    <p id="authdoc">
+                        (´・ω・｀) ～ボェェェ　なんかぼたんおしてねェェェ</p>
+                </div>
             </form>
         </div>
 
+
+        <!--Firebase -->
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
+        <!--<script src="/__/firebase/init.js"></script>
+    ↑ deploy on Firebase only  ↓ deploy on any platform-->
+        <script>
+            var firebaseConfig = {
+                apiKey: "AIzaSyCWzFat3oUpn_4TtOpDCMhcOD2Qf4u1Mr4",
+                authDomain: "crack-atlas-251509.firebaseapp.com",
+                databaseURL: "https://crack-atlas-251509.firebaseio.com",
+                projectId: "crack-atlas-251509",
+                storageBucket: "crack-atlas-251509.appspot.com",
+                messagingSenderId: "646437940818",
+                appId: "1:646437940818:web:a8f1315a41787cdfd3b98b",
+                measurementId: "G-JFF7YXX3B1"
+            };
+            firebase.initializeApp(firebaseConfig);
+            firebase.analytics();
+        </script>
 
         <!--Bootstrap and jQuery JS -->
         <!--CDN-->
