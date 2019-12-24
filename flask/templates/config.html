@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Configなお部屋</title>
+        <title>Config</title>
         <!--Bootstrap CSS -->
         <!--CDN-->
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" onload="window.bs4css= 1;">
@@ -30,20 +30,26 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>DB:GCS</td>
-                            <td>{{STATUS_GCS}}</td>
+                            <td style="width:20%;">DB:GCS</td>
+                            <td>STATUS_GCS</td>
                         </tr>
                         <tr>
                             <td>Directory_DB</td>
-                            <td>{{DIR_DB}}</td>
+                            <td>
+                                <input type="text" name="status_GCS" value="{{DIR_DB}}" class="form-control form-control-sm">
+                            </td>
                         </tr>
                         <tr>
                             <td>GCS:bucket</td>
-                            <td>{{GCS_BUCKET}}</td>
+                            <td>
+                                <input type="text" name="status_GCS" value="{{GCS_BUCKET}}" class="form-control form-control-sm">
+                            </td>
                         </tr>
                         <tr>
                             <td>GCS:bucket→blob</td>
-                            <td>{{GCS_BLOB}}</td>
+                            <td>
+                                <input type="text" name="status_GCS" value="{{GCS_BLOB}}" class="form-control form-control-sm">
+                            </td>
                         </tr>
                     </tbody>
                 </table>
