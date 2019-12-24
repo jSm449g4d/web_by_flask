@@ -83,7 +83,6 @@
             </form>
         </div>
 
-
         <!--Firebase -->
         <!-- The core Firebase JS SDK is always required and must be listed first -->
         <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
@@ -92,7 +91,7 @@
         <!--<script src="/__/firebase/init.js"></script>
     ↑ deploy on Firebase only  ↓ deploy on any platform-->
         <script>
-            var firebaseConfig = {
+            firebase.initializeApp({
                 apiKey: "AIzaSyCWzFat3oUpn_4TtOpDCMhcOD2Qf4u1Mr4",
                 authDomain: "crack-atlas-251509.firebaseapp.com",
                 databaseURL: "https://crack-atlas-251509.firebaseio.com",
@@ -101,10 +100,37 @@
                 messagingSenderId: "646437940818",
                 appId: "1:646437940818:web:a8f1315a41787cdfd3b98b",
                 measurementId: "G-JFF7YXX3B1"
-            };
-            firebase.initializeApp(firebaseConfig);
+            });
             firebase.analytics();
+
+            function bauth() {
+                firebase.auth().onAuthStateChanged(function(user) {
+                    if (user) {
+                        // User is signed in.
+                        var displayName = user.displayName;
+                        var email = user.email;
+                        var emailVerified = user.emailVerified;
+                        var photoURL = user.photoURL;
+                        var isAnonymous = user.isAnonymous;
+                        var uid = user.uid;
+                        var providerData = user.providerData;
+                        // ...
+                        document.getElementById("authdoc").innerHTML = displayName + "<br>" + email + "<br>" +
+                            emailVerified + "<br>" + photoURL + "<br>" +
+                            isAnonymous + "<br>" + uid + "<br>" + providerData;
+                    } else {
+                        document.getElementById("authdoc").innerHTML = "(´･ｪ･｀)～鰓ってるよぉぉぉ"
+                    }
+                });
+            }
+
+            function gauth() {
+                var provider = new firebase.auth.GoogleAuthProvider();
+                firebase.auth().signInWithPopup(provider).then(function(result) {}).catch(function(error) {});
+            }
         </script>
+        <!--Firebase -->
+
 
         <!--Bootstrap and jQuery JS -->
         <!--CDN-->

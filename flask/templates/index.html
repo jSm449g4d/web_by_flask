@@ -98,7 +98,7 @@
         <!--<script src="/__/firebase/init.js"></script>
     ↑ deploy on Firebase only  ↓ deploy on any platform-->
         <script>
-            var firebaseConfig = {
+            firebase.initializeApp({
                 apiKey: "AIzaSyCWzFat3oUpn_4TtOpDCMhcOD2Qf4u1Mr4",
                 authDomain: "crack-atlas-251509.firebaseapp.com",
                 databaseURL: "https://crack-atlas-251509.firebaseio.com",
@@ -107,13 +107,9 @@
                 messagingSenderId: "646437940818",
                 appId: "1:646437940818:web:a8f1315a41787cdfd3b98b",
                 measurementId: "G-JFF7YXX3B1"
-            };
-            firebase.initializeApp(firebaseConfig);
+            });
             firebase.analytics();
-        </script>
 
-
-        <script type="text/javascript">
             function bauth() {
                 firebase.auth().onAuthStateChanged(function(user) {
                     if (user) {
@@ -140,7 +136,7 @@
                 firebase.auth().signInWithPopup(provider).then(function(result) {}).catch(function(error) {});
             }
         </script>
-
+        <!--Firebase -->
 
         <!--Bootstrap and jQuery JS -->
         <!--CDN-->
