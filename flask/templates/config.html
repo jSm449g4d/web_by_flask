@@ -135,10 +135,12 @@
             }
 
             function onsubmit_rewritevalue_fbtoken() {
-                firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
-                    document.getElementById("fbtoken").value = idToken
-                    console.log(idToken);
-                })
+                const a = await firebase.auth().currentUser.getIdToken(true);
+                document.getElementById("fbtoken").value = a
+                    /*
+                    firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
+                        document.getElementById("fbtoken").value = idToken.idToken
+                    })*/
             }
         </script>
         <!--Firebase -->
