@@ -13,6 +13,7 @@ from google.cloud import storage
 import threading
 import random
 from datetime import datetime
+import pytz
 import time
 
 #flask start
@@ -37,7 +38,7 @@ def sqlbackup():
             bucket= storage.Client.from_service_account_json("FirebaseAdminKey.json").get_bucket("fb_gcs_bucket")
             bucket.blob('flask.sqlite3').upload_from_filename(DB_dir)
             GCS="APP→GCS"+datetime.now().strftime(" %Y/%m/%d %H:%M:%S ")
-        except:GCS="GCS:not_available"+datetime.now().strftime(" %Y/%m/%d %H:%M:%S ")
+        except:GCS="GCS:not_available"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
 threading.Thread(name='sqlbackup', target=sqlbackup).start()
 
 if os.path.exists(DB_dir):
@@ -45,17 +46,17 @@ if os.path.exists(DB_dir):
         bucket= storage.Client.from_service_account_json("FirebaseAdminKey.json").get_bucket("fb_gcs_bucket")
         bucket.blob('flask.sqlite3').upload_from_filename(DB_dir)
         GCS="APP→GCS"+datetime.now().strftime(" %Y/%m/%d %H:%M:%S ")
-    except:GCS="GCS:not_available"+datetime.now().strftime(" %Y/%m/%d %H:%M:%S ")
+    except:GCS="GCS:not_available"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
 else:
     try:
         storage_client = storage.Client.from_service_account_json("FirebaseAdminKey.json")
         bucket = storage_client.get_bucket("fb_gcs_bucket")
         blob = bucket.blob('flask.sqlite3')
         blob.download_to_filename(DB_dir)
-        GCS="GCS→APP"+datetime.now().strftime(" %Y/%m/%d %H:%M:%S ")
+        GCS="GCS→APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
     except:
         sqlite3.connect(os.path.join(DB_dir)).close()
-        GCS="GCS:not_available create_DB→APP"+datetime.now().strftime(" %Y/%m/%d %H:%M:%S ")
+        GCS="GCS:not_available create_DB→APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
 ###under_construction
 
 
