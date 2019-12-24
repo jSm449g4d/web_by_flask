@@ -61,7 +61,7 @@ def config_json_update(form={}):
     os.chmod(dir_config_json,0o777)
 
 def show(req):
-    global status_GCS,storage_client,fbtoken;
+    global status_GCS,storage_client,fbtoken,config_dict;
     global iii;iii+=1
     if req.method == 'POST':
         if "gcs_upload" in req.form and secure_filename(req.form["gcs_upload"])=="True":
@@ -84,13 +84,12 @@ def show(req):
                 status_GCS="error: ×gcs_client_reload"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
         if "fbtoken" in req.form:
             fbtoken=secure_filename(req.form["fbtoken"])
-        #↓Auth is Under construction
-        try:
+        try:#Auth is Under construction
             if config_dict["FB_admin_uid"]==firebase_admin.verify_id_token(fbtoken)['uid']:
                 config_json_update(req.form)
-                status_GCS+="uidTrue"
+                status_GCS+=" uidTrue"
         except:
-            status_GCS+="uidFalse"
+            status_GCS+=" uidFalse"
         
     try:fb_uid=firebase_admin.verify_id_token(fbtoken)['uid']
     except:fb_uid=""
