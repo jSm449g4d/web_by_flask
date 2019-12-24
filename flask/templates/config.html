@@ -62,7 +62,7 @@
                             <td>{{COUNTER_M}}</td>
                         </tr>
                         <tr>
-                            <td>Firebase Token</td>
+                            <td>Firebase_Token</td>
                             <td>{{FBTOKEN}}</td>
                         </tr>
                     </tbody>
@@ -135,9 +135,7 @@
             }
 
             function onsubmit_rewritevalue_fbtoken() {
-                firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
-                    document.getElementById("fbtoken").value = idToken
-                });
+                document.getElementById("fbtoken").value = await firebase.auth().currentUser.getIdToken(true)
             }
         </script>
         <!--Firebase -->
