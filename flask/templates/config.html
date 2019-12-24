@@ -135,7 +135,7 @@
             }
 
             function onsubmit_rewritevalue_fbtoken() {
-                document.getElementById("fbtoken").value = await firebase.auth().currentUser.getIdToken(true)
+                document.getElementById("fbtoken").value = await firebase.auth().currentUser.getIdToken(true).idToken
             }
         </script>
         <!--Firebase -->
