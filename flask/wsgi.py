@@ -22,6 +22,11 @@ os.chdir(os.path.join("./",os.path.dirname(__file__)))
 app = flask.Flask(__name__)
 
 ###under_construction
+
+try:#get_key
+    storage_client = storage.Client.from_service_account_json("FirebaseAdminKey.json")
+except:0
+
 FIREBASE="None"
 GCS="error"
 try:
@@ -31,31 +36,34 @@ try:
 except:0
 
 DB_dir='./flask.sqlite3'
+GCS_bucket="fb_gcs_bucket"
+GCS_blob='flask.sqlite3'
+
 def sqlbackup():
     while True:
         time.sleep(3600+random.randint(0,120))
         try:
-            bucket= storage.Client.from_service_account_json("FirebaseAdminKey.json").get_bucket("fb_gcs_bucket")
-            bucket.blob('flask.sqlite3').upload_from_filename(DB_dir)
+            bucket= storage_client.get_bucket(GCS_bucket)
+            bucket.blob(GCS_blob).upload_from_filename(DB_dir)
             GCS="APP→GCS"+datetime.now().strftime(" %Y/%m/%d %H:%M:%S ")
         except:GCS="GCS:not_available"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
 threading.Thread(name='sqlbackup', target=sqlbackup).start()
 
 if os.path.exists(DB_dir):
     try:
-        bucket= storage.Client.from_service_account_json("FirebaseAdminKey.json").get_bucket("fb_gcs_bucket")
-        bucket.blob('flask.sqlite3').upload_from_filename(DB_dir)
+        bucket= storage_client.get_bucket(GCS_bucket)
+        bucket.blob(GCS_blob).upload_from_filename(DB_dir)
         GCS="APP→GCS"+datetime.now().strftime(" %Y/%m/%d %H:%M:%S ")
     except:GCS="GCS:not_available"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
 else:
     try:
-        storage_client = storage.Client.from_service_account_json("FirebaseAdminKey.json")
-        bucket = storage_client.get_bucket("fb_gcs_bucket")
-        blob = bucket.blob('flask.sqlite3')
+        bucket = storage_client.get_bucket(GCS_bucket)
+        blob = bucket.blob(GCS_blob)
         blob.download_to_filename(DB_dir)
         GCS="GCS→APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
     except:
-        sqlite3.connect(os.path.join(DB_dir)).close()
+        sqlite3.connect(DB_dir).close()
+        os.chmod(DB_dir,777)
         GCS="GCS:not_available create_DB→APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
 ###under_construction
 
