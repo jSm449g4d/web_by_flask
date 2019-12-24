@@ -35,7 +35,7 @@ except:print("cant unzip CDN contents")
 
 @app.route("/")
 def indexpage_show():
-    access_count+=1
+    global access_count;access_count+=1
     return render_template("index.html",
     used_python=sys.version,
     used_flask=flask.__version__,

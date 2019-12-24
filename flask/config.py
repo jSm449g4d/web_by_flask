@@ -19,7 +19,7 @@ dir_config_json='./config.json'
 config_dict={"dir_db":'flask.sqlite3',"dir_gcp_key":"FirebaseAdminKey.json",
             "GCS_bucket":"fb_gcs_bucket","GCS_blob":"flask.sqlite3"}
 iii=0
-uids=""
+fbtoken=""
 
 if os.path.exists(dir_config_json):
     with open(dir_config_json,"r",encoding="utf-8") as fp:config_dict=json.load(fp)    
@@ -61,7 +61,7 @@ def config_json_update(form={}):
     os.chmod(dir_config_json,0o777)
 
 def show(req):
-    global status_GCS,storage_client,uids;
+    global status_GCS,storage_client,fbtoken;
     global iii;iii+=1
     if req.method == 'POST':
         if "gcs_upload" in req.form and secure_filename(req.form["gcs_upload"])=="True":
@@ -83,10 +83,10 @@ def show(req):
             except:
                 status_GCS="error: ×gcs_client_reload"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
         if "uidsend" in req.form:
-            uids=secure_filename(req.form["uidsend"])
+            fbtoken=secure_filename(req.form["fbtoken"])
         #config_json_update(req.form)
         #↑Auth is Under construction
     return render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],GCS_BUCKET=config_dict["GCS_bucket"],
-                            GCS_BLOB=config_dict["GCS_blob"],DIR_GCP_KEY=config_dict["dir_gcp_key"],COUNTER_M=str(iii)+":"+uids,
-                            UIDS=uids)
+                            GCS_BLOB=config_dict["GCS_blob"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
+                            COUNTER_M=str(iii)+":"+firebase_admin.verify_id_token(fbtoken)['uid'],FBTOKEN=fbtoken)
 
