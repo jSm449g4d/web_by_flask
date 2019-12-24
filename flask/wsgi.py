@@ -39,16 +39,6 @@ DB_dir='./flask.sqlite3'
 GCS_bucket="fb_gcs_bucket"
 GCS_blob='flask.sqlite3'
 
-def sqlbackup():
-    while True:
-        time.sleep(3600+random.randint(0,120))
-        try:
-            bucket= storage_client.get_bucket(GCS_bucket)
-            bucket.blob(GCS_blob).upload_from_filename(DB_dir)
-            GCS="APP→GCS"+datetime.now().strftime(" %Y/%m/%d %H:%M:%S ")
-        except:GCS="GCS:not_available"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
-threading.Thread(name='sqlbackup', target=sqlbackup).start()
-
 if os.path.exists(DB_dir):
     try:
         bucket= storage_client.get_bucket(GCS_bucket)
