@@ -27,7 +27,6 @@ else:
     with open(dir_config_json,"w",encoding="utf-8") as fp:json.dump(config_dict,fp)
     os.chmod(dir_config_json,0o777)
 
-
 try:#GCS key→client
     storage_client = storage.Client.from_service_account_json(config_dict["dir_gcp_key"])
     status_GCS="access success"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
@@ -86,8 +85,8 @@ def show(req):
             fbtoken=secure_filename(req.form["fbtoken"])
         #config_json_update(req.form)
         #↑Auth is Under construction
-        try:fb_uid=firebase_admin.verify_id_token(fbtoken)['uid']
-        except:fb_uid=""
+    try:fb_uid=firebase_admin.verify_id_token(fbtoken)['uid']
+    except:fb_uid=""
     return render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],GCS_BUCKET=config_dict["GCS_bucket"],
                             GCS_BLOB=config_dict["GCS_blob"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
                             COUNTER_M=str(iii)+":"+fb_uid,FBTOKEN=fbtoken)
