@@ -73,11 +73,11 @@
 
                 <div class="m-2 p-2" style="color:#AAFEFE;border:3px double silver;background:#001111;">
                     <h5 style="color:red;font-family:''">Firebaseの機能の実験</h5>
-                    <input type="button" value="bauth" class="btn btn-success" onclick="bauth();" />
-                    <input type="button" value="gauth" class="btn btn-success" onclick="gauth();" />
+                    <input type="button" value="bauth" class="btn btn-success" onclick="auth_disp();" />
+                    <input type="button" value="gauth" class="btn btn-success" onclick="auth_google();" />
                     <input type="button" value="nauth" class="btn btn-success" onclick="firebase.auth().signInAnonymously();" />
                     <input type="button" value="logout" class="btn btn-success" onclick="firebase.auth().signOut();" />
-                    <input id="uidsend" type="hidden" name="uidsend" value="">
+                    <input id="uidsend" type="hidden" name="uidsend" value="{{UIDS}}">
                     <p id="authdoc">
                         (´・ω・｀) ～ボェェェ　なんかぼたんおしてねェェェ</p>
                 </div>
@@ -104,7 +104,7 @@
             });
             firebase.analytics();
 
-            function bauth() {
+            function auth_disp() {
                 firebase.auth().onAuthStateChanged(function(user) {
                     if (user) {
                         // User is signed in.
@@ -125,15 +125,15 @@
                 });
             }
 
+            function auth_google() {
+                var provider = new firebase.auth.GoogleAuthProvider();
+                firebase.auth().signInWithPopup(provider).then(function(result) {}).catch(function(error) {});
+            }
+
             function onsubmit_rewritevalue_uidsend() {
                 firebase.auth().onAuthStateChanged(function(user) {
                     document.getElementById("uidsend").value = user.uid
                 });
-            }
-
-            function gauth() {
-                var provider = new firebase.auth.GoogleAuthProvider();
-                firebase.auth().signInWithPopup(provider).then(function(result) {}).catch(function(error) {});
             }
         </script>
         <!--Firebase -->
