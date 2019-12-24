@@ -25,10 +25,6 @@ app = flask.Flask(__name__)
 
 
 FIREBASE="None"
-GCS="error"
-try:#get_key
-    storage_client = storage.Client.from_service_account_json("FirebaseAdminKey.json")
-except:0
 try:
     cred = credentials.Certificate("FirebaseAdminKey.json")
     firebase_admin.initialize_app(cred)
@@ -36,26 +32,9 @@ try:
 except:0
 
 DB_dir='./flask.sqlite3'
-GCS_bucket="fb_gcs_bucket"
-GCS_blob='flask.sqlite3'
-
-if os.path.exists(DB_dir):
-    try:
-        bucket= storage_client.get_bucket(GCS_bucket)
-        bucket.blob(GCS_blob).upload_from_filename(DB_dir)
-        GCS="APP→GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
-    except:
-        GCS="GCS:not_available"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
-else:
-    try:
-        bucket = storage_client.get_bucket(GCS_bucket)
-        blob = bucket.blob(GCS_blob)
-        blob.download_to_filename(DB_dir)
-        GCS="GCS→APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
-    except:
-        sqlite3.connect(DB_dir).close()
-        os.chmod(DB_dir,0o777)
-        GCS="GCS:not_available create_DB→APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
+if os.path.exists(DB_dir)==False:
+    sqlite3.connect(DB_dir).close()
+    os.chmod(DB_dir,0o777)
 ###under_construction
 
 
@@ -73,7 +52,7 @@ def indexpage_show():
     used_flask=flask.__version__,
     used_sqlite3=sqlite3.version,
     used_firebase=FIREBASE,
-    used_gcs=GCS)
+    used_gcs="Under Construction")
 
 @app.route("/<name>.html")
 def html_show(name):

@@ -16,7 +16,7 @@ GCS_bucket="fb_gcs_bucket"
 GCS_blob='flask.sqlite3'
 
 try:#get_key
-    storage_clienta = storage.Client.from_service_account_json("FirebaseAdminKey.json")
+    storage_client = storage.Client.from_service_account_json("FirebaseAdminKey.json")
     status="access success"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
 except:0
 
@@ -33,10 +33,15 @@ def show(req):
     if req.method == 'POST':
         if "gcs_upload" in req.form and secure_filename(req.form["gcs_upload"])=="True":
             try:
-                bucket= storage_clienta.get_bucket(GCS_bucket)
-                bucket.blob(GCS_blob).upload_from_filename(dir_db)
+                storage_client.get_bucket(GCS_bucket).blob(GCS_blob).upload_from_filename(dir_db)
                 status_GCS="APP→GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
             except:
                 status_GCS="error: APP→×GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
+        if "gcs_download" in req.form and secure_filename(req.form["gcs_download"])=="True":
+            try:
+                storage_client.get_bucket(GCS_bucket).blob(GCS_blob).download_to_filename(dir_db)
+                status_GCS="GCS→APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
+            except:
+                status_GCS="error: GCS→×APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
     return render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=dir_db,GCS_BUCKET=GCS_bucket,GCS_BLOB=GCS_blob)
 
