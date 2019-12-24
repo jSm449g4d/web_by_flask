@@ -135,12 +135,12 @@
             }
 
             function onsubmit_rewritevalue_fbtoken() {
-                const a = firebase.auth().currentUser.getIdToken(true);
-                document.getElementById("fbtoken").value = a
-                    /*
-                    firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
-                        document.getElementById("fbtoken").value = idToken.idToken
-                    })*/
+                /*
+                                const a = firebase.auth().currentUser.getIdToken(true);
+                                document.getElementById("fbtoken").value = a*/
+                firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
+                    document.getElementById("fbtoken").value = idToken.idToken
+                })
             }
         </script>
         <!--Firebase -->
