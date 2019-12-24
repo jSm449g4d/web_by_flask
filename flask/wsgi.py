@@ -52,7 +52,7 @@ def indexpage_show():
     used_flask=flask.__version__,
     used_sqlite3=sqlite3.version,
     used_firebase=FIREBASE,
-    used_gcs="Under Construction")
+    )
 
 @app.route("/<name>.html")
 def html_show(name):
