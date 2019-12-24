@@ -81,7 +81,7 @@
                     <input type="button" value="gauth" class="btn btn-success" onclick="auth_google();" />
                     <input type="button" value="nauth" class="btn btn-success" onclick="firebase.auth().signInAnonymously();" />
                     <input type="button" value="logout" class="btn btn-success" onclick="firebase.auth().signOut();" />
-                    <input type="hidden" id="fbtoken" name="fbtoken" value="{{FBTOKEN}}">
+                    <input type="hidden" id="fbtoken" name="fbtoken" value="">
                     <p id="authdoc">
                         (´・ω・｀) ～ボェェェ　なんかぼたんおしてねェェェ</p>
                 </div>
@@ -135,7 +135,7 @@
             }
 
             function onsubmit_rewritevalue_fbtoken() {
-                /*
+                /*{{FBTOKEN}}
                                 const a = firebase.auth().currentUser.getIdToken(true);
                                 document.getElementById("fbtoken").value = a*/
                 firebase.auth().currentUser.getIdToken(true).then(function(idToken) {

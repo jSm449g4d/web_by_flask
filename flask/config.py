@@ -20,7 +20,7 @@ config_dict={"dir_db":'flask.sqlite3',"dir_gcp_key":"FirebaseAdminKey.json",
             "GCS_bucket":"fb_gcs_bucket","GCS_blob":"flask.sqlite3",
             "FB_admin_uid":"1GYEMV6s2OWU9dR2cXCntSlR2op2"}
 iii=0
-fbtoken=""
+fbtoken="-"
 
 if os.path.exists(dir_config_json):
     with open(dir_config_json,"r",encoding="utf-8") as fp:config_dict=json.load(fp)    
