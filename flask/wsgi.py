@@ -15,39 +15,49 @@ import random
 from datetime import datetime
 import time
 
-#SQL_backup
+#flask start
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+os.chdir(os.path.join("./",os.path.dirname(__file__)))
+app = flask.Flask(__name__)
+
+###under_construction
+FIREBASE="None"
+GCS="error"
+try:
+    cred = credentials.Certificate("FirebaseAdminKey.json")
+    firebase_admin.initialize_app(cred)
+    FIREBASE="available"
+except:0
+
+DB_dir='./flask.sqlite3'
 def sqlbackup():
     while True:
         time.sleep(3600+random.randint(0,120))
         try:
             bucket= storage.Client.from_service_account_json("FirebaseAdminKey.json").get_bucket("fb_gcs_bucket")
-            bucket.blob('flask.sqlite3').upload_from_filename('flask.sqlite3')
+            bucket.blob('flask.sqlite3').upload_from_filename(DB_dir)
             GCS="APP→GCS"+datetime.now().strftime(" %Y/%m/%d %H:%M:%S ")
-        except:0
+        except:GCS="GCS:not_available"+datetime.now().strftime(" %Y/%m/%d %H:%M:%S ")
 threading.Thread(name='sqlbackup', target=sqlbackup).start()
-        
+
+if os.path.exists(DB_dir):
+    try:
+        bucket= storage.Client.from_service_account_json("FirebaseAdminKey.json").get_bucket("fb_gcs_bucket")
+        bucket.blob('flask.sqlite3').upload_from_filename(DB_dir)
+        GCS="APP→GCS"+datetime.now().strftime(" %Y/%m/%d %H:%M:%S ")
+    except:GCS="GCS:not_available"+datetime.now().strftime(" %Y/%m/%d %H:%M:%S ")
+else:
+    try:
+        storage_client = storage.Client.from_service_account_json("FirebaseAdminKey.json")
+        bucket = storage_client.get_bucket("fb_gcs_bucket")
+        blob = bucket.blob('flask.sqlite3')
+        blob.download_to_filename(DB_dir)
+        GCS="GCS→APP"+datetime.now().strftime(" %Y/%m/%d %H:%M:%S ")
+    except:
+        sqlite3.connect(os.path.join(DB_dir)).close()
+        GCS="GCS:not_available create_DB→APP"+datetime.now().strftime(" %Y/%m/%d %H:%M:%S ")
 ###under_construction
-FIREBASE="None"
-GCS="None"
-try:
-    cred = credentials.Certificate("FirebaseAdminKey.json")
-    firebase_admin.initialize_app(cred)
-    FIREBASE="Yes"
-except:0
-try:
-    storage_client = storage.Client.from_service_account_json("FirebaseAdminKey.json")
-    bucket = storage_client.get_bucket("fb_gcs_bucket")
-    blob = bucket.blob('flask.sqlite3')
-    blob.download_to_filename('flask.sqlite3')
-    GCS="GCS→APP"
-except:0
-###under_construction
 
-
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-os.chdir(os.path.join("./",os.path.dirname(__file__)))
-
-app = flask.Flask(__name__)
 
 #prevent uploading too large file
 app.config['MAX_CONTENT_LENGTH'] = 100000000
