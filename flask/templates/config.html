@@ -141,6 +141,7 @@
                 firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
                     var cx = document.getElementById("fbtoken")
                     cx.value = idToken
+                    document.getElementById("authdoc2").innerHTML = idToken
                 })
             }
         </script>
