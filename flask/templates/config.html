@@ -63,7 +63,7 @@
                         </tr>
                         <tr>
                             <td>Firebase_Token</td>
-                            <td class="w-100" style="font-size: 12px;">{{FBTOKEN}}</td>
+                            <td style="font-size: 8px; word-wrap:normal;">{{FBTOKEN}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -74,12 +74,11 @@
 
                 <br><a class="btn btn-outline-success mt-2" href="./">Flask_Indexへ</a>
 
-
                 <div class="m-2 p-2" style="color:#AAFEFE;border:3px double silver;background:#001111;">
                     <h5 style="color:red;font-family:''">Firebaseの機能の実験</h5>
-                    <input type="button" value="bauth" class="btn btn-success" onclick="auth_disp();" />
-                    <input type="button" value="gauth" class="btn btn-success" onclick="auth_google();" />
-                    <input type="button" value="nauth" class="btn btn-success" onclick="firebase.auth().signInAnonymously();" />
+                    <input type="button" value="auth_disp+get_token" class="btn btn-success" onclick="auth_disp();" />
+                    <input type="button" value="auth_google" class="btn btn-success" onclick="auth_google();" />
+                    <input type="button" value="auth_anoni" class="btn btn-success" onclick="firebase.auth().signInAnonymously();" />
                     <input type="button" value="logout" class="btn btn-success" onclick="firebase.auth().signOut();" />
                     <input type="hidden" id="fbtoken" name="fbtoken" value="{{FBTOKEN}}">
                     <!-- {{FBTOKEN}} -->
