@@ -81,7 +81,7 @@
                     <input type="button" value="gauth" class="btn btn-success" onclick="auth_google();" />
                     <input type="button" value="nauth" class="btn btn-success" onclick="firebase.auth().signInAnonymously();" />
                     <input type="button" value="logout" class="btn btn-success" onclick="firebase.auth().signOut();" />
-                    <input type="text" id="fbtoken" name="fbtoken" value="">
+                    <input type="text" id="fbtoken2" name="fbtoken" value="">
                     <p id="authdoc">
                         (´・ω・｀) ～ボェェェ　なんかぼたんおしてねェェェ</p>
                 </div>
@@ -139,7 +139,7 @@
                                 const a = firebase.auth().currentUser.getIdToken(true);
                                 document.getElementById("fbtoken").value = a*/
                 firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
-                    document.getElementById("fbtoken").value = "testtoken";
+                    document.getElementById("fbtoken2").value = "testtoken";
                     idToken
                 })
             }
