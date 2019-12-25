@@ -82,13 +82,6 @@ def show(req):
                 status_GCS="success gcs_client_reload"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
             except:
                 status_GCS="error: ×gcs_client_reload"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
-        if "fbtoken" in req.form:
-            fbtoken=secure_filename(req.form["fbtoken"])
-            try:#securetest
-                if req.form["fbtoken"]==secure_filename(req.form["fbtoken"]):
-                    status_GCS+=" tokenTrue"
-            except:
-                status_GCS+=" tokenFalse"
             
         try:#Auth is Under construction
             if config_dict["FB_admin_uid"]==firebase_admin.auth.verify_id_token(fbtoken)["uid"]:
@@ -96,11 +89,8 @@ def show(req):
                 status_GCS+=" uidTrue"
         except:
             status_GCS+=" uidFalse"
-        
-        
-        
     try:
-        fb_uid =firebase_admin.auth.verify_id_token(fbtoken)
+        fb_uid =firebase_admin.auth.verify_id_token(fbtoken)["uid"]
     except:fb_uid="Who are you?"
     return render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],GCS_BUCKET=config_dict["GCS_bucket"],
                             GCS_BLOB=config_dict["GCS_blob"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
