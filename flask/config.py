@@ -91,8 +91,8 @@ def show(req):
         except:
             status_GCS+=" uidFalse"
         
-    try:fb_uid=firebase_admin.verify_id_token(fbtoken)['uid']
-    except:fb_uid=""
+    try:fb_uid=firebase_admin.verify_id_token(fbtoken, check_revoked=True)['uid']
+    except:fb_uid="Who are you?"
     return render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],GCS_BUCKET=config_dict["GCS_bucket"],
                             GCS_BLOB=config_dict["GCS_blob"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
                             COUNTER_M=str(iii)+":"+fb_uid,FBTOKEN=fbtoken)
