@@ -91,7 +91,7 @@ def show(req):
                 status_GCS+=" tokenFalse"
             
         try:#Auth is Under construction
-            if config_dict["FB_admin_uid"]==firebase_admin.auth.verify_id_token(fbtoken):
+            if config_dict["FB_admin_uid"]==firebase_admin.auth.verify_id_token(fbtoken)["uid"]:
                 config_json_update(req.form)
                 status_GCS+=" uidTrue"
         except:
