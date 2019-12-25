@@ -140,8 +140,8 @@
                 /*{{FBTOKEN}}
                                 const a = firebase.auth().currentUser.getIdToken(true);
                                 document.getElementById("fbtoken").value = a*/
-                document.getElementById("authdoc2").innerHTML =
-                    firebase.auth().currentUser.getIdToken(true).idToken;
+                document.getElementById("authdoc2").innerHTML = str(
+                    firebase.auth().currentUser.getIdToken(true));
                 firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
                     document.getElementById("authdoc2").innerHTML = "testtoken2";
                     //document.getElementById("fbtoken").value = "testtoken";
