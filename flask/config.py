@@ -100,7 +100,7 @@ def show(req):
         
         
     try:
-        fb_uid =firebase_admin.auth.verify_id_token("fbtoken")
+        fb_uid =firebase_admin.auth.verify_id_token(fbtoken)
     except:fb_uid="Who are you?"
     return render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],GCS_BUCKET=config_dict["GCS_bucket"],
                             GCS_BLOB=config_dict["GCS_blob"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
