@@ -129,7 +129,7 @@
                         document.getElementById("authdoc").innerHTML = "(´･ｪ･｀)～鰓ってるよぉぉぉ"
                     }
                     document.getElementById("authdoc2").innerHTML =
-                        firebase.auth().currentUser.getIdToken(true).idToken.keys();
+                        firebase.auth().currentUser.getIdToken(true).idToken;
                 });
             }
 
@@ -142,7 +142,6 @@
                 /*{{FBTOKEN}}
                                 const a = firebase.auth().currentUser.getIdToken(true);
                                 document.getElementById("fbtoken").value = a*/
-                firebase.auth().currentUser.getIdToken(true).idToken.keys();
                 firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
                     //document.getElementById("fbtoken").value = "testtoken";//idToken
                 })
