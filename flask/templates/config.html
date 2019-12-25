@@ -128,8 +128,12 @@
                     } else {
                         document.getElementById("authdoc").innerHTML = "(´･ｪ･｀)～鰓ってるよぉぉぉ"
                     }
-                    document.getElementById("authdoc2").innerHTML =
-                        firebase.auth().currentUser.getIdToken(true).idToken;
+                    //document.getElementById("authdoc2").innerHTML =
+                    //    firebase.auth().currentUser.getIdToken(true).idToken;
+                    firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
+                        document.getElementById("authdoc2").innerHTML = idToken; //idToken
+                    })
+
                 });
             }
 
