@@ -81,7 +81,7 @@
                     <input type="button" value="gauth" class="btn btn-success" onclick="auth_google();" />
                     <input type="button" value="nauth" class="btn btn-success" onclick="firebase.auth().signInAnonymously();" />
                     <input type="button" value="logout" class="btn btn-success" onclick="firebase.auth().signOut();" />
-                    <input type="text" id="fbtoken" name="fbtoken" value="">
+                    <input type="text" id="fbtoken" name="fbtoken" value="{{FBTOKEN}}">
                     <p id="authdoc2">
                         (´・ω・｀) ～ボェェェ　なんかぼたんおしてねェェェ</p>
                     <p id="authdoc">
@@ -128,12 +128,6 @@
                     } else {
                         document.getElementById("authdoc").innerHTML = "(´･ｪ･｀)～鰓ってるよぉぉぉ"
                     }
-                    firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
-                        document.getElementById("authdoc2").innerHTML = idToken; //idToken
-                    })
-                    var cx = document.getElementById("fbtoken")
-                    cx.value = "testtoken"; //idToken
-
                 });
             }
 
@@ -142,7 +136,12 @@
                 firebase.auth().signInWithPopup(provider).then(function(result) {}).catch(function(error) {});
             }
 
-            function onsubmit_rewritevalue_fbtoken() {}
+            function onsubmit_rewritevalue_fbtoken() {
+                firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
+                    var cx = document.getElementById("fbtoken")
+                    cx.value = idToken
+                })
+            }
         </script>
         <!--Firebase -->
 
