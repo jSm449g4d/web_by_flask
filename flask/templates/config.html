@@ -63,7 +63,7 @@
                         </tr>
                         <tr>
                             <td>Firebase_Token</td>
-                            <td style="font-size: 12px;">{{FBTOKEN}}</td>
+                            <td style="font-size:12px;width:80%;">{{FBTOKEN}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -126,13 +126,10 @@
                     } else {
                         document.getElementById("authdoc").innerHTML = "(´･ｪ･｀)～鰓ってるよぉぉぉ"
                     }
-
                     firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
                         var cx = document.getElementById("fbtoken")
                         cx.value = idToken
                     })
-
-
                 });
             }
 

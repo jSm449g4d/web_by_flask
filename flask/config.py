@@ -85,13 +85,13 @@ def show(req):
         if "fbtoken" in req.form:
             fbtoken=secure_filename(req.form["fbtoken"])
         try:#Auth is Under construction
-            if config_dict["FB_admin_uid"]==firebase_admin.verify_id_token(fbtoken)['uid']:
+            if config_dict["FB_admin_uid"]==firebase_admin.verify_id_token(fbtoken):
                 config_json_update(req.form)
                 status_GCS+=" uidTrue"
         except:
             status_GCS+=" uidFalse"
         
-    try:fb_uid=firebase_admin.verify_id_token(fbtoken, check_revoked=True)['uid']
+    try:fb_uid=firebase_admin.verify_id_token(fbtoken)
     except:fb_uid="Who are you?"
     return render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],GCS_BUCKET=config_dict["GCS_bucket"],
                             GCS_BLOB=config_dict["GCS_blob"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
