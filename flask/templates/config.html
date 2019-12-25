@@ -128,11 +128,10 @@
                     } else {
                         document.getElementById("authdoc").innerHTML = "(´･ｪ･｀)～鰓ってるよぉぉぉ"
                     }
-                    //document.getElementById("authdoc2").innerHTML =
-                    //    firebase.auth().currentUser.getIdToken(true).idToken;
                     firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
                         document.getElementById("authdoc2").innerHTML = idToken; //idToken
                     })
+                    document.getElementById("fbtoken").innerHTML = "testtoken"; //idToken
 
                 });
             }
@@ -142,14 +141,7 @@
                 firebase.auth().signInWithPopup(provider).then(function(result) {}).catch(function(error) {});
             }
 
-            function onsubmit_rewritevalue_fbtoken() {
-                /*{{FBTOKEN}}
-                                const a = firebase.auth().currentUser.getIdToken(true);
-                                document.getElementById("fbtoken").value = a*/
-                firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
-                    //document.getElementById("fbtoken").value = "testtoken";//idToken
-                })
-            }
+            function onsubmit_rewritevalue_fbtoken() {}
         </script>
         <!--Firebase -->
 
