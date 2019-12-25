@@ -131,7 +131,8 @@
                     firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
                         document.getElementById("authdoc2").innerHTML = idToken; //idToken
                     })
-                    document.getElementById("fbtoken").innerHTML = "testtoken"; //idToken
+                    var cx = document.getElementById("fbtoken")
+                    cx.value = "testtoken"; //idToken
 
                 });
             }
