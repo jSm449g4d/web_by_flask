@@ -11,7 +11,7 @@ from datetime import datetime
 import pytz
 import json
 import firebase_admin
-#from firebase_admin import auth
+from firebase_admin import auth
 
 status_GCS="error"
 FIREBASE="None"
@@ -60,10 +60,17 @@ def config_json_update(form={}):
     with open(dir_config_json,"w+",encoding="utf-8") as fp:json.dump(config_dict,fp)
     os.chmod(dir_config_json,0o777)
 
+def html_create_recode(title="",data=""):
+    return "<tr><td>"+title+"</td><td>"+data+"</td></tr>"
+    
+
 def show(req):
     global status_GCS,storage_client,fbtoken,config_dict;
     global iii;iii+=1
+    status_table=""
     if req.method == 'POST':
+        if "fbtoken" in req.form:#firebase_token front→backend
+            fbtoken=secure_filename(req.form["fbtoken"])
         if "gcs_upload" in req.form and secure_filename(req.form["gcs_upload"])=="True":
             try:
                 storage_client.get_bucket(config_dict["GCS_bucket"]).blob(config_dict["GCS_blob"]).upload_from_filename(config_dict["dir_db"])
@@ -82,20 +89,18 @@ def show(req):
                 status_GCS="success gcs_client_reload"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
             except:
                 status_GCS="error: ×gcs_client_reload"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
-            
-        if "fbtoken" in req.form:
-            fbtoken=secure_filename(req.form["fbtoken"])
-                
         try:#Auth is Under construction
             if config_dict["FB_admin_uid"]==firebase_admin.auth.verify_id_token(fbtoken)["uid"]:
                 config_json_update(req.form)
-                status_GCS+=" uidTrue"
+                status_table+=html_create_recode("are you Admin?","Yes")
         except:
-            status_GCS+=" uidFalse"
+            status_table+=html_create_recode("are you Admin?","No")
     try:
-        fb_uid =firebase_admin.auth.verify_id_token(fbtoken)["uid"]
-    except:fb_uid="Who are you?"
+        status_table+=html_create_recode("Firebase_uid",firebase_admin.auth.verify_id_token(fbtoken)["uid"])
+    except:
+        status_table+=html_create_recode("Firebase_uid","Unknown")
+    status_table+=html_create_recode("access_counter",str(iii))
     return render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],GCS_BUCKET=config_dict["GCS_bucket"],
                             GCS_BLOB=config_dict["GCS_blob"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
-                            COUNTER_M=str(iii)+":"+fb_uid,FBTOKEN=fbtoken)
+                            STATUS_TABLE=status_table,FBTOKEN=fbtoken)
 
