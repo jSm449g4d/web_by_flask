@@ -92,7 +92,7 @@ def show(req):
         try:#Auth is Under construction
             if config_dict["FB_admin_uid"]==firebase_admin.auth.verify_id_token(fbtoken)["uid"]:
                 config_json_update(req.form)
-                status_table+=html_create_recode("are you Admin?","Yes")
+                status_table+=html_create_recode("are you Admin?","<b>Yes</b>")
         except:
             status_table+=html_create_recode("are you Admin?","No")
     try:

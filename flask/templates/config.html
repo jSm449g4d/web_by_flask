@@ -57,11 +57,7 @@
                                 <input type="text" name="dir_gcp_key" value="{{DIR_GCP_KEY}}" class="form-control form-control-sm">
                             </td>
                         </tr>
-                        STATUS_TABLE
-                        <tr>
-                            <td>Firebase_Token</td>
-                            <td style="font-size:12px;width:80%;">{{FBTOKEN}}</td>
-                        </tr>
+                        {{STATUS_TABLE}}
                     </tbody>
                 </table>
 
@@ -78,7 +74,6 @@
                     <input type="button" value="auth_anoni" class="btn btn-success" onclick="firebase.auth().signInAnonymously();" />
                     <input type="button" value="logout" class="btn btn-success" onclick="firebase.auth().signOut();" />
                     <input type="hidden" id="fbtoken" name="fbtoken" value="{{FBTOKEN}}">
-                    <!-- {{FBTOKEN}} -->
                     <p id="authdoc">
                         (´・ω・｀) ～ボェェェ　なんかぼたんおしてねェェェ</p>
                 </div>
