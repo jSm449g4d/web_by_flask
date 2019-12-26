@@ -86,19 +86,17 @@ def show(req):
         if "gcs_client_reload" in req.form and secure_filename(req.form["gcs_client_reload"])=="True":
             try:#get_key
                 storage_client = storage.Client.from_service_account_json(config_dict["dir_gcp_key"])
-                status_GCS="success gcs_client_reload"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
+                status_GCS="reload:gcs_client"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
             except:
-                status_GCS="error: ×gcs_client_reload"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
+                status_GCS="Error:×gcs_client_reload"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
         try:#Auth is Under construction
             if config_dict["FB_admin_uid"]==firebase_admin.auth.verify_id_token(fbtoken)["uid"]:
                 config_json_update(req.form)
-                status_table+=html_create_recode("are you Admin?","<b>Yes</b>")
+                status_table+=html_create_recode("Authority","<b>Admin</b>")
+            else :
+                status_table+=html_create_recode("Authority","general")
         except:
-            status_table+=html_create_recode("are you Admin?","No")
-    try:
-        status_table+=html_create_recode("Firebase_uid",firebase_admin.auth.verify_id_token(fbtoken)["uid"])
-    except:
-        status_table+=html_create_recode("Firebase_uid","Unknown")
+            status_table+=html_create_recode("Authority","Non-login")
     status_table+=html_create_recode("access_counter",str(iii))
     return render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],GCS_BUCKET=config_dict["GCS_bucket"],
                             GCS_BLOB=config_dict["GCS_blob"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
