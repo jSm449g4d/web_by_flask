@@ -11,6 +11,8 @@ from datetime import datetime
 import pytz
 import json
 import firebase_admin
+from firebase_admin import auth
+import inspect
 #from firebase_admin import storage
 
 status_GCS="error"
@@ -99,10 +101,11 @@ def show(req):
         firebase_admin
     except:fb_uid+="0"
     try:
-        firebase_admin.auth
+        auth
     except:fb_uid+="1"
     try:
-        firebase_admin.auth.verify_id_token
+        for x in inspect.getmembers(auth, inspect.ismethod):
+            fb_uid+=x[0]
     except:fb_uid+="2"
     return render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],GCS_BUCKET=config_dict["GCS_bucket"],
                             GCS_BLOB=config_dict["GCS_blob"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
