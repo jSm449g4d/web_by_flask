@@ -1,6 +1,6 @@
 #Integration test
 waitress-serve --host=127.0.0.1 --port=8080 wsgi:app &
-python integration.py | exit
+result_integration=$(python integration.py)
 pkill -f waitress-serve
-echo STR
-exit 1
+echo result_integration
+exit result_integration
