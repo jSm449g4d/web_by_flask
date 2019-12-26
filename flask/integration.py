@@ -24,5 +24,5 @@ if __name__ == "__main__":
         r = requests.get(urllib.parse.urljoin("http://127.0.0.1:8080/",ea["href"]))
         if r.url!=urllib.parse.urljoin("http://127.0.0.1:8080/",ea["href"]):
             raise Exception("Error_URL:"+urllib.parse.urljoin("http://127.0.0.1:8080/",ea["href"]))
-    print("ok")
-    #sys.exit(0)
+    #print("ok")
+    sys.exit(0)
