@@ -7,3 +7,4 @@ if [ $result_integration = "ok"]; then
 else
     echo REJECT:Integration Test;
     echo $result_integration;exit 1
+fi
