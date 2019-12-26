@@ -71,6 +71,14 @@ def show(req):
     if req.method == 'POST':
         if "fbtoken" in req.form:#firebase_token front→backend
             fbtoken=secure_filename(req.form["fbtoken"])
+        try:#User authentication
+            if config_dict["FB_admin_uid"]==firebase_admin.auth.verify_id_token(fbtoken)["uid"]:
+                config_json_update(req.form)
+                status_table+=html_create_recode("Authority","<b>Admin</b>")
+            else :
+                status_table+=html_create_recode("Authority","general")
+        except:
+            status_table+=html_create_recode("Authority","Non-login")
         if "gcs_upload" in req.form and secure_filename(req.form["gcs_upload"])=="True":
             try:
                 storage_client.get_bucket(config_dict["GCS_bucket"]).blob(config_dict["GCS_blob"]).upload_from_filename(config_dict["dir_db"])
@@ -89,14 +97,6 @@ def show(req):
                 status_GCS="reload:gcs_client"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
             except:
                 status_GCS="Error:×gcs_client_reload"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
-        try:#Auth is Under construction
-            if config_dict["FB_admin_uid"]==firebase_admin.auth.verify_id_token(fbtoken)["uid"]:
-                config_json_update(req.form)
-                status_table+=html_create_recode("Authority","<b>Admin</b>")
-            else :
-                status_table+=html_create_recode("Authority","general")
-        except:
-            status_table+=html_create_recode("Authority","Non-login")
     status_table+=html_create_recode("access_counter",str(iii))
     return render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],GCS_BUCKET=config_dict["GCS_bucket"],
                             GCS_BLOB=config_dict["GCS_blob"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
