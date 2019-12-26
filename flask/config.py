@@ -68,7 +68,7 @@ def show(req):
     global iii;iii+=1
     status_table="";fbtoken="";
     if req.method == 'POST':
-        if "fbtoken" in req.form:#firebase_token front→backend
+        if "fbtoken" in req.form:#firebase_token front→backend !volatility!
             fbtoken=secure_filename(req.form["fbtoken"])
         try:#User authentication
             if config_dict["FB_admin_uid"]==firebase_admin.auth.verify_id_token(fbtoken)["uid"]:

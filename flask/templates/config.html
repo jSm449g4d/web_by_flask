@@ -71,8 +71,8 @@
                     <h5 style="color:red;font-family:''">Firebaseの機能の実験</h5>
                     <input type="button" value="auth_disp+get_token" class="btn btn-success" onclick="auth_disp();" />
                     <input type="button" value="auth_google" class="btn btn-success" onclick="auth_google();" />
-                    <input type="button" value="auth_anoni" class="btn btn-success" onclick="firebase.auth().signInAnonymously();" />
-                    <input type="button" value="logout" class="btn btn-success" onclick="firebase.auth().signOut();" />
+                    <input type="button" value="auth_guest" class="btn btn-success" onclick="auth_guest();" />
+                    <input type="button" value="logout" class="btn btn-success" onclick="auth_logout();" />
                     <input type="hidden" id="fbtoken" name="fbtoken" value="{{FBTOKEN}}">
                     <p id="authdoc">
                         (´・ω・｀) ～ボェェェ　なんかぼたんおしてねェェェ</p>
@@ -119,8 +119,8 @@
                         document.getElementById("authdoc").innerHTML = "(´･ｪ･｀)～鰓ってるよぉぉぉ"
                     }
                     firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
-                        var cx = document.getElementById("fbtoken")
-                        cx.value = idToken
+                        var cx = document.getElementById("fbtoken");
+                        cx.value = idToken;
                     })
                 });
             }
@@ -128,6 +128,24 @@
             function auth_google() {
                 var provider = new firebase.auth.GoogleAuthProvider();
                 firebase.auth().signInWithPopup(provider).then(function(result) {}).catch(function(error) {});
+                firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
+                    var cx = document.getElementById("fbtoken");
+                    cx.value = idToken;
+                })
+            }
+
+            function auth_guest() {
+                firebase.auth().signInAnonymously();
+                firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
+                    var cx = document.getElementById("fbtoken");
+                    cx.value = idToken;
+                })
+            }
+
+            function auth_logout() {
+                firebase.auth().signOut();
+                var cx = document.getElementById("fbtoken");
+                cx.value = "";
             }
         </script>
         <!--Firebase -->
