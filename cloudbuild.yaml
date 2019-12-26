@@ -12,7 +12,7 @@ steps:
       args: ["build", "-t", "$_PROJECT/$_APPNAME", "."]
       dir: '$_APPNAME'
       #CI_test      
-    - name: "gcr.io/cloud-builders/docker"
+    - name: "gcr.io/cloud-builders/npm"
       args: ["run", "--rm", "$_PROJECT/$_APPNAME", "bash","integration.sh"]
       #push image to Container Registry
     - name: "gcr.io/cloud-builders/docker"
