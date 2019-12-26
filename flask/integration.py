@@ -12,7 +12,9 @@ if __name__ == "__main__":
     while True:#If the server still doesn't start
         try :html=requests.get("http://127.0.0.1:8080/").text;break
         except:time.sleep(1);connect_try_count+=1
-        if 3<connect_try_count:raise Exception("Error:connection to http://127.0.0.1:8080/")
+        if 3<connect_try_count:
+            print("Error:connection to http://127.0.0.1:8080/")        
+            sys.exit(1)
     
     html=requests.get("http://127.0.0.1:8080/").text
     soup = BeautifulSoup(html,"html.parser")
@@ -22,6 +24,7 @@ if __name__ == "__main__":
         #wsgi.py triggers redirect on error
         r = requests.get(urllib.parse.urljoin("http://127.0.0.1:8080/",ea["href"]))
         if r.url!=urllib.parse.urljoin("http://127.0.0.1:8080/",ea["href"]):
-            raise Exception("Error_URL:"+urllib.parse.urljoin("http://127.0.0.1:8080/",ea["href"]))
-    print("Okey")
-    
+            print("Error_URL:"+urllib.parse.urljoin("http://127.0.0.1:8080/",ea["href"]))
+            sys.exit(1)
+    print("CI_test_Passed")
+    sys.exit(0)
