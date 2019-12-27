@@ -75,10 +75,10 @@ def show(req):
                 config_json_update(req.form)
                 status_table+=html_create_recode("Authority","<b>Admin</b>");clearance=2
                 db = firestore.client()
-                doc_ref = db.doc('users/alovelace')
+                doc_ref = db.collection('users').doc('alovelace')
                 doc_ref.set({'first': 'Ada','last': 'Lovelace','born': 1815})
-#                doc_ref = db.doc('users/alovelaces').doc('users/alovelacess')
-#                doc_ref.set({'fist': 'grad','rust': 'lol','bear': 2200})
+                doc_ref = db.collection('users').doc('alovelaces').collection('users').doc('alovelacess')
+                doc_ref.set({'fist': 'grad','rust': 'lol','bear': 2200})
             else :
                 status_table+=html_create_recode("Authority","general");clearance=1
         except:
