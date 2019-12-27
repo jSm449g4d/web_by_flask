@@ -58,7 +58,7 @@ def config_json_update(form={}):
     os.chmod(dir_config_json,0o777)
 
 def html_create_recode(title="",data="",color="color: navy;"):
-    return "<tr style=\""+color+"\"><td>"+title+"</td><td style=\""+color+"\">"+data+"</td></tr>"
+    return "<tr><td style=\""+color+"\">"+title+"</td><td style=\""+color+"\">"+data+"</td></tr>"
     
 
 def show(req):
