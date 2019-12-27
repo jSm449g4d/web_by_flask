@@ -82,14 +82,14 @@
 
                 <div class="m-2 p-2" style="color:#AAFEFE;border:3px double silver;background:#001111;">
                     <h5 style="color:red;font-family:''">Firebaseの機能の実験</h5>
-                    <input type="button" value="bauth" class="btn btn-success" onclick="bauth();" />
-                    <input type="button" value="gauth" class="btn btn-success" onclick="gauth();" />
-                    <input type="button" value="nauth" class="btn btn-success" onclick="firebase.auth().signInAnonymously();" />
-                    <input type="button" value="logout" class="btn btn-success" onclick="firebase.auth().signOut();" />
+                    <input type="button" value="auth_disp" class="btn btn-success" onclick="auth_disp();" />
+                    <input type="button" value="auth_google" class="btn btn-success" onclick="auth_google();" />
+                    <input type="button" value="auth_guest" class="btn btn-success" onclick="auth_guest();" />
+                    <input type="button" value="logout" class="btn btn-success" onclick="auth_logout();" />
                     <p id="authdoc">
                         (´・ω・｀) ～ボェェェ　なんかぼたんおしてねェェェ</p>
                 </div>
-                <input type="hidden" id="fbtoken" name="fbtoken" value="{{FBTOKEN}}">
+                <input type="hidden" id="fbtoken" name="fbtoken" value="">
                 <!--↑Firebase_token_keep-->
             </form>
         </div>
@@ -114,7 +114,7 @@
             });
             firebase.analytics();
 
-            function bauth() {
+            function auth_disp() {
                 firebase.auth().onAuthStateChanged(function(user) {
                     if (user) {
                         // User is signed in.
@@ -135,9 +135,19 @@
                 });
             }
 
-            function gauth() {
+            function auth_google() {
                 var provider = new firebase.auth.GoogleAuthProvider();
                 firebase.auth().signInWithPopup(provider).then(function(result) {}).catch(function(error) {});
+            }
+
+            function auth_guest() {
+                firebase.auth().signInAnonymously();
+            }
+
+            function auth_logout() {
+                firebase.auth().signOut();
+                var cx = document.getElementById("fbtoken");
+                cx.value = "";
             }
 
             firebase.auth().onAuthStateChanged(function(user) { //Firebase_token_keep

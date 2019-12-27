@@ -36,17 +36,12 @@ except:print("cant unzip CDN contents")
 
 @app.route("/")
 def indexpage_show():
-    #Assignment to indexpage
-    fbtoken="";global access_counter;access_counter+=1
-    if request.method == 'POST':
-        if "fbtoken" in request.form:fbtoken=secure_filename(request.form["fbtoken"])#Firebase_Token_keep
-    #/Assignment to indexpage
+    global access_counter;access_counter+=1
     return render_template("index.html",
     used_python=sys.version,
     used_flask=flask.__version__,
     used_sqlite3=sqlite3.version,
-    access_counter=str(access_counter),
-    FBTOKEN=fbtoken
+    access_counter=str(access_counter)
     )
 
 @app.route("/<name>.html")
