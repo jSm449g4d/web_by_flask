@@ -57,8 +57,8 @@ def config_json_update(form={}):
     with open(dir_config_json,"w+",encoding="utf-8") as fp:json.dump(config_dict,fp)
     os.chmod(dir_config_json,0o777)
 
-def html_create_recode(title="",data=""):
-    return "<tr><td>"+title+"</td><td>"+data+"</td></tr>"
+def html_create_recode(title="",data="",color="color: navy;"):
+    return "<tr style=\""+color+"\"><td>"+title+"</td><td style=\""+color+"\">"+data+"</td></tr>"
     
 
 def show(req):
@@ -86,7 +86,7 @@ def show(req):
                     status_GCS="APP→GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
                 except:
                     status_GCS="APP→×GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
-            else:status_table+=html_create_recode("APP→×GCS","The operation Don't allowed for your clearance.")
+            else:status_table+=html_create_recode("APP→×GCS","The operation Don't allowed for your clearance.",color="red")
         if "gcs_download" in req.form and secure_filename(req.form["gcs_download"])=="True":
             if clearance==2:
                 try:
@@ -94,7 +94,7 @@ def show(req):
                     status_GCS="GCS→APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
                 except:
                     status_GCS="GCS→×APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
-            else:status_table+=html_create_recode("GCS→×APP","The operation Don't allowed for your clearance.")
+            else:status_table+=html_create_recode("GCS→×APP","The operation Don't allowed for your clearance.",color="red")
         if "gcs_client_reload" in req.form and secure_filename(req.form["gcs_client_reload"])=="True":
             if clearance==1 or clearance==2:
                 try:#get_key
@@ -102,7 +102,7 @@ def show(req):
                     status_GCS="reload:gcs_client"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
                 except:
                     status_GCS="×gcs_client_reload"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
-            else:status_table+=html_create_recode("×gcs_client_reload","The operation Don't allowed for your clearance.")
+            else:status_table+=html_create_recode("×gcs_client_reload","The operation Don't allowed for your clearance.",color="red")
         #/Operation
     return render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],GCS_BUCKET=config_dict["GCS_bucket"],
                             GCS_BLOB=config_dict["GCS_blob"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
