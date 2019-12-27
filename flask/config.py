@@ -66,37 +66,47 @@ def html_create_recode(title="",data=""):
 def show(req):
     global status_GCS,storage_client,config_dict;
     global iii;iii+=1
-    status_table="";fbtoken="";
+    status_table="";fbtoken="";clearance=0#0:non-login,1:general,2:admin
     if req.method == 'POST':
+        #Check Auth
         if "fbtoken" in req.form:#firebase_token front→backend !volatility!
             fbtoken=secure_filename(req.form["fbtoken"])
         try:#User authentication
             if config_dict["FB_admin_uid"]==firebase_admin.auth.verify_id_token(fbtoken)["uid"]:
                 config_json_update(req.form)
-                status_table+=html_create_recode("Authority","<b>Admin</b>")
+                status_table+=html_create_recode("Authority","<b>Admin</b>");clearance=2
             else :
-                status_table+=html_create_recode("Authority","general")
+                status_table+=html_create_recode("Authority","general");clearance=1
         except:
-            status_table+=html_create_recode("Authority","Non-login")
+            status_table+=html_create_recode("Authority","Non-login");clearance=0
+        status_table+=html_create_recode("access_counter",str(iii))
+        #/Check Auth
+        #Operation
         if "gcs_upload" in req.form and secure_filename(req.form["gcs_upload"])=="True":
-            try:
-                storage_client.get_bucket(config_dict["GCS_bucket"]).blob(config_dict["GCS_blob"]).upload_from_filename(config_dict["dir_db"])
-                status_GCS="APP→GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
-            except:
-                status_GCS="error: APP→×GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
+            if clearance==2:
+                try:
+                    storage_client.get_bucket(config_dict["GCS_bucket"]).blob(config_dict["GCS_blob"]).upload_from_filename(config_dict["dir_db"])
+                    status_GCS="APP→GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
+                except:
+                    status_GCS="error: APP→×GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
+            else:status_table+=html_create_recode("APP→×GCS","The operation Don't allowed for your clearance.")
         if "gcs_download" in req.form and secure_filename(req.form["gcs_download"])=="True":
-            try:
-                storage_client.get_bucket(config_dict["GCS_bucket"]).blob(config_dict["GCS_blob"]).download_to_filename(config_dict["dir_db"])
-                status_GCS="GCS→APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
-            except:
-                status_GCS="error: GCS→×APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
+            if clearance==2:
+                try:
+                    storage_client.get_bucket(config_dict["GCS_bucket"]).blob(config_dict["GCS_blob"]).download_to_filename(config_dict["dir_db"])
+                    status_GCS="GCS→APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
+                except:
+                    status_GCS="error: GCS→×APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
+            else:status_table+=html_create_recode("GCS→×APP","The operation Don't allowed for your clearance.")
         if "gcs_client_reload" in req.form and secure_filename(req.form["gcs_client_reload"])=="True":
-            try:#get_key
-                storage_client = storage.Client.from_service_account_json(config_dict["dir_gcp_key"])
-                status_GCS="reload:gcs_client"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
-            except:
-                status_GCS="Error:×gcs_client_reload"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
-    status_table+=html_create_recode("access_counter",str(iii))
+            if clearance==1 or clearance==2:
+                try:#get_key
+                    storage_client = storage.Client.from_service_account_json(config_dict["dir_gcp_key"])
+                    status_GCS="reload:gcs_client"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
+                except:
+                    status_GCS="Error:×gcs_client_reload"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
+            else:status_table+=html_create_recode("×gcs_client_reload","The operation Don't allowed for your clearance.")
+        #/Operation
     return render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],GCS_BUCKET=config_dict["GCS_bucket"],
                             GCS_BLOB=config_dict["GCS_blob"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
                             STATUS_TABLE=status_table,FBTOKEN=fbtoken)
