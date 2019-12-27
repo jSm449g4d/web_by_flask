@@ -159,7 +159,7 @@ def show(req):
     passwd=""
     fields=""
     fields_c=""#fields_command
-    bftoken=""
+    fbtoken=""
     if req.method == 'POST':
         if "fbtoken" in req.form:fbtoken=secure_filename(req.form["fbtoken"])#Firebase_Token_keep
         if 'url' in req.form:
