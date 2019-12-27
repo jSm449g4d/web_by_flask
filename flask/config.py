@@ -57,8 +57,8 @@ def config_json_update(form={}):
     with open(dir_config_json,"w+",encoding="utf-8") as fp:json.dump(config_dict,fp)
     os.chmod(dir_config_json,0o777)
 
-def html_create_recode(title="",data="",color="color: navy;"):
-    return "<tr><td style=\""+color+"\">"+title+"</td><td style=\""+color+"\">"+data+"</td></tr>"
+def html_create_recode(title="",data="",color="navy"):
+    return "<tr><td style=\"color:"+color+";\">"+title+"</td><td style=\"color:"+color+";\">"+data+"</td></tr>"
     
 
 def show(req):
