@@ -12,6 +12,7 @@ import pytz
 import json
 import firebase_admin
 from firebase_admin import auth
+from firebase_admin import firestore
 
 status_GCS="error"
 dir_config_json='./config.json'
@@ -73,6 +74,13 @@ def show(req):
             if config_dict["FB_admin_uid"]==firebase_admin.auth.verify_id_token(fbtoken)["uid"]:
                 config_json_update(req.form)
                 status_table+=html_create_recode("Authority","<b>Admin</b>");clearance=2
+                db = firestore.client()
+                doc_ref = db.collection('users').document('alovelace')
+                doc_ref.set({
+                    'first': 'Ada',
+                    'last': 'Lovelace',
+                    'born': 1815
+                    })
             else :
                 status_table+=html_create_recode("Authority","general");clearance=1
         except:
