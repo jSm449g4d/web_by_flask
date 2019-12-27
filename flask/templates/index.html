@@ -18,76 +18,80 @@
 
     <body>
         <div class="mx-3">
-            <h1 style="color:#001900;font-family:serif">Flask_Index</h1>
-            <h5 style="color:darkgreen;font-family:''">Flask+SQLite3+Bootstrap4</h5>
-            <table class="table table-sm table-bordered" style="color: #555000;background-color: azure;">
-                <thead>
-                    <tr>
-                        <th class="text-center" colspan="2">versions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Python</td>
-                        <td>{{used_python}}</td>
-                    </tr>
-                    <tr>
-                        <td>Flask</td>
-                        <td>{{used_flask}}</td>
-                    </tr>
-                    <tr>
-                        <td>SQLite3</td>
-                        <td>{{used_sqlite3}}</td>
-                    </tr>
-                    <tr>
-                        <td>Access Counter</td>
-                        <td>{{access_counter}}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <form method="post" enctype="multipart/form-data" style="display:inline;">
+                <h1 style="color:#001900;font-family:serif">Flask_Index</h1>
+                <h5 style="color:darkgreen;font-family:''">Flask+SQLite3+Bootstrap4</h5>
+                <table class="table table-sm table-bordered" style="color: #555000;background-color: azure;">
+                    <thead>
+                        <tr>
+                            <th class="text-center" colspan="2">versions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Python</td>
+                            <td>{{used_python}}</td>
+                        </tr>
+                        <tr>
+                            <td>Flask</td>
+                            <td>{{used_flask}}</td>
+                        </tr>
+                        <tr>
+                            <td>SQLite3</td>
+                            <td>{{used_sqlite3}}</td>
+                        </tr>
+                        <tr>
+                            <td>Access Counter</td>
+                            <td>{{access_counter}}</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-            <table class="table table-sm table-bordered mt-2 table-success" style="color: navy;background-color: khaki;">
-                <thead>
-                    <tr>
-                        <th class="text-center">Link</th>
-                        <th class="text-center">Outline</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><a href="./22.py">Flaskで示す「鯖のスペック」</a></td>
-                        <td>Hello World 的なアプリ</td>
-                    </tr>
-                    <tr>
-                        <td><a href="./fud.py">Flaskなファイルストレージ</a></td>
-                        <td>勉強用に作ったファイル置き場です</td>
-                    </tr>
-                    <tr>
-                        <td><a href="./tptef.py">Flaskなチャットルーム</a></td>
-                        <td>↓を作ってる途中で、偶然出来たアプリです</td>
-                    </tr>
-                    <tr style="font-weight: bold;">
-                        <td><a href="./nicoapi.py">wrapper for NicoNicoAPI</a></td>
-                        <td>ニコニコAPIやなろうAPIとかを気軽に叩いて情報収集出来ます</td>
-                    </tr>
-                    <tr style="font-weight: bold;">
-                        <td><a href="./jm.py">Janome doe</a></td>
-                        <td>Janomeで形態素解析をします</td>
-                    </tr>
-                </tbody>
-            </table>
-            <a class="btn btn-outline-success mt-2" href="/">戻る</a>
-            <a class="btn btn-warning mx-2 mt-2" href="./config.py">config</a>
+                <table class="table table-sm table-bordered mt-2 table-success" style="color: navy;background-color: khaki;">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Link</th>
+                            <th class="text-center">Outline</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="./22.py">Flaskで示す「鯖のスペック」</a></td>
+                            <td>Hello World 的なアプリ</td>
+                        </tr>
+                        <tr>
+                            <td><a href="./fud.py">Flaskなファイルストレージ</a></td>
+                            <td>勉強用に作ったファイル置き場です</td>
+                        </tr>
+                        <tr>
+                            <td><a href="./tptef.py">Flaskなチャットルーム</a></td>
+                            <td>↓を作ってる途中で、偶然出来たアプリです</td>
+                        </tr>
+                        <tr style="font-weight: bold;">
+                            <td><a href="./nicoapi.py">wrapper for NicoNicoAPI</a></td>
+                            <td>ニコニコAPIやなろうAPIとかを気軽に叩いて情報収集出来ます</td>
+                        </tr>
+                        <tr style="font-weight: bold;">
+                            <td><a href="./jm.py">Janome doe</a></td>
+                            <td>Janomeで形態素解析をします</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a class="btn btn-outline-success mt-2" href="/">戻る</a>
+                <a class="btn btn-warning mx-2 mt-2" href="./config.py">config</a>
 
-            <div class="m-2 p-2" style="color:#AAFEFE;border:3px double silver;background:#001111;">
-                <h5 style="color:red;font-family:''">Firebaseの機能の実験</h5>
-                <input type="button" value="bauth" class="btn btn-success" onclick="bauth();" />
-                <input type="button" value="gauth" class="btn btn-success" onclick="gauth();" />
-                <input type="button" value="nauth" class="btn btn-success" onclick="firebase.auth().signInAnonymously();" />
-                <input type="button" value="logout" class="btn btn-success" onclick="firebase.auth().signOut();" />
-                <p id="authdoc">
-                    (´・ω・｀) ～ボェェェ　なんかぼたんおしてねェェェ</p>
-            </div>
+                <div class="m-2 p-2" style="color:#AAFEFE;border:3px double silver;background:#001111;">
+                    <h5 style="color:red;font-family:''">Firebaseの機能の実験</h5>
+                    <input type="button" value="bauth" class="btn btn-success" onclick="bauth();" />
+                    <input type="button" value="gauth" class="btn btn-success" onclick="gauth();" />
+                    <input type="button" value="nauth" class="btn btn-success" onclick="firebase.auth().signInAnonymously();" />
+                    <input type="button" value="logout" class="btn btn-success" onclick="firebase.auth().signOut();" />
+                    <p id="authdoc">
+                        (´・ω・｀) ～ボェェェ　なんかぼたんおしてねェェェ</p>
+                </div>
+                <input type="hidden" id="fbtoken" name="fbtoken" value="{{FBTOKEN}}">
+                <!--↑Firebase_token_keep-->
+            </form>
         </div>
 
         <!--Firebase -->

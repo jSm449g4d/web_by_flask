@@ -14,7 +14,6 @@ import firebase_admin
 from firebase_admin import auth
 
 status_GCS="error"
-FIREBASE="None"
 dir_config_json='./config.json'
 config_dict={"dir_db":'flask.sqlite3',"dir_gcp_key":"FirebaseAdminKey.json",
             "GCS_bucket":"fb_gcs_bucket","GCS_blob":"flask.sqlite3",
@@ -35,7 +34,6 @@ except:
 try:#Firebase key→client
     cred = firebase_admin.credentials.Certificate("FirebaseAdminKey.json")
     firebase_admin.initialize_app(cred)
-    FIREBASE="available"
 except:0
 
 def render_template_2(dir,**kwargs):
@@ -88,7 +86,7 @@ def show(req):
                     storage_client.get_bucket(config_dict["GCS_bucket"]).blob(config_dict["GCS_blob"]).upload_from_filename(config_dict["dir_db"])
                     status_GCS="APP→GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
                 except:
-                    status_GCS="error: APP→×GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
+                    status_GCS="APP→×GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
             else:status_table+=html_create_recode("APP→×GCS","The operation Don't allowed for your clearance.")
         if "gcs_download" in req.form and secure_filename(req.form["gcs_download"])=="True":
             if clearance==2:
@@ -96,7 +94,7 @@ def show(req):
                     storage_client.get_bucket(config_dict["GCS_bucket"]).blob(config_dict["GCS_blob"]).download_to_filename(config_dict["dir_db"])
                     status_GCS="GCS→APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
                 except:
-                    status_GCS="error: GCS→×APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
+                    status_GCS="GCS→×APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
             else:status_table+=html_create_recode("GCS→×APP","The operation Don't allowed for your clearance.")
         if "gcs_client_reload" in req.form and secure_filename(req.form["gcs_client_reload"])=="True":
             if clearance==1 or clearance==2:
@@ -104,7 +102,7 @@ def show(req):
                     storage_client = storage.Client.from_service_account_json(config_dict["dir_gcp_key"])
                     status_GCS="reload:gcs_client"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
                 except:
-                    status_GCS="Error:×gcs_client_reload"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
+                    status_GCS="×gcs_client_reload"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
             else:status_table+=html_create_recode("×gcs_client_reload","The operation Don't allowed for your clearance.")
         #/Operation
     return render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],GCS_BUCKET=config_dict["GCS_bucket"],
