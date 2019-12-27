@@ -159,7 +159,9 @@ def show(req):
     passwd=""
     fields=""
     fields_c=""#fields_command
+    bftoken=""
     if req.method == 'POST':
+        if "fbtoken" in req.form:fbtoken=secure_filename(req.form["fbtoken"])#Firebase_Token_keep
         if 'url' in req.form:
             urls=req.form['url'].translate(str.maketrans("\"\'<>`?;",'_______'))#Not_secure_filename!
         if 'query' in req.form:
@@ -213,4 +215,4 @@ def show(req):
     orders=Display_Current_SQL(passwd)
     _,size_files=about_files(passwd)
     return render_template_2("nicoapi.html",ORDERS=orders,URL=urls,QUERY=query,PASS=passwd,\
-    SIZE_FILES=size_files,FIELDS=fields,FIELDS_C=fields_c)
+    SIZE_FILES=size_files,FIELDS=fields,FIELDS_C=fields_c,FBTOKEN=fbtoken)
