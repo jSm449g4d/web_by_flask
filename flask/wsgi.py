@@ -36,12 +36,16 @@ except:print("cant unzip CDN contents")
 
 @app.route("/")
 def indexpage_show():
+    fbtoken=""
+    if request.method == 'POST':
+        if "fbtoken" in request.form:fbtoken=secure_filename(request.form["fbtoken"])
     global access_counter;access_counter+=1
     return render_template("index.html",
     used_python=sys.version,
     used_flask=flask.__version__,
     used_sqlite3=sqlite3.version,
     access_counter=str(access_counter),
+    FBTOKEN=fbtoken
     )
 
 @app.route("/<name>.html")
