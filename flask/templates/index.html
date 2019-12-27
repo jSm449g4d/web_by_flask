@@ -152,6 +152,7 @@
 
             firebase.auth().onAuthStateChanged(function(user) { //Firebase_token_keep
                 firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
+
                     var cx = document.getElementById("fbtoken");
                     cx.value = idToken;
                 })
