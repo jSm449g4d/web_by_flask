@@ -141,9 +141,12 @@
                 var cx = document.getElementById("fbtoken");
                 cx.value = "";
             }
-            firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
-                var cx = document.getElementById("fbtoken");
-                cx.value = idToken;
+
+            firebase.auth().onAuthStateChanged(function(user) {
+                firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
+                    var cx = document.getElementById("fbtoken");
+                    cx.value = idToken;
+                })
             })
         </script>
         <!--Firebase -->

@@ -139,9 +139,11 @@
                 var provider = new firebase.auth.GoogleAuthProvider();
                 firebase.auth().signInWithPopup(provider).then(function(result) {}).catch(function(error) {});
             }
-            firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
-                var cx = document.getElementById("fbtoken");
-                cx.value = idToken;
+            firebase.auth().onAuthStateChanged(function(user) {
+                firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
+                    var cx = document.getElementById("fbtoken");
+                    cx.value = idToken;
+                })
             })
         </script>
         <!--Firebase -->
