@@ -77,8 +77,13 @@ def show(req):
                 db = firestore.client()
                 doc_ref = db.collection('users').document('alovelace')
                 doc_ref.set({'first': 'Ada','last': 'Lovelace','born': 1815})
-                doc_ref = db.collection('users').document('alovelaces').collection('users').document('alovelacess')
-                doc_ref.set({'fist': 'grad','rust': 'lol','bear': 2200})
+                
+                jsondict=db.collection('users').document('alovelace').get().to_dict()
+                with open("a.json","w") as fp:
+                    json.dump(jsondict, fp)
+                storage_client.get_bucket(config_dict["GCS_bucket"]).blob("a.json").upload_from_filename("a.json")
+                #client = firestore.Client.from_service_account_json('')
+                
             else :
                 status_table+=html_create_recode("Authority","general");clearance=1
         except:
