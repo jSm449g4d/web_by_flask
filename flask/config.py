@@ -64,7 +64,8 @@ def html_create_recode(title="",data=""):
 def show(req):
     global status_GCS,storage_client,config_dict;
     global iii;iii+=1
-    status_table="";fbtoken="";clearance=0#0:non-login,1:general,2:admin
+    status_table=html_create_recode("access_counter",str(iii))
+    clearance=0#0:non-login,1:general,2:admin
     if req.method == 'POST':
         #Check Auth
         if "fbtoken" in req.form:fbtoken=secure_filename(req.form["fbtoken"])#Firebase_Token_keep
@@ -76,7 +77,6 @@ def show(req):
                 status_table+=html_create_recode("Authority","general");clearance=1
         except:
             status_table+=html_create_recode("Authority","Non-login");clearance=0
-        status_table+=html_create_recode("access_counter",str(iii))
         #/Check Auth
         #Operation
         if "gcs_upload" in req.form and secure_filename(req.form["gcs_upload"])=="True":
