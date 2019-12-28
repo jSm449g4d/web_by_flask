@@ -47,12 +47,13 @@ def indexpage_show():
 @app.route("/<name>.html")
 def html_show(name):
     try :return render_template('./'+name+'.html')
-    except:return redirect('./')
+    except:return redirect('./'),404
 
 @app.route("/<name>.py",methods=['GET', 'POST'])
 def py_show(name):
     try :return importlib.import_module(name).show(request)
-    except:return redirect('./')
+    except:return render_template("error.html",
+    form_error_code="500",form_error_text="×importlib.import_module"),500
 
 application=app
 

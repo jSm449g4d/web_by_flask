@@ -21,9 +21,6 @@ if __name__ == "__main__":
     element_a=soup.find_all("a")
     for ea in element_a:
         if ea["href"].startswith("./") ==False:continue
-        #wsgi.py triggers redirect on error
         r = requests.get(urllib.parse.urljoin("http://127.0.0.1:8080/",ea["href"]))
         if r.status_code!=200:raise Exception("http://127.0.0.1:8080/",ea["href"])
-        if r.url!=urllib.parse.urljoin("http://127.0.0.1:8080/",ea["href"]):
-            raise Exception("Error_URL:"+urllib.parse.urljoin("http://127.0.0.1:8080/",ea["href"]))
     print("ok")
