@@ -76,7 +76,8 @@ def show(req):
                 status_table+=html_create_recode("Authority","<b>Admin</b>");clearance=2
                 db = firestore.client()
                 doc_ref = db.collection('users').document('alovelace')
-                doc_ref.set({'first': 'Ada','last': 'Lovelace','born': 1815})
+                dict2=["dict2","ha","Nanika"]
+                doc_ref.set({'first': dict2,'last': 'Lovelace','born': 1815})
                 
                 jsondict=db.collection('users').document('alovelace').get().to_dict()
                 with open("a.json","w") as fp:
