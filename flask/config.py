@@ -50,7 +50,7 @@ def config_json_update(form={}):
     if "status_GCS" in form:
         config_dict["status_GCS"]=secure_filename(form["status_GCS"])
     if "form_gcs_uri" in form:
-        config_dict["form_gcs_uri"]=secure_filename(form["form_gcs_uri"])
+        config_dict["form_gcs_uri"]=form["form_gcs_uri"].translate(str.maketrans("","","\"\'<>`;"))#Not_secure_filename!
     if "dir_gcp_key" in form:
         config_dict["dir_gcp_key"]=secure_filename(form["dir_gcp_key"])
     with open(dir_config_json,"w+",encoding="utf-8") as fp:json.dump(config_dict,fp)
