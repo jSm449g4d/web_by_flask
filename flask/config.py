@@ -81,8 +81,8 @@ def show(req):
         if "gcs_upload" in req.form and secure_filename(req.form["gcs_upload"])=="True":
             if clearance==2:
                 try:
-                    storage_client.get_bucket(parse.urlsplit(config_dict["form_gcs_uri"])["netloc"])\
-                    .blob(parse.urlsplit(config_dict["form_gcs_uri"])["path"].strip("/")).upload_from_filename(config_dict["dir_db"])
+                    storage_client.get_bucket(parse.urlsplit(config_dict["form_gcs_uri"])[1])\
+                    .blob(parse.urlsplit(config_dict["form_gcs_uri"])[2].strip("/")).upload_from_filename(config_dict["dir_db"])
                     status_GCS="APP→GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
                 except:
                     status_GCS="APP→×GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
@@ -90,8 +90,8 @@ def show(req):
         if "gcs_download" in req.form and secure_filename(req.form["gcs_download"])=="True":
             if clearance==2:
                 try:
-                    storage_client.get_bucket(parse.urlsplit(config_dict["form_gcs_uri"])["netloc"])\
-                    .blob(parse.urlsplit(config_dict["form_gcs_uri"])["path"].strip("/")).download_to_filename(config_dict["dir_db"])
+                    storage_client.get_bucket(parse.urlsplit(config_dict["form_gcs_uri"])[1])\
+                    .blob(parse.urlsplit(config_dict["form_gcs_uri"])[2].strip("/")).download_to_filename(config_dict["dir_db"])
                     status_GCS="GCS→APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
                 except:
                     status_GCS="GCS→×APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
