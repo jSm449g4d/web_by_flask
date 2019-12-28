@@ -49,10 +49,8 @@ def config_json_update(form={}):
     global config_dict
     if "status_GCS" in form:
         config_dict["status_GCS"]=secure_filename(form["status_GCS"])
-    if "GCS_bucket" in form:
-        config_dict["GCS_bucket"]=secure_filename(form["GCS_bucket"])
-    if "GCS_blob" in form:
-        config_dict["GCS_blob"]=secure_filename(form["GCS_blob"])
+    if "html_gcs_uri" in form:
+        config_dict["GCS_uri"]=secure_filename(form["html_gcs_uri"])
     if "dir_gcp_key" in form:
         config_dict["dir_gcp_key"]=secure_filename(form["dir_gcp_key"])
     with open(dir_config_json,"w+",encoding="utf-8") as fp:json.dump(config_dict,fp)
@@ -83,7 +81,8 @@ def show(req):
         if "gcs_upload" in req.form and secure_filename(req.form["gcs_upload"])=="True":
             if clearance==2:
                 try:
-                    storage_client.get_bucket(config_dict["GCS_bucket"]).blob(config_dict["GCS_blob"]).upload_from_filename(config_dict["dir_db"])
+                    storage_client.get_bucket(parse.urlsplit(config_dict["GCS_uri"])["netloc"])\
+                    .blob(parse.urlsplit(config_dict["GCS_uri"])["path"].strip("/")).upload_from_filename(config_dict["dir_db"])
                     status_GCS="APP→GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
                 except:
                     status_GCS="APP→×GCS"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
@@ -91,7 +90,8 @@ def show(req):
         if "gcs_download" in req.form and secure_filename(req.form["gcs_download"])=="True":
             if clearance==2:
                 try:
-                    storage_client.download_blob_to_file("gs://fb_gcs_bucket/flask.sqlite3",config_dict["dir_db"])
+                    storage_client.get_bucket(parse.urlsplit(config_dict["GCS_uri"])["netloc"])\
+                    .blob(parse.urlsplit(config_dict["GCS_uri"])["path"].strip("/")).download_to_filename(config_dict["dir_db"])
                     status_GCS="GCS→APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
                 except:
                     status_GCS="GCS→×APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
@@ -105,7 +105,7 @@ def show(req):
                     status_GCS="×gcs_client_reload"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
             else:status_table+=html_create_recode("×gcs_client_reload","The operation Don't allowed for your clearance.",color="red")
         #/Operation
-    return render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],GCS_BUCKET=config_dict["GCS_bucket"],
-                            GCS_BLOB=config_dict["GCS_blob"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
+    return render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],
+                            html_gcs_uri=config_dict["GCS_uri"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
                             STATUS_TABLE=status_table)
 
