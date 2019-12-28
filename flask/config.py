@@ -12,7 +12,7 @@ import pytz
 import json
 import firebase_admin
 from firebase_admin import auth
-from firebase_admin import firestore
+from urllib import parse
 
 status_GCS="error"
 dir_config_json='./config.json'
@@ -73,18 +73,7 @@ def show(req):
         try:#User authentication
             if config_dict["FB_admin_uid"]==firebase_admin.auth.verify_id_token(fbtoken)["uid"]:
                 config_json_update(req.form)
-                status_table+=html_create_recode("Authority","<b>Admin</b>");clearance=2
-                db = firestore.client()
-                doc_ref = db.collection('users').document('alovelace')
-                dict2=["dict2","ha","Nanika"]
-                doc_ref.set({'firsta': dict2,'last': 'Lovelace','born': 1815})
-                
-                jsondict=db.collection('users').document('alovelace').get().to_dict()
-                with open("a.json","w") as fp:
-                    json.dump(jsondict, fp)
-                storage_client.get_bucket(config_dict["GCS_bucket"]).blob("a.json").upload_from_filename("a.json")
-                #client = firestore.Client.from_service_account_json('')
-                
+                status_table+=html_create_recode("Authority","<b>Admin</b>");clearance=2                
             else :
                 status_table+=html_create_recode("Authority","general");clearance=1
         except:
@@ -102,7 +91,7 @@ def show(req):
         if "gcs_download" in req.form and secure_filename(req.form["gcs_download"])=="True":
             if clearance==2:
                 try:
-                    storage_client.get_bucket(config_dict["GCS_bucket"]).blob(config_dict["GCS_blob"]).download_to_filename(config_dict["dir_db"])
+                    storage_client.download_blob_to_file("gs://fb_gcs_bucket/flask.sqlite3",config_dict["dir_db"])
                     status_GCS="GCS→APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
                 except:
                     status_GCS="GCS→×APP"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")

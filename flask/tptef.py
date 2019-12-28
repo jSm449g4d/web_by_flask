@@ -4,6 +4,8 @@ import os
 import sqlite3
 import hashlib
 import datetime
+from firebase_admin import auth
+from firebase_admin import firestore
 
 def Display_Current_SQL(room=""):
     html=""
@@ -53,7 +55,10 @@ def show(req):
     user=""
     remark=""
     passwd=""
+    fbtoken=""
     if req.method == 'POST':
+        if "fbtoken" in req.form:fbtoken=secure_filename(req.form["fbtoken"])#Firebase_Token_keep
+        
         if 'room' in req.form:
             room=req.form['room'].translate(str.maketrans("\"\'\\/<>%`?;",'__________'))#Not_secure_filename!
         if 'user' in req.form:

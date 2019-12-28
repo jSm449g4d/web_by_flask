@@ -1,109 +1,135 @@
 <!DOCTYPE html>
 <html lang="ja">
 
-<head>
-    <meta charset="utf-8">
-    <title>Flaskなチャットルーム</title>
-    <!--Bootstrap CSS -->
-    <!--CDN-->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"
-        onload="window.bs4css= 1;">
-    <!--fallback by Flask-->
-    <script>window.bs4css || document.write(
-            "<link rel=\"stylesheet\" href=\"{{ url_for('static', filename='bootstrap-4.4.1-dist/css/bootstrap.min.css') }}\"\
+    <head>
+        <meta charset="utf-8">
+        <title>Flaskなチャットルーム</title>
+        <!--Bootstrap CSS -->
+        <!--CDN-->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" onload="window.bs4css= 1;">
+        <!--fallback by Flask-->
+        <script>
+            window.bs4css || document.write(
+                "<link rel=\"stylesheet\" href=\"{{ url_for('static', filename='bootstrap-4.4.1-dist/css/bootstrap.min.css') }}\"\
     crossorigin=\"anonymous\">");
-    </script>
-    <!--/Bootstrap CSS -->
-</head>
+        </script>
+        <!--/Bootstrap CSS -->
+    </head>
 
-<body>
-    <div class="mt-2 mx-2">
-        <form method="post" enctype="multipart/form-data" style="display:inline;">
-            <h2 style="color:black;font-family:serif;">Chat_room</h2>
-            <h5 style="color:red;font-family:'';">=Please use freely at your own risk=</h5>
+    <body>
+        <div class="mt-2 mx-2">
+            <form method="post" enctype="multipart/form-data" style="display:inline;">
+                <h2 style="color:black;font-family:serif;">Chat_room</h2>
+                <h5 style="color:red;font-family:'';">=Please use freely at your own risk=</h5>
 
 
-            <nav>
-                <div class="navbar navbar-default p-0 m-0 form-inline">
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link" id="nav-1-tab" data-toggle="tab" href="#nav-1" role="tab"
-                            aria-controls="nav-1" aria-selected="true">Front</a>
-                        <a class="nav-item nav-link active" id="nav-2-tab" data-toggle="tab" href="#nav-2" role="tab"
-                            aria-controls="nav-2" aria-selected="false">How_to_use</a>
-                        <a class="nav-item nav-link" id="nav-3-tab" data-toggle="tab" href="#nav-3" role="tab"
-                            aria-controls="nav-3" aria-selected="false">Description</a>
+                <nav>
+                    <div class="navbar navbar-default p-0 m-0 form-inline">
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link" id="nav-1-tab" data-toggle="tab" href="#nav-1" role="tab" aria-controls="nav-1" aria-selected="true">Front</a>
+                            <a class="nav-item nav-link active" id="nav-2-tab" data-toggle="tab" href="#nav-2" role="tab" aria-controls="nav-2" aria-selected="false">How_to_use</a>
+                            <a class="nav-item nav-link" id="nav-3-tab" data-toggle="tab" href="#nav-3" role="tab" aria-controls="nav-3" aria-selected="false">Description</a>
+                        </div>
                     </div>
+                    <div class="tab-content alert-info" id="nav-tabContent">
+                        <div class="tab-pane fade  p-1" id="nav-1" role="tabpanel" aria-labelledby="nav-1-tab">
+                            NoSQL化のための改装中<br>
+                        </div>
+                        <div class="tab-pane fade show active  p-1" id="nav-2" role="tabpanel" aria-labelledby="nav-2-tab">
+                            ニコニコAPI操作アプリを作る途中で、副産物的に出来たチャットアプリです。<br> Roomを指定すると、身内でチャットができます
+                            <br> Userはユーザーネームで、Pass(英数字)でトリップ(sha256)を生成
+                            <br> Remarkに入力して、Remarkボタンを押すと書き込みます
+                            <br> Clear_your_Remarksボタンで、Pass入力欄に該当するトリップ発言を全削除します
+                            <br>
+                        </div>
+                        <div class="tab-pane fade p-1" id="nav-3" role="tabpanel" aria-labelledby="nav-3-tab">
+                        </div>
+                    </div>
+                </nav>
+
+                <table class="table table-sm text-white">
+                    <thead>
+                        <tr>
+                            <th><input type="text" name="room" class="form-control mt-1" value="{{ROOM}}" placeholder="Room"></th>
+                            <th><input type="text" name="user" class="form-control mt-1" value="{{USER}}" placeholder="User"></th>
+                            <th><input type="text" name="pass" class="form-control mt-1" value="{{PASS}}" placeholder="Pass"></th>
+                            <th><input type="submit" class="btn btn-success" value="Reload"></th>
+                        </tr>
+                    </thead>
+                </table>
+
+                <div class="form-group mt-2">
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="remark" placeholder="Remark"></textarea>
+                    <button name="launch" class="btn btn-success mt-1" value="True">Remark</button>
+                    <button name="clear" class="btn btn-outline-danger mt-1" value="True">Clear_your_Remarks</button>
                 </div>
-                <div class="tab-content alert-info" id="nav-tabContent">
-                    <div class="tab-pane fade  p-1" id="nav-1" role="tabpanel" aria-labelledby="nav-1-tab">
-                        NoSQL化のための改装中<br>
-                    </div>
-                    <div class="tab-pane fade show active  p-1" id="nav-2" role="tabpanel" aria-labelledby="nav-2-tab">
-                        ニコニコAPI操作アプリを作る途中で、副産物的に出来たチャットアプリです。<br>
-                        Roomを指定すると、身内でチャットができます<br>
-                        Userはユーザーネームで、Pass(英数字)でトリップ(sha256)を生成<br>
-                        Remarkに入力して、Remarkボタンを押すと書き込みます<br>
-                        Clear_your_Remarksボタンで、Pass入力欄に該当するトリップ発言を全削除します<br>
-                    </div>
-                    <div class="tab-pane fade p-1" id="nav-3" role="tabpanel" aria-labelledby="nav-3-tab">
-                    </div>
-                </div>
-            </nav>
 
-            <table class="table table-sm text-white">
-                <thead>
-                    <tr>
-                        <th><input type="text" name="room" class="form-control mt-1" value="{{ROOM}}"
-                                placeholder="Room"></th>
-                        <th><input type="text" name="user" class="form-control mt-1" value="{{USER}}"
-                                placeholder="User"></th>
-                        <th><input type="text" name="pass" class="form-control mt-1" value="{{PASS}}"
-                                placeholder="Pass"></th>
-                        <th><input type="submit" class="btn btn-success" value="Reload"></th>
-                    </tr>
-                </thead>
-            </table>
+                <table class="table table-sm bg-light">
+                    <thead>
+                        <tr>
+                            <th style="width:15%;">user_name</th>
+                            <th>remark</th>
+                            <th style="width:15%;">sha256</th>
+                            <th style="width:15%;">timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody>{{ORDERS}}</tbody>
+                </table>
 
-            <div class="form-group mt-2">
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="remark"
-                    placeholder="Remark"></textarea>
-                <button name="launch" class="btn btn-success mt-1" value="True">Remark</button>
-                <button name="clear" class="btn btn-outline-danger mt-1" value="True">Clear_your_Remarks</button>
-            </div>
+                <a class="btn btn-outline-success mt-2" href="./">Flask_Indexへ</a>
+            </form>
+        </div>
 
-            <table class="table table-sm bg-light">
-                <thead>
-                    <tr>
-                        <th style="width:15%;">user_name</th>
-                        <th>remark</th>
-                        <th style="width:15%;">sha256</th>
-                        <th style="width:15%;">timestamp</th>
-                    </tr>
-                </thead>
-                <tbody>{{ORDERS}}</tbody>
-            </table>
+        <!--Firebase -->
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
+        <!--<script src="/__/firebase/init.js"></script>
+    ↑ deploy on Firebase only  ↓ deploy on any platform-->
+        <script>
+            firebase.initializeApp({
+                apiKey: "AIzaSyCWzFat3oUpn_4TtOpDCMhcOD2Qf4u1Mr4",
+                authDomain: "crack-atlas-251509.firebaseapp.com",
+                databaseURL: "https://crack-atlas-251509.firebaseio.com",
+                projectId: "crack-atlas-251509",
+                storageBucket: "crack-atlas-251509.appspot.com",
+                messagingSenderId: "646437940818",
+                appId: "1:646437940818:web:a8f1315a41787cdfd3b98b",
+                measurementId: "G-JFF7YXX3B1"
+            });
+            firebase.analytics();
 
-            <a class="btn btn-outline-success mt-2" href="./">Flask_Indexへ</a>
-        </form>
-    </div>
+            firebase.auth().onAuthStateChanged(function(user) { //Firebase_token_keep
+                document.getElementById("authdoc").innerHTML = user.displayName + "<br>" + user.email + "<br>" +
+                    user.emailVerified + "<br>" + user.photoURL + "<br>" +
+                    user.isAnonymous + "<br>" + user.uid + "<br>" + user.providerData;
 
+                firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
+                    var cx = document.getElementById("fbtoken");
+                    cx.value = idToken;
+                })
+            })
+        </script>
+        <!--Firebase -->
 
-    <!--Bootstrap and jQuery JS -->
-    <!--CDN-->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"
-        integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
-        crossorigin="anonymous"></script>
-    <!--fallback by Flask-->
-    <script>window.jQuery || document.write(
-            "<script src=\"{{ url_for('static', filename='bootstrap-4.4.1-dist/js/jquery-3.4.1.min.js') }}\"\
-        crossorigin=\"anonymous\"><\/script>")</script>
-    <script>$.fn.modal || document.write(
-            "<script src=\"{{ url_for('static', filename='bootstrap-4.4.1-dist/js/bootstrap.bundle.min.js') }}\"\
-    crossorigin=\"anonymous\"><\/script>")</script>
-    <!--/Bootstrap and jQuery JS -->
+        <!--Bootstrap and jQuery JS -->
+        <!--CDN-->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
+        <!--fallback by Flask-->
+        <script>
+            window.jQuery || document.write(
+                "<script src=\"{{ url_for('static', filename='bootstrap-4.4.1-dist/js/jquery-3.4.1.min.js') }}\"\
+        crossorigin=\"anonymous\"><\/script>")
+        </script>
+        <script>
+            $.fn.modal || document.write(
+                "<script src=\"{{ url_for('static', filename='bootstrap-4.4.1-dist/js/bootstrap.bundle.min.js') }}\"\
+    crossorigin=\"anonymous\"><\/script>")
+        </script>
+        <!--/Bootstrap and jQuery JS -->
 
-</body>
+    </body>
 
 </html>
