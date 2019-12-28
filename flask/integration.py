@@ -19,8 +19,9 @@ if __name__ == "__main__":
     if r.status_code!=200:raise Exception("Error_URL:"+"http://127.0.0.1:8080/")
     soup = BeautifulSoup(r.text,"html.parser")
     element_a=soup.find_all("a")
-    for ea in element_a:
+    for ea in element_a:#SPA
         if ea["href"].startswith("./") ==False:continue
         r = requests.get(urllib.parse.urljoin("http://127.0.0.1:8080/",ea["href"]))
         if r.status_code!=200:raise Exception("http://127.0.0.1:8080/",ea["href"])
+        
     print("ok")

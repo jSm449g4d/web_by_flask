@@ -75,4 +75,4 @@ def show(req):
             if sql_reg(target,passwd,mode=0)!=0:
                 os.remove(os.path.join(DataDir,target))
             
-    return render_template_2s("fud.html",FILES=htmlwalk(),PASS=passwd)
+    return render_template_2("fud.html",FILES=htmlwalk(),PASS=passwd)
