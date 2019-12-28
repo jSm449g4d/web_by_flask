@@ -77,7 +77,7 @@ def show(req):
                 db = firestore.client()
                 doc_ref = db.collection('users').document('alovelace')
                 dict2=["dict2","ha","Nanika"]
-                doc_ref.set({'first': dict2,'last': 'Lovelace','born': 1815})
+                doc_ref.set({'firsta': dict2,'last': 'Lovelace','born': 1815})
                 
                 jsondict=db.collection('users').document('alovelace').get().to_dict()
                 with open("a.json","w") as fp:
