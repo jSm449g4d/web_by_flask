@@ -2,7 +2,7 @@
 import sys
 import os
 import flask
-from flask import  render_template,redirect,request
+from flask import  render_template,redirect,request,render_template_string
 from werkzeug.utils import secure_filename
 import importlib
 import sqlite3
@@ -12,6 +12,15 @@ import random
 from datetime import datetime
 import pytz
 import time
+
+
+def render_template_2(dir,**kwargs):
+    html=""
+    with open(os.path.join("./templates/",dir),"r",encoding="utf-8") as f:
+        html=f.read()
+        for kw,arg in kwargs.items():
+            html=html.replace("{{"+kw+"}}",arg)
+    return render_template_string(html)
 
 #flask start
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -53,7 +62,7 @@ def html_show(name):
 def py_show(name):
     try :return importlib.import_module(name).show(request)
     except:return render_template("error.html",
-    form_error_code="500",form_error_text="×importlib.import_module"),500
+        form_error_code="500",form_error_text="×importlib.import_module"),500
 
 application=app
 

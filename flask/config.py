@@ -13,6 +13,7 @@ import json
 import firebase_admin
 from firebase_admin import auth
 from urllib import parse
+import wsgi
 
 status_GCS="error"
 dir_config_json='./config.json'
@@ -36,14 +37,6 @@ try:#Firebase key→client
     cred = firebase_admin.credentials.Certificate("FirebaseAdminKey.json")
     firebase_admin.initialize_app(cred)
 except:0
-
-def render_template_2(dir,**kwargs):
-    html=""
-    with open(os.path.join("./templates/",dir),"r",encoding="utf-8") as f:
-        html=f.read()
-        for kw,arg in kwargs.items():
-            html=html.replace("{{"+kw+"}}",arg)
-    return render_template_string(html)
 
 def config_json_update(form={}):
     global config_dict
@@ -105,7 +98,7 @@ def show(req):
                     status_GCS="×gcs_client_reload"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
             else:status_table+=html_create_recode("×gcs_client_reload","The operation Don't allowed for your clearance.",color="red")
         #/Operation
-    return render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],
+    return wsgi.render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],
                             form_gcs_uri=config_dict["form_gcs_uri"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
                             STATUS_TABLE=status_table)
 
