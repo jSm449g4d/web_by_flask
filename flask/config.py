@@ -102,7 +102,7 @@ def show(req):
         if "fb_fs" in req.form and secure_filename(req.form["fb_fs"])=="True":
             db = firestore.client()
             resp=db.collection('users').document('alovelace').to_dict()
-            status_table+=html_create_recode("Firestore",resp)
+            status_table+=html_create_recode("Firestore",json.dumps(resp))
         #/Operation
     return wsgi.render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],
                             form_gcs_uri=config_dict["form_gcs_uri"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
