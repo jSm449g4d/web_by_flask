@@ -10,7 +10,8 @@ RUN apt install -yq gcc
 
 RUN pip install -U pip
 RUN pip install -U flask waitress janome werkzeug psutil urllib3 certifi pytz neologdn \
-firebase-admin google-cloud-firestore google-cloud-storage BeautifulSoup4 requests urllib3 sqlalchemy
+firebase-admin google-cloud-firestore google-cloud-storage BeautifulSoup4 requests urllib3b \
+MySQLdb
 
 CMD bash -c "waitress-serve --port=8080 wsgi:app"
 #CMD python app.py

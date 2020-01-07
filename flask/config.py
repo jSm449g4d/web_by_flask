@@ -14,6 +14,7 @@ import firebase_admin
 from firebase_admin import auth,firestore
 from urllib import parse
 import wsgi
+import MySQLdb
 
 status_GCS="error"
 dir_config_json='./config.json'
@@ -101,7 +102,21 @@ def show(req):
         if "fb_fs" in req.form and secure_filename(req.form["fb_fs"])=="True":
             db = firestore.client()
             resp=db.collection('users').document('alovelace').get().to_dict()
-            status_table+=html_create_recode("Firestore",json.dumps(resp))#"clicked"
+            status_table+=html_create_recode("Firestore",json.dumps(resp))
+        if "mysql_check" in req.form and secure_filename(req.form["mysql_check"])=="True":
+            mysql_keys={}
+            with open("MySQL_key.json","r",encoding="utf-8") as fp:
+                mysql_keys=json.load(fp)
+            for i in mysql_keys:
+                connection = MySQLdb.connect(
+                    host=i["host"],
+                    user=i["user"],
+                    passwd=i["passwd"],
+                    db=i["db"])
+                connection.close()
+            status_table+=html_create_recode("MySQL","TestOK")
+        if "sqlite3_check" in req.form and secure_filename(req.form["sqlite3_check"])=="True":
+            0
         #/Operation
     return wsgi.render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],
                             form_gcs_uri=config_dict["form_gcs_uri"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
