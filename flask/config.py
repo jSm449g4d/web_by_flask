@@ -113,6 +113,8 @@ def show(req):
                     user=i["user"],
                     passwd=i["passwd"],
                     db=i["db"])
+                cur = connection.cursor()
+                connection.commit()
                 connection.close()
             status_table+=html_create_recode("MySQL","TestOK")
         if "sqlite3_check" in req.form and secure_filename(req.form["sqlite3_check"])=="True":
