@@ -22,6 +22,8 @@ def render_template_2(dir,**kwargs):
             html=html.replace("{{"+kw+"}}",arg)
     return render_template_string(html)
 
+
+
 #flask start
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.chdir(os.path.join("./",os.path.dirname(__file__)))
@@ -46,7 +48,7 @@ except:print("cant unzip CDN contents")
 @app.route("/")
 def indexpage_show():
     global access_counter;access_counter+=1
-    return render_template("index.html",
+    return render_template_2("index.html",
     used_python=sys.version,
     used_flask=flask.__version__,
     used_sqlite3=sqlite3.version,

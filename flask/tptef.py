@@ -6,6 +6,7 @@ import hashlib
 import datetime
 from firebase_admin import auth
 from firebase_admin import firestore
+import wsgi
 
 def Display_Current_SQL(room=""):
     html=""
@@ -42,14 +43,6 @@ def Clear_Order_SQL(passwd=""):
     cur.execute("delete from tptef where sha256=\"%s\""%sha256)
     cur.close();con.close()
 
-def render_template_2(dir,**kwargs):
-    html=""
-    with open(os.path.join("./templates/",dir),"r",encoding="utf-8") as f:
-        html=f.read()
-        for kw,arg in kwargs.items():
-            html=html.replace("{{"+kw+"}}",arg)
-    return render_template_string(html)
-
 def show(req):
     room=""
     user=""
@@ -73,4 +66,4 @@ def show(req):
             Clear_Order_SQL(passwd)
 
     orders=Display_Current_SQL(room)
-    return render_template_2("tptef.html",ORDERS=orders,ROOM=room,USER=user,REMARK=remark,PASS=passwd)
+    return wsgi.render_template_2("tptef.html",ORDERS=orders,ROOM=room,USER=user,REMARK=remark,PASS=passwd)
