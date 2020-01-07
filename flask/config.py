@@ -11,8 +11,7 @@ from datetime import datetime
 import pytz
 import json
 import firebase_admin
-from firebase_admin import auth
-from firebase_admin import firestore
+from firebase_admin import auth,firestore
 from urllib import parse
 import wsgi
 
@@ -100,7 +99,7 @@ def show(req):
             else:status_table+=html_create_recode("×gcs_client_reload","The operation Don't allowed for your clearance.",color="red")
             
         if "fb_fs" in req.form and secure_filename(req.form["fb_fs"])=="True":
-            #db = firestore.client()
+            db = firestore.client()
             #resp=db.collection('users').document('alovelace').to_dict()
             status_table+=html_create_recode("Firestore","clicked")#json.dumps(resp)
         #/Operation
