@@ -99,7 +99,7 @@ def show(req):
                     status_GCS="×gcs_client_reload"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
             else:status_table+=html_create_recode("×gcs_client_reload","The operation Don't allowed for your clearance.",color="red")
             
-        if "fb_fs" in req.form and secure_filename(req.form["gcs_upload"])=="True":
+        if "fb_fs" in req.form and secure_filename(req.form["fb_fs"])=="True":
             db = firestore.client()
             resp=db.collection('users').document('alovelace').to_dict()
             status_table+=html_create_recode("Firestore",resp)
