@@ -1,12 +1,12 @@
 #plz set appname to env "Cloud Build→trigger→env→'_APPNAME'"
 #plz set GCP_project_dicetry to env "Cloud Build→trigger→env→'_PROJECT'"
-#plz set used_API_keys to env "Cloud Build→trigger→env→'_APIKEYS'"
+#plz set used_keys to env "Cloud Build→trigger→env→'_APPKEYS'"
 #plz set test_bash_file to env "Cloud Build→trigger→env→'_TESTSH'"
 
 steps:
       #insert keys
     - name: "gcr.io/cloud-builders/gsutil"
-      args: ["cp", "$_APIKEYS", "FirebaseAdminKey.json"]
+      args: ["cp","$_APPKEYS", "./"]
       dir: '$_APPNAME'
       #build      
     - name: "gcr.io/cloud-builders/docker"
