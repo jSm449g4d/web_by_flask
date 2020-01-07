@@ -12,6 +12,7 @@ import pytz
 import json
 import firebase_admin
 from firebase_admin import auth
+from firebase_admin import firestore
 from urllib import parse
 import wsgi
 
@@ -97,6 +98,11 @@ def show(req):
                 except:
                     status_GCS="×gcs_client_reload"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
             else:status_table+=html_create_recode("×gcs_client_reload","The operation Don't allowed for your clearance.",color="red")
+            
+        if "fb_fs" in req.form and secure_filename(req.form["gcs_upload"])=="True":
+            db = firestore.client()
+            resp=db.collection('users').document('alovelace').to_dict()
+            status_table+=html_create_recode("Firestore",resp)
         #/Operation
     return wsgi.render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],
                             form_gcs_uri=config_dict["form_gcs_uri"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
