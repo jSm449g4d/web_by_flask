@@ -108,19 +108,22 @@ def show(req):
             with open("MySQL_key.json","r") as fp:
                 mysql_keys=json.load(fp)
             for i in mysql_keys.values():
-                status_table+=html_create_recode("MySQL",i["host"])
-                connection = MySQLdb.connect(
-                    host=i["host"],
-                    user=i["user"],
-                    passwd=i["passwd"],
-                    db=i["db"])
+                status_table+=html_create_recode("MySQL_host",i["host"])
+                status_table+=html_create_recode("MySQL_user",i["user"])
+                try:
+                    connection = MySQLdb.connect(
+                        host=i["host"],
+                        user=i["user"],
+                        passwd=i["passwd"],
+                        db=i["db"])
                 #cur = connection.cursor()
-                #cur.execute('show tables from flaskdb')
+                #cur.execute('show tables')
                 #results = cur.fetchall()
                 #for result in results:
                 #    status_table+=html_create_recode("MySQL>",result)
                 #connection.commit()
-                connection.close()
+                    connection.close()
+                    status_table+=html_create_recode("MySQL","OK")
             
         if "sqlite3_check" in req.form and secure_filename(req.form["sqlite3_check"])=="True":
             0
