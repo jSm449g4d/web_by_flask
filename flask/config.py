@@ -109,14 +109,14 @@ def show(req):
                 mysql_keys=json.load(fp)
             for i in mysql_keys:
                 status_table+=html_create_recode("MySQL",i["host"])
-                connection = MySQLdb.connect(
-                    host=i["host"],
-                    user=i["user"],
-                    passwd=i["passwd"],
-                    db=i["db"])
+                #connection = MySQLdb.connect(
+                #    host=i["host"],
+                #    user=i["user"],
+                #    passwd=i["passwd"],
+                #    db=i["db"])
                 #cur = connection.cursor()
                 #connection.commit()
-                connection.close()
+                #connection.close()
             
         if "sqlite3_check" in req.form and secure_filename(req.form["sqlite3_check"])=="True":
             0
