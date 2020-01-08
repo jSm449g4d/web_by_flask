@@ -124,6 +124,8 @@ def show(req):
                 #connection.commit()
                     connection.close()
                     status_table+=html_create_recode("MySQL","OK")
+                except:
+                    status_table+=html_create_recode("MySQL","err")
             
         if "sqlite3_check" in req.form and secure_filename(req.form["sqlite3_check"])=="True":
             0
