@@ -107,7 +107,7 @@ def show(req):
         if "mysql_check" in req.form and secure_filename(req.form["mysql_check"])=="True":
             with open("MySQL_key.json","r") as fp:
                 mysql_keys=json.load(fp)
-            for i in mysql_keys:
+            for i in mysql_keys.values():
                 status_table+=html_create_recode("MySQL",i["host"])
                 #connection = MySQLdb.connect(
                 #    host=i["host"],
