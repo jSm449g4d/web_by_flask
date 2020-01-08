@@ -105,8 +105,7 @@ def show(req):
             resp=db.collection('users').document('alovelace').get().to_dict()
             status_table+=html_create_recode("Firestore",json.dumps(resp))
         if "mysql_check" in req.form and secure_filename(req.form["mysql_check"])=="True":
-            mysql_keys={}
-            with open("MySQL_key.json","r",encoding="utf-8") as fp:
+            with open("MySQL_key.json") as fp:
                 mysql_keys=json.load(fp)
             status_table+=html_create_recode("MySQL","OK")
             #for i in mysql_keys:
