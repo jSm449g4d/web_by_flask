@@ -109,14 +109,15 @@ def show(req):
                 mysql_keys=json.load(fp)
             for i in mysql_keys.values():
                 status_table+=html_create_recode("MySQL_host",i["host"])
-                #status_table+=html_create_recode("MySQL_port",i["port"])
+                status_table+=html_create_recode("MySQL_port",str(i["port"]))
                 try:
                     connection = MySQLdb.connect(
                         host=i["host"],
                         user=i["user"],
-                        passwd=i["passwd"],
+                        password=i["passwd"],
                         db=i["db"],
-                        port=i["port"],
+                        port="33060",
+                        autocommit=True,
                         charset='utf8')
                 #cur = connection.cursor()
                 #cur.execute('show tables')
