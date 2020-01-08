@@ -105,19 +105,18 @@ def show(req):
             resp=db.collection('users').document('alovelace').get().to_dict()
             status_table+=html_create_recode("Firestore",json.dumps(resp))
         if "mysql_check" in req.form and secure_filename(req.form["mysql_check"])=="True":
-            with open("MySQL_key.json") as fp:
+            with open("MySQL_key.json","r") as fp:
                 mysql_keys=json.load(fp)
-            status_table+=html_create_recode("MySQL","OK")
-            #for i in mysql_keys:
-            #    status_table+=html_create_recode("MySQL",i["host"])
-                #connection = MySQLdb.connect(
-                #    host=i["host"],
-                #    user=i["user"],
-                #    passwd=i["passwd"],
-                #    db=i["db"])
+            for i in mysql_keys:
+                status_table+=html_create_recode("MySQL",i["host"])
+                connection = MySQLdb.connect(
+                    host=i["host"],
+                    user=i["user"],
+                    passwd=i["passwd"],
+                    db=i["db"])
                 #cur = connection.cursor()
                 #connection.commit()
-                #connection.close()
+                connection.close()
             
         if "sqlite3_check" in req.form and secure_filename(req.form["sqlite3_check"])=="True":
             0
