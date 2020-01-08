@@ -106,9 +106,10 @@ def show(req):
             status_table+=html_create_recode("Firestore",json.dumps(resp))
         if "mysql_check" in req.form and secure_filename(req.form["mysql_check"])=="True":
             mysql_keys={}
-            with open("MySQL_key.json","r",encoding="utf-8") as fp:
-                mysql_keys=json.load(fp)
-            status_table+=html_create_recode("MySQL","OK")
+            status_table+=html_create_recode("MySQL",','.join(os.listdir("./")))
+            #with open("MySQL_key.json","r",encoding="utf-8") as fp:
+            #    mysql_keys=json.load(fp)
+            #status_table+=html_create_recode("MySQL","OK")
             #for i in mysql_keys:
             #    status_table+=html_create_recode("MySQL",i["host"])
                 #connection = MySQLdb.connect(
@@ -121,9 +122,7 @@ def show(req):
                 #connection.close()
             
         if "sqlite3_check" in req.form and secure_filename(req.form["sqlite3_check"])=="True":
-            engine = create_engine('sqlite://./flask.sqlite3', echo=True)
-            with engine.connect() as con:
-                status_table+=html_create_recode("sqlite3",con.execute(".table"))
+            0
         #/Operation
     return wsgi.render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],
                             form_gcs_uri=config_dict["form_gcs_uri"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
