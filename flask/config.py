@@ -114,9 +114,9 @@ def show(req):
                     connection = MySQLdb.connect(
                         host=i["host"],
                         user=i["user"],
-                        password=i["passwd"],
+                        password=i["password"],
                         db=i["db"],
-                        port=i["port"],
+                        port=str(i["port"]),
                         autocommit=True)
                 #cur = connection.cursor()
                 #cur.execute('show tables')
