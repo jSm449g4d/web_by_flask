@@ -128,7 +128,7 @@ def show(req):
                     status_table+=html_create_recode("MySQL","OK")
                     connection.close()
                 except:
-                    status_table+=html_create_recode("MySQL","err")
+                    status_table+=html_create_recode("MySQL",MySQLdb.Error)
             
         if "sqlite3_check" in req.form and secure_filename(req.form["sqlite3_check"])=="True":
             0
