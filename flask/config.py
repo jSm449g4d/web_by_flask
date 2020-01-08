@@ -109,7 +109,7 @@ def show(req):
                 mysql_keys=json.load(fp)
             for i in mysql_keys.values():
                 status_table+=html_create_recode("MySQL_host",i["host"])
-                status_table+=html_create_recode("MySQL_port",i["port"])
+                #status_table+=html_create_recode("MySQL_port",i["port"])
                 try:
                     connection = MySQLdb.connect(
                         host=i["host"],
