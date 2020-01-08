@@ -108,8 +108,9 @@ def show(req):
             mysql_keys={}
             with open("MySQL_key.json","r",encoding="utf-8") as fp:
                 mysql_keys=json.load(fp)
-            for i in mysql_keys:
-                status_table+=html_create_recode("MySQL",i["host"])
+            status_table+=html_create_recode("MySQL","OK")
+            #for i in mysql_keys:
+            #    status_table+=html_create_recode("MySQL",i["host"])
                 #connection = MySQLdb.connect(
                 #    host=i["host"],
                 #    user=i["user"],
