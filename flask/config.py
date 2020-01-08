@@ -116,7 +116,7 @@ def show(req):
                         user=i["user"],
                         passwd=i["passwd"],
                         db=i["db"],
-                        port=33060
+                        port=i["port"],
                         charset='utf8')
                 #cur = connection.cursor()
                 #cur.execute('show tables')
