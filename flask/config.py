@@ -111,6 +111,7 @@ def show(req):
                 status_table+=html_create_recode("MySQL_host",i["host"])
                 status_table+=html_create_recode("MySQL_port",i["port"])
                 try:
+                    MySQLdb
                     status_table+=html_create_recode("MySQL","TRY")
                     connection = MySQLdb.connect(
                         host=i["host"],
@@ -128,7 +129,7 @@ def show(req):
                     status_table+=html_create_recode("MySQL","OK")
                     connection.close()
                 except:
-                    status_table+=html_create_recode("MySQL",MySQLdb.Error)
+                    status_table+=html_create_recode("MySQL","MySQLdb.Error")
             
         if "sqlite3_check" in req.form and secure_filename(req.form["sqlite3_check"])=="True":
             0
