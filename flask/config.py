@@ -114,12 +114,12 @@ def show(req):
                     user=i["user"],
                     passwd=i["passwd"],
                     db=i["db"])
-                cur = connection.cursor()
-                cur.execute('show tables from flaskdb')
-                results = cur.fetchall()
-                for result in results:
-                    status_table+=html_create_recode("MySQL>",result)
-                connection.commit()
+                #cur = connection.cursor()
+                #cur.execute('show tables from flaskdb')
+                #results = cur.fetchall()
+                #for result in results:
+                #    status_table+=html_create_recode("MySQL>",result)
+                #connection.commit()
                 connection.close()
             
         if "sqlite3_check" in req.form and secure_filename(req.form["sqlite3_check"])=="True":
