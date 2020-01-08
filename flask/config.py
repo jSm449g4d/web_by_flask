@@ -106,10 +106,9 @@ def show(req):
             status_table+=html_create_recode("Firestore",json.dumps(resp))
         if "mysql_check" in req.form and secure_filename(req.form["mysql_check"])=="True":
             mysql_keys={}
-            status_table+=html_create_recode("MySQL",','.join(os.listdir("./")))
-            #with open("MySQL_key.json","r",encoding="utf-8") as fp:
-            #    mysql_keys=json.load(fp)
-            #status_table+=html_create_recode("MySQL","OK")
+            with open("MySQL_key.json","r",encoding="utf-8") as fp:
+                mysql_keys=json.load(fp)
+            status_table+=html_create_recode("MySQL","OK")
             #for i in mysql_keys:
             #    status_table+=html_create_recode("MySQL",i["host"])
                 #connection = MySQLdb.connect(
