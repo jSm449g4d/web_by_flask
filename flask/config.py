@@ -116,7 +116,7 @@ def show(req):
                     db=i["db"])
                 cur = connection.cursor()
                 cur.execute('show tables from flaskdb')
-                results = cursor.fetchall()
+                results = cur.fetchall()
                 for result in results:
                     status_table+=html_create_recode("MySQL>",result)
                 connection.commit()
