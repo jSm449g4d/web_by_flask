@@ -113,7 +113,7 @@ def show(req):
                 try:
                     MySQLdb
                     status_table+=html_create_recode("MySQL","TRY")
-                    connection = MySQLdb.connect(
+                    conn = MySQLdb.connect(
                         host=i["host"],
                         user=i["user"],
                         password=i["password"],
