@@ -108,6 +108,7 @@ def show(req):
             with open("MySQL_key.json","r",encoding="utf-8") as fp:
                 mysql_keys=json.load(fp)
             for i in mysql_keys:
+                status_table+=html_create_recode("MySQL",i["host"])
                 connection = MySQLdb.connect(
                     host=i["host"],
                     user=i["user"],
@@ -116,7 +117,7 @@ def show(req):
                 cur = connection.cursor()
                 connection.commit()
                 connection.close()
-            status_table+=html_create_recode("MySQL","TestOK")
+            
         if "sqlite3_check" in req.form and secure_filename(req.form["sqlite3_check"])=="True":
             0
         #/Operation
