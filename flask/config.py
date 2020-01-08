@@ -109,14 +109,15 @@ def show(req):
                 mysql_keys=json.load(fp)
             for i in mysql_keys.values():
                 status_table+=html_create_recode("MySQL_host",i["host"])
-                status_table+=html_create_recode("MySQL_port",str(i["port"]))
+                status_table+=html_create_recode("MySQL_port",i["port"])
                 try:
+                    status_table+=html_create_recode("MySQL","TRY")
                     connection = MySQLdb.connect(
                         host=i["host"],
                         user=i["user"],
                         password=i["password"],
                         db=i["db"],
-                        port=str(i["port"]),
+                        port=i["port"],
                         autocommit=True)
                 #cur = connection.cursor()
                 #cur.execute('show tables')
@@ -124,8 +125,8 @@ def show(req):
                 #for result in results:
                 #    status_table+=html_create_recode("MySQL>",result)
                 #connection.commit()
-                    connection.close()
                     status_table+=html_create_recode("MySQL","OK")
+                    connection.close()
                 except:
                     status_table+=html_create_recode("MySQL","err")
             
