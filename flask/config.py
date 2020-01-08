@@ -15,6 +15,7 @@ from firebase_admin import auth,firestore
 from urllib import parse
 import wsgi
 import MySQLdb
+from sqlalchemy import create_engine,declarative_base
 
 status_GCS="error"
 dir_config_json='./config.json'
@@ -109,17 +110,19 @@ def show(req):
                 mysql_keys=json.load(fp)
             for i in mysql_keys:
                 status_table+=html_create_recode("MySQL",i["host"])
-                connection = MySQLdb.connect(
-                    host=i["host"],
-                    user=i["user"],
-                    passwd=i["passwd"],
-                    db=i["db"])
-                cur = connection.cursor()
-                connection.commit()
-                connection.close()
+                #connection = MySQLdb.connect(
+                #    host=i["host"],
+                #    user=i["user"],
+                #    passwd=i["passwd"],
+                #    db=i["db"])
+                #cur = connection.cursor()
+                #connection.commit()
+                #connection.close()
             
         if "sqlite3_check" in req.form and secure_filename(req.form["sqlite3_check"])=="True":
-            0
+            engine = create_engine('sqlite://./flask.sqlite3', echo=True)
+            with engine.connect() as con:
+                status_table+=html_create_recode("sqlite3",con.execute(".table"))
         #/Operation
     return wsgi.render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],
                             form_gcs_uri=config_dict["form_gcs_uri"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
