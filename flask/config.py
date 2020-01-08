@@ -15,7 +15,7 @@ from firebase_admin import auth,firestore
 from urllib import parse
 import wsgi
 import MySQLdb
-from sqlalchemy import create_engine,declarative_base
+from sqlalchemy import create_engine
 
 status_GCS="error"
 dir_config_json='./config.json'
