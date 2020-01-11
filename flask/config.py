@@ -120,8 +120,10 @@ def show(req):
                         autocommit=True)
                     status_table+=html_create_recode("MySQL","OK")
                     conn.close()
-                except as e:
-                    status_table+=html_create_recode("MySQL_err",e)
+                except Exception as e:
+                    status_table+=html_create_recode("MySQL_err","a")
+                except:
+                    status_table+=html_create_recode("MySQL","ERROR")
         #/Operation
     return wsgi.render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],
                             form_gcs_uri=config_dict["form_gcs_uri"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
