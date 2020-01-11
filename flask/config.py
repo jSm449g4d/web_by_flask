@@ -121,7 +121,7 @@ def show(req):
                     status_table+=html_create_recode("MySQL","OK")
                     conn.close()
                 except Exception as e:
-                    status_table+=html_create_recode("MySQL_err",e)
+                    status_table+=html_create_recode("MySQL_err",str(e))
                 except:
                     status_table+=html_create_recode("MySQL","ERROR")
         #/Operation
