@@ -127,7 +127,7 @@ def show(req):
                 #    status_table+=html_create_recode("MySQL>",result)
                 #connection.commit()
                     status_table+=html_create_recode("MySQL","OK")
-                    connection.close()
+                    conn.close()
                 except:
                     status_table+=html_create_recode("MySQL","MySQLdb.Error")
             
