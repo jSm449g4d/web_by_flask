@@ -117,7 +117,7 @@ def show(req):
                         host=i["host"],
                         user=i["user"],
                         password=i["password"],
-                        db=i["db"],
+                        #db=i["db"],
                         port=int(i["port"]),
                         autocommit=True)
                 #cur = connection.cursor()
