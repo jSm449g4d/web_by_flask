@@ -121,7 +121,7 @@ def show(req):
                     status_table+=html_create_recode("MySQL","OK")
                     conn.close()
                 except as e:
-                    status_table+=html_create_recode("MySQL_err",e.args)
+                    status_table+=html_create_recode("MySQL_err",e.message)
         #/Operation
     return wsgi.render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],
                             form_gcs_uri=config_dict["form_gcs_uri"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
