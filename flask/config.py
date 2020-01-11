@@ -117,7 +117,7 @@ def show(req):
                         user=i["user"],
                         password=i["password"],
                         db=i["db"],
-                        port=int(i["port"]),
+                        port=3306,
                         autocommit=True)
                     status_table+=html_create_recode("MySQL","OK")
                     conn.close()
