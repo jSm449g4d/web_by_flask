@@ -113,7 +113,8 @@ def show(req):
             resp=db.collection('users').document('alovelace').get().to_dict()
             status_table+=html_create_recode("Firestore",json.dumps(resp))
         if "mysql_check" in req.form and secure_filename(req.form["mysql_check"])=="True":
-            try:with open("MySQL_key.json","r") as fp:mysql_keys=json.load(fp)
+            try:
+                with open("MySQL_key.json","r") as fp:mysql_keys=json.load(fp)
             except:mysql_keys={}
             for i in mysql_keys.values():
                 status_table+=html_create_recode("MySQL_host",i["host"])
@@ -124,9 +125,6 @@ def show(req):
                     Base.metadata.create_all(dbengine)                    
                     conn.close()
                     status_table+=html_create_recode("sqlalchemy","Ced")
-                    
-                    
-                    status_table+=html_create_recode("sqlalchemy","Ced_sqlite3")
                 except Exception as e:
                     status_table+=html_create_recode("MySQL_err",str(e))
                     continue
