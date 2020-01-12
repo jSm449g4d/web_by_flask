@@ -129,7 +129,7 @@ def show(req):
                     status_table+=html_create_recode("MySQL_err",str(e))
                     continue
                 break;
-            dbengine = create_engine('sqlite://./flask2.sqlite3',encoding = "utf-8")
+            dbengine = create_engine('sqlite:///flask2.sqlite3',encoding = "utf-8")
             conn = dbengine.connect()
             conn.close()
             os.chmod("./flask2.sqlite3",0o777)
