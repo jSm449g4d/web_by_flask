@@ -124,7 +124,7 @@ def show(req):
                     dbengine = create_engine("mysql+pymysql://"+i["user"]+":"+i["password"]+"@"+i["host"]+"/"+i["db"]+"?charset=utf8"
                         ,encoding = "utf-8",echo=True)
                     status_table+=html_create_recode("sqlalchemy","EGed")
-                    connection = engine.connect()
+                    connection = dbengine.connect()
                     status_table+=html_create_recode("sqlalchemy","CONNed")
                     connection.close()
                     status_table+=html_create_recode("sqlalchemy","Ced")
