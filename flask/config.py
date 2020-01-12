@@ -14,7 +14,6 @@ import firebase_admin
 from firebase_admin import auth,firestore
 from urllib import parse
 import wsgi
-import MySQLdb
 from sqlalchemy import create_engine
 from sqlalchemy import Column,Integer,String
 from sqlalchemy.ext.declarative import declarative_base
@@ -119,21 +118,20 @@ def show(req):
             for i in mysql_keys.values():
                 status_table+=html_create_recode("MySQL_host",i["host"])
                 try:
-                    conn = MySQLdb.connect(
-                        host=i["host"],
-                        user=i["user"],
-                        password=i["password"],
-                        db=i["db"],
-                        port=3306,
-                        autocommit=True)                    
-                    conn.close()
-                    dbengine = create_engine("mysql+pymysql://"+i["user"]+":"+i["password"]+"@"+i["host"]+"/"+i["db"]+"?charset=utf8"
+                    dbengine = create_engine("mysql+mysqldb://"+i["user"]+":"+i["password"]+"@"+i["host"]+"/"+i["db"]+"?charset=utf8"
                         ,encoding = "utf-8",echo=True)
                     conn = dbengine.connect()
-                    Base.metadata.create_all(dbengine)
-                    
+                    Base.metadata.create_all(dbengine)                    
                     conn.close()
                     status_table+=html_create_recode("sqlalchemy","Ced")
+                    
+                    dbengine = create_engine('sqlite://./flask.sqlite3'
+                        ,encoding = "utf-8",echo=True)
+                    os.chmod("./flask.sqlite3",0o777)
+                    conn = dbengine.connect()
+                    conn.close()
+                    
+                    status_table+=html_create_recode("sqlalchemy","Ced_sqlite3")
                 except Exception as e:
                     status_table+=html_create_recode("MySQL_err",str(e))
                     continue
