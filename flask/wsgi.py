@@ -63,8 +63,9 @@ def html_show(name):
 @app.route("/<name>.py",methods=['GET', 'POST'])
 def py_show(name):
     try :return importlib.import_module(name).show(request)
-    except:return render_template("error.html",
-        form_error_code="500",form_error_text="×importlib.import_module"),500
+    except Exception as e:
+        return render_template("error.html",
+        form_error_code="500",form_error_text=str(e)),500
 
 application=app
 
