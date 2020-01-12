@@ -131,8 +131,9 @@ def show(req):
                 break;
             dbengine = create_engine('sqlite:///flask2.sqlite3',encoding = "utf-8")
             conn = dbengine.connect()
+            Base.metadata.create_all(dbengine)           
             conn.close()
-            os.chmod("./flask2.sqlite3",0o777)
+#            os.chmod("./flask2.sqlite3",0o777)
             status_table+=html_create_recode("sqlalchemy","Ced_sqlite3")
         #/Operation
     return wsgi.render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],
