@@ -122,9 +122,9 @@ def show(req):
                 try:
                     dbengine = create_engine("mysql+mysqldb://"+i["user"]+":"+i["password"]+"@"+i["host"]+"/"+i["db"]+"?charset=utf8"
                         ,encoding = "utf-8")
-            Base.metadata.create_all(dbengine)           
-            Session = sessionmaker(bind=dbengine, autocommit=True)
-            Session.close()
+                    Base.metadata.create_all(dbengine)           
+                    Session = sessionmaker(bind=dbengine, autocommit=True)
+                    Session.close()
                     status_table+=html_create_recode("sqlalchemy","Ced")
                 except Exception as e:
                     status_table+=html_create_recode("MySQL_err",str(e))
