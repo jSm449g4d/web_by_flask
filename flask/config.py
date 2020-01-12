@@ -119,14 +119,14 @@ def show(req):
                 status_table+=html_create_recode("MySQL_host",i["host"])
                 try:
                     dbengine = create_engine("mysql+mysqldb://"+i["user"]+":"+i["password"]+"@"+i["host"]+"/"+i["db"]+"?charset=utf8"
-                        ,encoding = "utf-8",echo=True)
+                        ,encoding = "utf-8")
                     conn = dbengine.connect()
                     Base.metadata.create_all(dbengine)                    
                     conn.close()
                     status_table+=html_create_recode("sqlalchemy","Ced")
                     
-                    dbengine = create_engine('sqlite://./flask.sqlite3'
-                        ,encoding = "utf-8",echo=True)
+                    dbengine = create_engine('sqlite:///flask.sqlite3'
+                        ,encoding = "utf-8")
                     os.chmod("./flask.sqlite3",0o777)
                     conn = dbengine.connect()
                     conn.close()
