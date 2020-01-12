@@ -15,6 +15,7 @@ from firebase_admin import auth,firestore
 from urllib import parse
 import wsgi
 import MySQLdb
+from sqlalchemy import create_engine
 
 status_GCS="error"
 dir_config_json='./config.json'
@@ -116,9 +117,17 @@ def show(req):
                         password=i["password"],
                         db=i["db"],
                         port=3306,
-                        autocommit=True)
-                    status_table+=html_create_recode("MySQL","OK")
+                        autocommit=True)                    
                     conn.close()
+                    status_table+=html_create_recode("MySQL","OK")
+                    status_table+=html_create_recode("sqlalchemy","TRY")
+                    dbengine = create_engine('mysql+pymysql://i["user"]:i["password"]@i["host"]/i["db"]?charset=utf8'
+                        ,encoding = "utf-8",echo=True)
+                    status_table+=html_create_recode("sqlalchemy","EGed")
+                    connection = engine.connect()
+                    status_table+=html_create_recode("sqlalchemy","CONNed")
+                    connection.close()
+                    status_table+=html_create_recode("sqlalchemy","Ced")
                 except Exception as e:
                     status_table+=html_create_recode("MySQL_err",str(e))
                 except:
