@@ -17,6 +17,7 @@ import wsgi
 from sqlalchemy import create_engine
 from sqlalchemy import Column,Integer,String
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 
 status_GCS="error"
 dir_config_json='./config.json'
@@ -58,7 +59,7 @@ def html_create_recode(title="",data="",color="navy"):
 
 Base = declarative_base()
 class testtable(Base):
-    __tablename__ = 'testtable'
+    __tablename__ = 'test2'
     id = Column(Integer,primary_key = True)
     date = Column(String(255))
     temperature = Column(Integer)
@@ -121,19 +122,21 @@ def show(req):
                 try:
                     dbengine = create_engine("mysql+mysqldb://"+i["user"]+":"+i["password"]+"@"+i["host"]+"/"+i["db"]+"?charset=utf8"
                         ,encoding = "utf-8")
-                    conn = dbengine.connect()
+                    #conn = dbengine.connect()
+                    Session = sessionmaker(bind=dbengine, autocommit=True)
                     Base.metadata.create_all(dbengine)                    
-                    conn.close()
+                    #conn.close()
                     status_table+=html_create_recode("sqlalchemy","Ced")
                 except Exception as e:
                     status_table+=html_create_recode("MySQL_err",str(e))
                     continue
                 break;
             dbengine = create_engine('sqlite:///flask2.sqlite3',encoding = "utf-8")
-            conn = dbengine.connect()
+#            conn = dbengine.connect()
+            Session = sessionmaker(bind=dbengine, autocommit=True)
             Base.metadata.create_all(dbengine)           
-            conn.close()
-#            os.chmod("./flask2.sqlite3",0o777)
+#            conn.close()
+            os.chmod("./flask2.sqlite3",0o777)
             status_table+=html_create_recode("sqlalchemy","Ced_sqlite3")
         #/Operation
     return wsgi.render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],
