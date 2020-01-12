@@ -122,20 +122,18 @@ def show(req):
                 try:
                     dbengine = create_engine("mysql+mysqldb://"+i["user"]+":"+i["password"]+"@"+i["host"]+"/"+i["db"]+"?charset=utf8"
                         ,encoding = "utf-8")
-                    #conn = dbengine.connect()
-                    Session = sessionmaker(bind=dbengine, autocommit=True)
-                    Base.metadata.create_all(dbengine)                    
-                    #conn.close()
+            Base.metadata.create_all(dbengine)           
+            Session = sessionmaker(bind=dbengine, autocommit=True)
+            Session.close()
                     status_table+=html_create_recode("sqlalchemy","Ced")
                 except Exception as e:
                     status_table+=html_create_recode("MySQL_err",str(e))
                     continue
                 break;
             dbengine = create_engine('sqlite:///flask2.sqlite3',encoding = "utf-8")
-#            conn = dbengine.connect()
-            Session = sessionmaker(bind=dbengine, autocommit=True)
             Base.metadata.create_all(dbengine)           
-#            conn.close()
+            Session = sessionmaker(bind=dbengine, autocommit=True)
+            Session.close()
             os.chmod("./flask2.sqlite3",0o777)
             status_table+=html_create_recode("sqlalchemy","Ced_sqlite3")
         #/Operation
