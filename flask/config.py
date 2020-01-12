@@ -122,7 +122,7 @@ def show(req):
                 try:
                     dbengine = create_engine("mysql+mysqldb://"+i["user"]+":"+i["password"]+"@"+i["host"]+"/"+i["db"]+"?charset=utf8"
                         ,encoding = "utf-8")     
-                    Session = sessionmaker(bind=dbengine, autocommit=True)
+                    Session = sessionmaker(bind=dbengine, autocommit=True)()
                     Base.metadata.create_all(dbengine)
                     Session.add(
                     testtable(id=iii,date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =0))
@@ -133,7 +133,7 @@ def show(req):
                     continue
                 break;
             dbengine = create_engine('sqlite:///flask2.sqlite3',encoding = "utf-8")
-            Session = sessionmaker(bind=dbengine, autocommit=True)
+            Session = sessionmaker(bind=dbengine, autocommit=True)()
             Base.metadata.create_all(dbengine)  
             Session.add(     
             testtable(id=iii,date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =1)  )
