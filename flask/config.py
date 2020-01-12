@@ -128,12 +128,12 @@ def show(req):
                 except Exception as e:
                     status_table+=html_create_recode("MySQL_err",str(e))
                     continue
-                dbengine = create_engine('sqlite://./flask2.sqlite3',encoding = "utf-8")
-                conn = dbengine.connect()
-                conn.close()
-                os.chmod("./flask2.sqlite3",0o777)
-                status_table+=html_create_recode("sqlalchemy","Ced_sqlite3")
                 break;
+            dbengine = create_engine('sqlite://./flask2.sqlite3',encoding = "utf-8")
+            conn = dbengine.connect()
+            conn.close()
+            os.chmod("./flask2.sqlite3",0o777)
+            status_table+=html_create_recode("sqlalchemy","Ced_sqlite3")
         #/Operation
     return wsgi.render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],
                             form_gcs_uri=config_dict["form_gcs_uri"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
