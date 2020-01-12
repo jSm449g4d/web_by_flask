@@ -8,7 +8,7 @@ COPY . .
 
 RUN apt update -q;apt upgrade -yq
 RUN apt install -yq gcc
-RUN apt install -yq python3 python3-pip mysql-server libmysqlclient
+RUN apt install -yq python3 python3-pip mysql-server libmysqlclient-dev
 
 RUN pip3 install -U pip
 RUN pip3 install -U flask waitress janome werkzeug psutil urllib3 certifi pytz neologdn \
