@@ -125,9 +125,9 @@ def show(req):
                     conn.close()
                     status_table+=html_create_recode("sqlalchemy","Ced")
                     
-                    dbengine = create_engine('sqlite:///flask.sqlite3'
+                    dbengine = create_engine('sqlite:///flask2.sqlite3'
                         ,encoding = "utf-8")
-                    os.chmod("./flask.sqlite3",0o777)
+                    os.chmod("./flask2.sqlite3",0o777)
                     conn = dbengine.connect()
                     conn.close()
                     
