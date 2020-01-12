@@ -8,7 +8,7 @@ COPY . .
 
 RUN apt update -q;apt upgrade -yq
 RUN apt install -yq gcc
-RUN apt install -yq python3-pip python3
+RUN apt install -yq python3 python3-pip
 
 RUN pip3 install -U pip
 RUN pip3 install -U flask waitress janome werkzeug psutil urllib3 certifi pytz neologdn \
