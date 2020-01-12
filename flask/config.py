@@ -124,7 +124,7 @@ def show(req):
                         ,encoding = "utf-8")     
                     Session = sessionmaker(bind=dbengine, autocommit=True)
                     Base.metadata.create_all(dbengine)
-                    session.add(
+                    Session.add(
                     testtable(id=iii,date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =0))
                     dbengine.dispose()
                     status_table+=html_create_recode("sqlalchemy","Ced")
@@ -135,7 +135,7 @@ def show(req):
             dbengine = create_engine('sqlite:///flask2.sqlite3',encoding = "utf-8")
             Session = sessionmaker(bind=dbengine, autocommit=True)
             Base.metadata.create_all(dbengine)  
-            session.add(     
+            Session.add(     
             testtable(id=iii,date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =1)  )
             dbengine.dispose()  
             os.chmod("./flask2.sqlite3",0o777)
