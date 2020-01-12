@@ -10,6 +10,7 @@ RUN apt update -q;apt upgrade -yq
 RUN apt install -yq gcc
 RUN apt install -yq python3 python3-pip mysql-server
 
+RUN pip3 install -U pip3
 RUN pip3 install -U flask waitress janome werkzeug psutil urllib3 certifi pytz neologdn \
 firebase-admin google-cloud-firestore google-cloud-storage BeautifulSoup4 requests urllib3 \
 mysqlclient SQLAlchemy
