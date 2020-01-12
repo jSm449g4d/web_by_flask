@@ -16,6 +16,8 @@ from urllib import parse
 import wsgi
 import MySQLdb
 from sqlalchemy import create_engine
+from sqlalchemy import Column,Integer,String
+from sqlalchemy.ext.declarative import declarative_base
 
 status_GCS="error"
 dir_config_json='./config.json'
@@ -54,6 +56,13 @@ def config_json_update(form={}):
 def html_create_recode(title="",data="",color="navy"):
     return "<tr><td style=\"color:"+color+";\">"+title+"</td><td style=\"color:"+color+";\">"+data+"</td></tr>"
     
+
+Base = declarative_base()
+class testtable(Base):
+    __tablename__ = 'testtable'
+    id = Column(Integer,primary_key = True)
+    date = Column(String)
+    temperature = Column(Integer)
 
 def show(req):
     global status_GCS,storage_client,config_dict;
@@ -110,7 +119,6 @@ def show(req):
             for i in mysql_keys.values():
                 status_table+=html_create_recode("MySQL_host",i["host"])
                 try:
-                    status_table+=html_create_recode("MySQL","TRY")
                     conn = MySQLdb.connect(
                         host=i["host"],
                         user=i["user"],
@@ -119,19 +127,17 @@ def show(req):
                         port=3306,
                         autocommit=True)                    
                     conn.close()
-                    status_table+=html_create_recode("MySQL","OK")
-                    status_table+=html_create_recode("sqlalchemy","TRY")
                     dbengine = create_engine("mysql+pymysql://"+i["user"]+":"+i["password"]+"@"+i["host"]+"/"+i["db"]+"?charset=utf8"
                         ,encoding = "utf-8",echo=True)
-                    status_table+=html_create_recode("sqlalchemy","EGed")
-                    connection = dbengine.connect()
-                    status_table+=html_create_recode("sqlalchemy","CONNed")
-                    connection.close()
+                    conn = dbengine.connect()
+                    Base.metadata.create_all(dbengine)
+                    
+                    conn.close()
                     status_table+=html_create_recode("sqlalchemy","Ced")
                 except Exception as e:
                     status_table+=html_create_recode("MySQL_err",str(e))
-                except:
-                    status_table+=html_create_recode("MySQL","ERROR")
+                    continue
+                break;
         #/Operation
     return wsgi.render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],
                             form_gcs_uri=config_dict["form_gcs_uri"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
