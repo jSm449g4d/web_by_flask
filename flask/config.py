@@ -113,17 +113,18 @@ def show(req):
             db = firestore.client()
             resp=db.collection('users').document('alovelace').get().to_dict()
             status_table+=html_create_recode("Firestore",json.dumps(resp))
+        #SQLAlchemy test
         if "mysql_check" in req.form and secure_filename(req.form["mysql_check"])=="True":
             try:
                 with open("MySQL_key.json","r") as fp:mysql_keys=json.load(fp)
             except:mysql_keys={}
             for i in mysql_keys.values():
-                status_table+=html_create_recode("MySQL_host",i["host"])
                 try:
                     dbengine = create_engine("mysql+mysqldb://"+i["user"]+":"+i["password"]+"@"+i["host"]+"/"+i["db"]+"?charset=utf8"
                         ,encoding = "utf-8")     
                     Session = sessionmaker(bind=dbengine, autocommit=True)
-                    Base.metadata.create_all(dbengine)      
+                    Base.metadata.create_all(dbengine)
+                    testtable(id=iii,date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =0)
                     dbengine.dispose()
                     status_table+=html_create_recode("sqlalchemy","Ced")
                 except Exception as e:
@@ -132,7 +133,8 @@ def show(req):
                 break;
             dbengine = create_engine('sqlite:///flask2.sqlite3',encoding = "utf-8")
             Session = sessionmaker(bind=dbengine, autocommit=True)
-            Base.metadata.create_all(dbengine)         
+            Base.metadata.create_all(dbengine)       
+            testtable(id=iii,date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =1)  
             dbengine.dispose()  
             os.chmod("./flask2.sqlite3",0o777)
             status_table+=html_create_recode("sqlalchemy","Ced_sqlite3")
