@@ -61,7 +61,7 @@ Base = declarative_base()
 class testtable(Base):
     __tablename__ = 'testtable'
     id = Column(Integer,primary_key = True)
-    date = Column(String)
+    date = Column(String(255))
     temperature = Column(Integer)
 
 def show(req):
