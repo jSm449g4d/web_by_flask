@@ -134,7 +134,7 @@ def show(req):
                 break;
             dbengine = create_engine('sqlite:///flask2.sqlite3',encoding = "utf-8")
             Session = sessionmaker(bind=dbengine, autocommit=True)()
-            Base.metadata.create_all(dbengine)  
+            Base.metadata.create_all(dbengine) 
             Session.add(     
             testtable(id=iii,date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =1)  )
             dbengine.dispose()  
