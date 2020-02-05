@@ -119,8 +119,8 @@ def show(req):
             try:
                 with open("MySQL_key.json","r") as fp:
                     mysqljson=json.load(fp)
-                    dbengine = create_engine("mysql+mysqldb://"+mysqljson(fp)["user"]+":"+mysqljson(fp)["password"]+
-                                            "@"+mysqljson(fp)["host"]+"/"+mysqljson(fp)["db"]+"?charset=utf8",encoding = "utf-8")  
+                    dbengine = create_engine("mysql+mysqldb://"+mysqljson["user"]+":"+mysqljson["password"]+
+                                            "@"+mysqljson["host"]+"/"+mysqljson["db"]+"?charset=utf8",encoding = "utf-8")  
                 status_table+=html_create_recode("DB","MySQL")
             except:
                 dbengine = create_engine('sqlite:///flask2.sqlite3',encoding = "utf-8")
