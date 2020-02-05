@@ -118,7 +118,6 @@ def show(req):
             status_table+=html_create_recode("Firestore",json.dumps(resp))
         #SQLAlchemy test
         if "mysql_check" in req.form and secure_filename(req.form["mysql_check"])=="True":
-            dbengine;
             try:
                 with open("MySQL_key.json","r") as fp:
                     dbengine = create_engine("mysql+mysqldb://"+json.load(fp)["user"]+":"+json.load(fp)["password"]+
