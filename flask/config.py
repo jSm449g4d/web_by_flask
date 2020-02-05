@@ -61,9 +61,6 @@ class testtable(Base):
     id = Column(Integer,primary_key = True)
     date = Column(String(255))
     temperature = Column(Integer)
-class tsimple(Base):
-    __tablename__ = 'tsimple'
-    id = Column(Integer,primary_key = True)
 
 def show(req):
     global status_GCS,storage_client,config_dict;
@@ -118,9 +115,9 @@ def show(req):
         if "mysql_check" in req.form and secure_filename(req.form["mysql_check"])=="True":
             try:
                 with open("MySQL_key.json","r") as fp:
-                    mysqljson=json.load(fp)
-                    dbengine = create_engine("mysql+mysqldb://"+mysqljson["user"]+":"+mysqljson["password"]+
-                                            "@"+mysqljson["host"]+"/"+mysqljson["db"]+"?charset=utf8",encoding = "utf-8")  
+                    MySQL_key=json.load(fp)
+                    dbengine = create_engine("mysql+mysqldb://"+MySQL_key["user"]+":"+MySQL_key["password"]+
+                                            "@"+MySQL_key["host"]+"/"+MySQL_key["db"]+"?charset=utf8",encoding = "utf-8")  
                 status_table+=html_create_recode("DB","MySQL")
             except:
                 dbengine = create_engine('sqlite:///flask2.sqlite3',encoding = "utf-8")
