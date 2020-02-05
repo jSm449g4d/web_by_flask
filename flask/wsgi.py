@@ -39,8 +39,6 @@ except:
     dbengine = create_engine('sqlite:///flask2.sqlite3',encoding = "utf-8")
     #os.chmod("./flask2.sqlite3",0o777)
     status_table+=html_create_recode("DB","MySQL")
-global dbengine
-
 
 #flask start
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))

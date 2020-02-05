@@ -114,13 +114,14 @@ def show(req):
         #SQLAlchemy test
         if "mysql_check" in req.form and secure_filename(req.form["mysql_check"])=="True":
             try:
-                session = sessionmaker(bind=dbengine)()
-                Base.metadata.create_all(dbengine)
+                wsgi.dbengine
+                session = sessionmaker(bind=wsgi.dbengine)()
+                Base.metadata.create_all(wsgi.dbengine)
                 session.add(
                 testtable(id=iii,date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =0))
                 session.commit()
                 session.close()
-                dbengine.dispose()
+                wsgi.dbengine.dispose()
                 status_table+=html_create_recode("sqlalchemy","Ced")
             except Exception as e:
                 status_table+=html_create_recode("MySQL_err",str(e))
