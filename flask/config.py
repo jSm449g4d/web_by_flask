@@ -114,7 +114,7 @@ def show(req):
         #SQLAlchemy test
         if "mysql_check" in req.form and secure_filename(req.form["mysql_check"])=="True":
             try:
-                wsgi.dbengine
+                global wsgi.dbengine
                 session = sessionmaker(bind=wsgi.dbengine)()
                 Base.metadata.create_all(wsgi.dbengine)
                 session.add(
