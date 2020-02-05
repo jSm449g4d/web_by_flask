@@ -127,7 +127,7 @@ def show(req):
             except:
                 dbengine = create_engine('sqlite:///flask2.sqlite3',encoding = "utf-8")
                 os.chmod("./flask2.sqlite3",0o777)
-                status_table+=html_create_recode("sqlalchemy","Ced_sqlite3")
+                status_table+=html_create_recode("sqlalchemy","sqlite3")
                 try:
                     session = sessionmaker(bind=dbengine)()
                     Base.metadata.create_all(dbengine)
