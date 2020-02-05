@@ -126,14 +126,14 @@ def show(req):
                     dbengine = create_engine("mysql+mysqldb://"+i["user"]+":"+i["password"]+"@"+i["host"]+"/"+i["db"]+"?charset=utf8"
                         ,encoding = "utf-8")     
                     Session = sessionmaker(bind=dbengine, autocommit=True)
-                    status_table+=html_create_recode("sqlalchemy","AA")
                     session = Session()
-                    status_table+=html_create_recode("sqlalchemy","BB")
                     Base.metadata.create_all(dbengine)
+                    status_table+=html_create_recode("sqlalchemy","AA")
                     session.add(
                     testtable(id=iii,date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =0))
                     te=tsimple()
                     te.id=100
+                    status_table+=html_create_recode("sqlalchemy","BB")
                     session.add(te)
                     session.commit()
                     session.close()
