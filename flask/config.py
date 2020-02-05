@@ -120,9 +120,9 @@ def show(req):
         if "mysql_check" in req.form and secure_filename(req.form["mysql_check"])=="True":
             try:
                 with open("MySQL_key.json","r") as fp:
-                    status_table+=html_create_recode("DBs",json.load(fp)["port"])
-                    dbengine = create_engine("mysql+mysqldb://"+json.load(fp)["user"]+":"+json.load(fp)["password"]+
-                                            "@"+json.load(fp)["host"]+"/"+json.load(fp)["db"]+"?charset=utf8",encoding = "utf-8")  
+                    mysqljson=json.load(fp)
+                    dbengine = create_engine("mysql+mysqldb://"+mysqljson(fp)["user"]+":"+mysqljson(fp)["password"]+
+                                            "@"+mysqljson(fp)["host"]+"/"+mysqljson(fp)["db"]+"?charset=utf8",encoding = "utf-8")  
                 status_table+=html_create_recode("DB","MySQL")
             except:
                 dbengine = create_engine('sqlite:///flask2.sqlite3',encoding = "utf-8")
