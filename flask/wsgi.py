@@ -23,19 +23,10 @@ def render_template_2(dir,**kwargs):
     return render_template_string(html)
 
 
-
 #flask start
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.chdir(os.path.join("./",os.path.dirname(__file__)))
 app = flask.Flask(__name__)
-
-###under_construction
-access_counter=0
-DB_dir='./flask.sqlite3'
-if os.path.exists(DB_dir)==False:
-    sqlite3.connect(DB_dir).close()
-    os.chmod(DB_dir,0o777)
-###under_construction
 
 
 #prevent uploading too large file

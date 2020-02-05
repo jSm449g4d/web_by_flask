@@ -118,34 +118,26 @@ def show(req):
             status_table+=html_create_recode("Firestore",json.dumps(resp))
         #SQLAlchemy test
         if "mysql_check" in req.form and secure_filename(req.form["mysql_check"])=="True":
+            dbengine;
             try:
-                with open("MySQL_key.json","r") as fp:mysql_keys=json.load(fp)
-            except:mysql_keys={}
-            for i in mysql_keys.values():
+                with open("MySQL_key.json","r") as fp:
+                    dbengine = create_engine("mysql+mysqldb://"+json.load(fp)["user"]+":"+json.load(fp)["password"]+
+                                            "@"+json.load(fp)["host"]+"/"+json.load(fp)["db"]+"?charset=utf8",encoding = "utf-8")  
+                status_table+=html_create_recode("sqlalchemy","MySQL")
+            except:
+                dbengine = create_engine('sqlite:///flask2.sqlite3',encoding = "utf-8")
+                os.chmod("./flask2.sqlite3",0o777)
+                status_table+=html_create_recode("sqlalchemy","Ced_sqlite3")
                 try:
-                    dbengine = create_engine("mysql+mysqldb://"+i["user"]+":"+i["password"]+"@"+i["host"]+"/"+i["db"]+"?charset=utf8"
-                        ,encoding = "utf-8")     
-                    Session = sessionmaker(bind=dbengine)
-                    session = Session()
+                    session = sessionmaker(bind=dbengine)()
                     Base.metadata.create_all(dbengine)
                     session.add(
                     testtable(id=iii,date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =0))
-                    te=tsimple()
-                    te.id=100
-                    session.add(te)
-                    status_table+=html_create_recode("sqlalchemy","A")
                     session.commit()
-                    status_table+=html_create_recode("sqlalchemy","B")
                     dbengine.dispose()
                     status_table+=html_create_recode("sqlalchemy","Ced")
                 except Exception as e:
                     status_table+=html_create_recode("MySQL_err",str(e))
-                    continue
-                break;
-#            dbengine = create_engine('sqlite:///flask2.sqlite3',encoding = "utf-8")
-#            os.chmod("./flask2.sqlite3",0o777)
-#            status_table+=html_create_recode("sqlalchemy","Ced_sqlite3")
-        #/Operation
     return wsgi.render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],
                             form_gcs_uri=config_dict["form_gcs_uri"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
                             STATUS_TABLE=status_table)
