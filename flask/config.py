@@ -128,16 +128,16 @@ def show(req):
                 dbengine = create_engine('sqlite:///flask2.sqlite3',encoding = "utf-8")
                 os.chmod("./flask2.sqlite3",0o777)
                 status_table+=html_create_recode("sqlalchemy","sqlite3")
-                try:
-                    session = sessionmaker(bind=dbengine)()
-                    Base.metadata.create_all(dbengine)
-                    session.add(
-                    testtable(id=iii,date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =0))
-                    session.commit()
-                    dbengine.dispose()
-                    status_table+=html_create_recode("sqlalchemy","Ced")
-                except Exception as e:
-                    status_table+=html_create_recode("MySQL_err",str(e))
+            try:
+                session = sessionmaker(bind=dbengine)()
+                Base.metadata.create_all(dbengine)
+                session.add(
+                testtable(id=iii,date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =0))
+                session.commit()
+                dbengine.dispose()
+                status_table+=html_create_recode("sqlalchemy","Ced")
+            except Exception as e:
+                status_table+=html_create_recode("MySQL_err",str(e))
     return wsgi.render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],
                             form_gcs_uri=config_dict["form_gcs_uri"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
                             STATUS_TABLE=status_table)
