@@ -125,28 +125,25 @@ def show(req):
                 try:
                     dbengine = create_engine("mysql+mysqldb://"+i["user"]+":"+i["password"]+"@"+i["host"]+"/"+i["db"]+"?charset=utf8"
                         ,encoding = "utf-8")     
-                    Session = sessionmaker(bind=dbengine)()
+                    Session = sessionmaker(bind=dbengine, autocommit=True)
+                    session = Session()
                     Base.metadata.create_all(dbengine)
-                    Session.add(
+                    session.add(
                     testtable(id=iii,date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =0))
                     te=tsimple()
                     te.id=100
-                    Session.add(te)
+                    session.add(te)
                     session.commit()
+                    session.close()
                     dbengine.dispose()
                     status_table+=html_create_recode("sqlalchemy","Ced")
                 except Exception as e:
                     status_table+=html_create_recode("MySQL_err",str(e))
                     continue
                 break;
-            dbengine = create_engine('sqlite:///flask2.sqlite3',encoding = "utf-8")
-            Session = sessionmaker(bind=dbengine, autocommit=True)()
-            Base.metadata.create_all(dbengine) 
-            Session.add(     
-            testtable(id=iii,date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =1)  )
-            dbengine.dispose()  
-            os.chmod("./flask2.sqlite3",0o777)
-            status_table+=html_create_recode("sqlalchemy","Ced_sqlite3")
+#            dbengine = create_engine('sqlite:///flask2.sqlite3',encoding = "utf-8")
+#            os.chmod("./flask2.sqlite3",0o777)
+#            status_table+=html_create_recode("sqlalchemy","Ced_sqlite3")
         #/Operation
     return wsgi.render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],
                             form_gcs_uri=config_dict["form_gcs_uri"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
