@@ -48,8 +48,6 @@ def config_json_update(form={}):
         config_dict["status_GCS"]=secure_filename(form["status_GCS"])
     if "form_gcs_uri" in form:
         config_dict["form_gcs_uri"]=form["form_gcs_uri"].translate(str.maketrans("","","\"\'<>`;"))#Not_secure_filename!
-    if "dir_gcp_key" in form:
-        config_dict["dir_gcp_key"]=secure_filename(form["dir_gcp_key"])
     with open(dir_config_json,"w+",encoding="utf-8") as fp:json.dump(config_dict,fp)
     os.chmod(dir_config_json,0o777)
 
@@ -139,6 +137,5 @@ def show(req):
             except Exception as e:
                 status_table+=html_create_recode("MySQL_err",str(e))
     return wsgi.render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],
-                            form_gcs_uri=config_dict["form_gcs_uri"],DIR_GCP_KEY=config_dict["dir_gcp_key"],
-                            STATUS_TABLE=status_table)
+                            form_gcs_uri=config_dict["form_gcs_uri"],STATUS_TABLE=status_table)
 
