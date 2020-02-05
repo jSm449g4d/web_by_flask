@@ -11,7 +11,8 @@ import random
 from datetime import datetime
 import pytz
 import time
-import sqlite3
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 
 def render_template_2(dir,**kwargs):
@@ -23,6 +24,22 @@ def render_template_2(dir,**kwargs):
     return render_template_string(html)
 
 access_counter=0
+
+#ORM_test
+def html_create_recode(title="",data="",color="navy"):
+    return "<tr><td style=\"color:"+color+";\">"+title+"</td><td style=\"color:"+color+";\">"+data+"</td></tr>"
+status_table=""
+try:
+    with open("MySQL_key.json","r") as fp:
+        MySQL_key=json.load(fp)
+        dbengine = create_engine("mysql+mysqldb://"+MySQL_key["user"]+":"+MySQL_key["password"]+
+                                "@"+MySQL_key["host"]+"/"+MySQL_key["db"]+"?charset=utf8",encoding = "utf-8")
+        status_table+=html_create_recode("DB","MySQL")
+except:
+    dbengine = create_engine('sqlite:///flask2.sqlite3',encoding = "utf-8")
+    #os.chmod("./flask2.sqlite3",0o777)
+    status_table+=html_create_recode("DB","MySQL")
+
 
 #flask start
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -42,7 +59,7 @@ def indexpage_show():
     return render_template_2("index.html",
     used_python=sys.version,
     used_flask=flask.__version__,
-    used_sqlite3=sqlite3.version,
+    STATUS_TABLE=status_table,
     access_counter=str(access_counter)
     )
 

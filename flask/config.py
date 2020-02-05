@@ -114,16 +114,6 @@ def show(req):
         #SQLAlchemy test
         if "mysql_check" in req.form and secure_filename(req.form["mysql_check"])=="True":
             try:
-                with open("MySQL_key.json","r") as fp:
-                    MySQL_key=json.load(fp)
-                    dbengine = create_engine("mysql+mysqldb://"+MySQL_key["user"]+":"+MySQL_key["password"]+
-                                            "@"+MySQL_key["host"]+"/"+MySQL_key["db"]+"?charset=utf8",encoding = "utf-8")  
-                status_table+=html_create_recode("DB","MySQL")
-            except:
-                dbengine = create_engine('sqlite:///flask2.sqlite3',encoding = "utf-8")
-                #os.chmod("./flask2.sqlite3",0o777)
-                status_table+=html_create_recode("DB","sqlite3")
-            try:
                 session = sessionmaker(bind=dbengine)()
                 Base.metadata.create_all(dbengine)
                 session.add(
