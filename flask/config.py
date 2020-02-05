@@ -113,7 +113,6 @@ def show(req):
             status_table+=html_create_recode("Firestore",json.dumps(resp))
         #SQLAlchemy test
         if "mysql_check" in req.form and secure_filename(req.form["mysql_check"])=="True":
-            global dbengine
             try:
                 session = sessionmaker(bind=dbengine)()
                 Base.metadata.create_all(dbengine)
