@@ -129,7 +129,7 @@ def show(req):
                     Base.metadata.create_all(dbengine)
                     Session.add(
                     testtable(id=iii,date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =0))
-                    Session.add(testtable(id=1))
+                    Session.add(tsimple(id=1))
                     dbengine.dispose()
                     status_table+=html_create_recode("sqlalchemy","Ced")
                 except Exception as e:
