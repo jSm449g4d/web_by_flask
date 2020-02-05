@@ -63,6 +63,9 @@ class testtable(Base):
     id = Column(Integer,primary_key = True)
     date = Column(String(255))
     temperature = Column(Integer)
+class tsimple(Base):
+    __tablename__ = 'tsimple'
+    id = Column(Integer,primary_key = True)
 
 def show(req):
     global status_GCS,storage_client,config_dict;
@@ -126,6 +129,7 @@ def show(req):
                     Base.metadata.create_all(dbengine)
                     Session.add(
                     testtable(id=iii,date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =0))
+                    Session.add(testtable(id=1))
                     dbengine.dispose()
                     status_table+=html_create_recode("sqlalchemy","Ced")
                 except Exception as e:
