@@ -36,8 +36,9 @@ def html_create_recode(title="",data="",color="navy"):
 status_table=""
 try:
     with open("MySQL_key.json","r") as fp:
+        status_table+=html_create_recode("debug","AA")
         MySQL_key=json.load(fp)
-        status_table+=html_create_recode("debug",json.load(fp)["port"])
+        status_table+=html_create_recode("debug",MySQL_key["port"])
         dbengine = create_engine("mysql+mysqldb://"+MySQL_key["user"]+":"+MySQL_key["password"]+
                                 "@"+MySQL_key["host"]+"/"+MySQL_key["db"]+"?charset=utf8",encoding = "utf-8")
         status_table+=html_create_recode("DB","MySQL")
