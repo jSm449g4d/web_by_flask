@@ -13,7 +13,7 @@ from sqlalchemy.orm import sessionmaker
 
 
 Base = declarative_base()
-class testtable(Base):
+class tptef_table(Base):
     __tablename__ = 'tptef'
     room=Column(String(64))
     user=Column(String(64))
