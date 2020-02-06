@@ -39,7 +39,6 @@ def add_status_table(title="",data="",color="navy"):
     status_table+="<tr><td style=\"color:"+color+";\">"+title+"</td><td style=\"color:"+color+";\">"+data+"</td></tr>"
 add_status_table("Python",sys.version,color="#555000")
 add_status_table("Flask",flask.__version__,color="#555000")
-add_status_table("sqlalchemy",sqlalchemy.__version__,color="#555000")
 access_counter=0
 #unzip CDN contents for fallback
 try:zipfile.ZipFile(os.path.join("./static/","bootstrap-4.4.1-dist.zip")).extractall("./static/")
