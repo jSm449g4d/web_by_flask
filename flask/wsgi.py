@@ -23,6 +23,11 @@ def render_template_2(dir,**kwargs):
             html=html.replace("{{"+kw+"}}",arg)
     return render_template_string(html)
 
+
+#flask start
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+os.chdir(os.path.join("./",os.path.dirname(__file__)))
+app = flask.Flask(__name__)
 access_counter=0
 
 #ORM_test
@@ -41,10 +46,6 @@ except:
     #os.chmod("./flask2.sqlite3",0o777)
     status_table+=html_create_recode("DB","sqlite3")
 
-#flask start
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-os.chdir(os.path.join("./",os.path.dirname(__file__)))
-app = flask.Flask(__name__)
 
 #prevent uploading too large file
 app.config['MAX_CONTENT_LENGTH'] = 100000000
