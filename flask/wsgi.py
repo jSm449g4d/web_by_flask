@@ -12,7 +12,6 @@ from datetime import datetime
 import pytz
 import time
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 import json
 
 
@@ -38,9 +37,10 @@ def add_status_table(title="",data="",color="navy"):
     status_table+="<tr><td style=\"color:"+color+";\">"+title+"</td><td style=\"color:"+color+";\">"+data+"</td></tr>"
 add_status_table("Python",sys.version,color="#555000")
 add_status_table("Flask",flask.__version__,color="#555000")
+add_status_table("sqlalchemy",sqlalchemy.__version__,color="#555000")
 access_counter=0
 
-#ORM_test
+#management of ORMapper
 try:
     with open("MySQL_key.json","r") as fp:
         MySQL_key=json.load(fp)
@@ -48,8 +48,8 @@ try:
                                 "@"+MySQL_key["host"]+"/"+MySQL_key["db"]+"?charset=utf8",encoding = "utf-8")
         add_status_table("DB","MySQL")
 except:
-    dbengine = create_engine('sqlite:///flask2.sqlite3',encoding = "utf-8")
-    #os.chmod("./flask2.sqlite3",0o777)
+    dbengine = create_engine('sqlite:///flask.sqlite3',encoding = "utf-8")
+    #os.chmod("./flask.sqlite3",0o777)
     add_status_table("DB","sqlite3")
 
 #unzip CDN contents for fallback

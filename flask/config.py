@@ -21,7 +21,7 @@ from sqlalchemy.orm import sessionmaker
 
 status_GCS="error"
 dir_config_json='./config.json'
-config_dict={"dir_db":'flask.sqlite3',"dir_gcp_key":"FirebaseAdminKey.json",
+config_dict={"dir_db":'flask.sqlite3',
             "form_gcs_uri":"gs://fb_gcs_bucket/flask.sqlite3",
             "FB_admin_uid":"1GYEMV6s2OWU9dR2cXCntSlR2op2"}
 iii=0
@@ -33,12 +33,12 @@ else:
     os.chmod(dir_config_json,0o777)
 
 try:#GCS key→client
-    storage_client = storage.Client.from_service_account_json(config_dict["dir_gcp_key"])
+    storage_client = storage.Client.from_service_account_json("FirebaseAdmin_Key.json")
     status_GCS="access success"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
 except:
     status_GCS="not_available"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
 try:#Firebase key→client
-    cred = firebase_admin.credentials.Certificate("FirebaseAdminKey.json")
+    cred = firebase_admin.credentials.Certificate("FirebaseAdmin_Key.json")
     firebase_admin.initialize_app(cred)
 except:0
 
@@ -101,7 +101,7 @@ def show(req):
         if "gcs_client_reload" in req.form and secure_filename(req.form["gcs_client_reload"])=="True":
             if clearance==1 or clearance==2:
                 try:#get_key
-                    storage_client = storage.Client.from_service_account_json(config_dict["dir_gcp_key"])
+                    storage_client = storage.Client.from_service_account_json("FirebaseAdmin_Key.json")
                     status_GCS="reload:gcs_client"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
                 except:
                     status_GCS="×gcs_client_reload"+datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")
