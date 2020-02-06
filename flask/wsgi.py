@@ -25,32 +25,32 @@ def render_template_2(dir,**kwargs):
     return render_template_string(html)
 
 
-#flask start
+#flask startup
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.chdir(os.path.join("./",os.path.dirname(__file__)))
 app = flask.Flask(__name__)
+#prevent uploading too large file
+app.config['MAX_CONTENT_LENGTH'] = 100000000
+#management of status_table
+status_table=""
+def add_status_table(title="",data="",color="navy"):
+    global status_table
+    status_table+="<tr><td style=\"color:"+color+";\">"+title+"</td><td style=\"color:"+color+";\">"+data+"</td></tr>"
+add_status_table("Python",sys.version,color="#555000")
+add_status_table("Flask",flask.__version__,color="#555000")
 access_counter=0
 
 #ORM_test
-def html_create_recode(title="",data="",color="navy"):
-    return "<tr><td style=\"color:"+color+";\">"+title+"</td><td style=\"color:"+color+";\">"+data+"</td></tr>"
-status_table=""
 try:
     with open("MySQL_key.json","r") as fp:
-        status_table+=html_create_recode("debug","AA")
         MySQL_key=json.load(fp)
-        status_table+=html_create_recode("debug",MySQL_key["port"])
         dbengine = create_engine("mysql+mysqldb://"+MySQL_key["user"]+":"+MySQL_key["password"]+
                                 "@"+MySQL_key["host"]+"/"+MySQL_key["db"]+"?charset=utf8",encoding = "utf-8")
-        status_table+=html_create_recode("DB","MySQL")
+        add_status_table("DB","MySQL")
 except:
     dbengine = create_engine('sqlite:///flask2.sqlite3',encoding = "utf-8")
     #os.chmod("./flask2.sqlite3",0o777)
-    status_table+=html_create_recode("DB","sqlite3")
-
-
-#prevent uploading too large file
-app.config['MAX_CONTENT_LENGTH'] = 100000000
+    add_status_table("DB","sqlite3")
 
 #unzip CDN contents for fallback
 try:zipfile.ZipFile(os.path.join("./static/","bootstrap-4.4.1-dist.zip")).extractall("./static/")
@@ -60,8 +60,6 @@ except:print("cant unzip CDN contents")
 def indexpage_show():
     global access_counter;access_counter+=1
     return render_template_2("index.html",
-    used_python=sys.version,
-    used_flask=flask.__version__,
     STATUS_TABLE=status_table,
     access_counter=str(access_counter)
     )
