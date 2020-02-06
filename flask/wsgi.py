@@ -54,12 +54,12 @@ try:
         storage_client = storage.Client.from_service_account_json("FirebaseAdmin_Key.json")
         cred = firebase_admin.credentials.Certificate("FirebaseAdmin_Key.json")
         firebase_admin.initialize_app(cred)
-        add_status_table("GCP","available:%Y/%m/%d %H:%M:%S (UTC)")
+        add_status_table("GCP",datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"))
 except:
     dbengine = create_engine('sqlite:///flask.sqlite3',encoding = "utf-8")
     #os.chmod("./flask.sqlite3",0o777)
     add_status_table("DB","sqlite3")
-
+    add_status_table("CAUTION","FALLBACK_MODE because cant use online resource",color="red")
 
 @app.route("/")
 def indexpage_show():
