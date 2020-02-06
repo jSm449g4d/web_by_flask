@@ -13,13 +13,13 @@ from sqlalchemy.orm import sessionmaker
 
 
 Base = declarative_base()
-class tptef_table(Base):
-    __tablename__ = 'tptef'
-    room=Column(String(64))
-    user=Column(String(64))
-    remark=Column(String(256))
-    sha256=Column(String(32))
-    date = Column(String(64))
+#class tptef_table(Base):
+#    __tablename__ = 'tptef'
+#    room=Column(String(64))
+#    user=Column(String(64))
+#    remark=Column(String(256))
+#    sha256=Column(String(32))
+#    date = Column(String(64))
 
 def Display_Current_SQL(room=""):
     html=""
