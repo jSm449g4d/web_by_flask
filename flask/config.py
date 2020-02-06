@@ -14,7 +14,6 @@ import firebase_admin
 from firebase_admin import auth,firestore
 from urllib import parse
 import wsgi
-from sqlalchemy import create_engine
 from sqlalchemy import Column,Integer,String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
