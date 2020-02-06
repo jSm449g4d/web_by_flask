@@ -13,6 +13,9 @@ import pytz
 import time
 from sqlalchemy import create_engine
 import json
+from google.cloud import storage
+import firebase_admin
+from firebase_admin import auth
 
 
 def render_template_2(dir,**kwargs):
@@ -23,8 +26,7 @@ def render_template_2(dir,**kwargs):
             html=html.replace("{{"+kw+"}}",arg)
     return render_template_string(html)
 
-
-#flask startup
+#Flask_Startup
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.chdir(os.path.join("./",os.path.dirname(__file__)))
 app = flask.Flask(__name__)
@@ -39,6 +41,9 @@ add_status_table("Python",sys.version,color="#555000")
 add_status_table("Flask",flask.__version__,color="#555000")
 add_status_table("sqlalchemy",sqlalchemy.__version__,color="#555000")
 access_counter=0
+#unzip CDN contents for fallback
+try:zipfile.ZipFile(os.path.join("./static/","bootstrap-4.4.1-dist.zip")).extractall("./static/")
+except:print("cant unzip CDN contents")
 
 #management of ORMapper
 try:
@@ -47,14 +52,15 @@ try:
         dbengine = create_engine("mysql+mysqldb://"+MySQL_key["user"]+":"+MySQL_key["password"]+
                                 "@"+MySQL_key["host"]+"/"+MySQL_key["db"]+"?charset=utf8",encoding = "utf-8")
         add_status_table("DB","MySQL")
+        storage_client = storage.Client.from_service_account_json("FirebaseAdmin_Key.json")
+        cred = firebase_admin.credentials.Certificate("FirebaseAdmin_Key.json")
+        firebase_admin.initialize_app(cred)
+        add_status_table("GCP","available:%Y/%m/%d %H:%M:%S (UTC)")
 except:
     dbengine = create_engine('sqlite:///flask.sqlite3',encoding = "utf-8")
     #os.chmod("./flask.sqlite3",0o777)
     add_status_table("DB","sqlite3")
 
-#unzip CDN contents for fallback
-try:zipfile.ZipFile(os.path.join("./static/","bootstrap-4.4.1-dist.zip")).extractall("./static/")
-except:print("cant unzip CDN contents")
 
 @app.route("/")
 def indexpage_show():
