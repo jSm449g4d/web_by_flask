@@ -13,6 +13,7 @@ import pytz
 import time
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+import json
 
 
 def render_template_2(dir,**kwargs):
@@ -23,6 +24,11 @@ def render_template_2(dir,**kwargs):
             html=html.replace("{{"+kw+"}}",arg)
     return render_template_string(html)
 
+
+#flask start
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+os.chdir(os.path.join("./",os.path.dirname(__file__)))
+app = flask.Flask(__name__)
 access_counter=0
 
 #ORM_test
@@ -30,9 +36,10 @@ def html_create_recode(title="",data="",color="navy"):
     return "<tr><td style=\"color:"+color+";\">"+title+"</td><td style=\"color:"+color+";\">"+data+"</td></tr>"
 status_table=""
 try:
-    with open("./MySQL_key.json","r") as fp:
+    with open("MySQL_key.json","r") as fp:
+        status_table+=html_create_recode("debug","AA")
         MySQL_key=json.load(fp)
-        status_table+=html_create_recode("debug",json.load(fp)["port"])
+        status_table+=html_create_recode("debug",MySQL_key["port"])
         dbengine = create_engine("mysql+mysqldb://"+MySQL_key["user"]+":"+MySQL_key["password"]+
                                 "@"+MySQL_key["host"]+"/"+MySQL_key["db"]+"?charset=utf8",encoding = "utf-8")
         status_table+=html_create_recode("DB","MySQL")
@@ -41,10 +48,6 @@ except:
     #os.chmod("./flask2.sqlite3",0o777)
     status_table+=html_create_recode("DB","sqlite3")
 
-#flask start
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-os.chdir(os.path.join("./",os.path.dirname(__file__)))
-app = flask.Flask(__name__)
 
 #prevent uploading too large file
 app.config['MAX_CONTENT_LENGTH'] = 100000000
