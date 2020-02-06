@@ -19,7 +19,7 @@ class tptef_table(Base):
     user=Column(String(64))
     remark=Column(String(256))
     sha256=Column(String(32))
-    date = Column(String(64),primary_key)
+    date = Column(String(64),primary_key= True)
 
 def Display_Current_SQL(room=""):
     html=""
