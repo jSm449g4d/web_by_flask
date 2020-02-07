@@ -58,7 +58,7 @@ def wsgi_Resource_Reload():
             add_status_table("GCP",datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"))
     except:
         dbengine = create_engine('sqlite:///flask2.sqlite3',encoding = "utf-8")
-        add_status_table("DB",color="#555000")
+        add_status_table("DB","SQLite3",color="#555000")
         add_status_table("CAUTION","FALLBACK_MODE because cant use online resource",color="red")
 wsgi_Resource_Reload()
 
