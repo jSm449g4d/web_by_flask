@@ -20,15 +20,15 @@ class tptef_table(Base):
     user=Column(String(64))
     remark=Column(String(256))
     sha256=Column(String(32))
-    date = Column(String(64),primary_key= True)
+    date = Column(String(128),primary_key= True)
 
 def Display_Current_SQL(room=""):
     html=""
     try:
         session = sessionmaker(bind=wsgi.dbengine)()
         Base.metadata.create_all(wsgi.dbengine)
-        #session.add(tptef_table(room="sqlarchemytst",user ="",remark="tst",sha256="tst"
-        #                    ,date = datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"))
+        session.add(tptef_table(room="sqlarchemytst",user ="a",remark="tst",sha256="tst"
+                            ,date = datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"))
         #aaa=session.query(tptef_table).filter(tptef_table.room == room)
         session.commit()
         session.close()
