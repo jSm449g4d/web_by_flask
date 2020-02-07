@@ -11,6 +11,7 @@ from sqlalchemy import Column,Integer,String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import sqlite3
+import random
 
 
 Base = declarative_base()
@@ -21,6 +22,11 @@ class tptef_table(Base):
     remark=Column(String(256))
     sha256=Column(String(32))
     date = Column(String(128),primary_key= True)
+class testtable(Base):
+    __tablename__ = 'test2'
+    id = Column(Integer,primary_key = True)
+    date = Column(String(255))
+    temperature = Column(Integer)
 
 def Display_Current_SQL(room=""):
     html=""
@@ -29,6 +35,8 @@ def Display_Current_SQL(room=""):
         Base.metadata.create_all(wsgi.dbengine)
 #        session.add(tptef_table(room="sqlarchemytst",user ="a",remark="tst",sha256="tst"
 #                            ,date = datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")))
+
+        session.add(testtable(id=random.randint(1,100000),date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =0))
         #aaa=session.query(tptef_table).filter(tptef_table.room == room)
         session.commit()
         session.close()
