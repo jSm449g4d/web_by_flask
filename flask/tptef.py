@@ -1,15 +1,16 @@
 from flask import  render_template_string,send_file
 from werkzeug.utils import secure_filename
-import os 
-import sqlite3
+import os
 import hashlib
 import datetime
+import pytz
 from firebase_admin import auth
 from firebase_admin import firestore
 import wsgi
 from sqlalchemy import Column,Integer,String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+import sqlite3
 
 
 Base = declarative_base()
@@ -22,19 +23,22 @@ class tptef_table(Base):
     date = Column(String(64),primary_key= True)
 
 def Display_Current_SQL(room=""):
+    html=""
     try:
         session = sessionmaker(bind=wsgi.dbengine)()
         Base.metadata.create_all(wsgi.dbengine)
+        session.add(testtable(room="sqlarchemytst",user ="",remark="tst",sha256=hashlib.sha256("")
+                            ,date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"))
+        aaa=session.filter(tptef_table.room == room)
         session.commit()
         session.close()
+        for i in aaa:
+            html+=i+"<br>"
     except:
         return "DB_error"
     
     
-    html=""
-    #sqlite3
-    con=sqlite3.connect(os.path.join("./flask.sqlite3"),isolation_level = None)
-    cur=con.cursor()
+    
     cur.execute("create table if not exists tptef (room text,user text,remark text,sha256 text,date datetime)")
     orders=cur.execute("select * from tptef where room=\"%s\""%room).fetchall()
     cur.close();con.close()

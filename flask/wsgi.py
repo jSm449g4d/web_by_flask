@@ -50,10 +50,10 @@ try:
         MySQL_key=json.load(fp)
         dbengine = create_engine("mysql+mysqldb://"+MySQL_key["user"]+":"+MySQL_key["password"]+
                                 "@"+MySQL_key["host"]+"/"+MySQL_key["db"]+"?charset=utf8",encoding = "utf-8")
-        add_status_table("DB","MySQL")
         storage_client = storage.Client.from_service_account_json("FirebaseAdmin_Key.json")
         cred = firebase_admin.credentials.Certificate("FirebaseAdmin_Key.json")
         firebase_admin.initialize_app(cred)
+        add_status_table("DB","MySQL")
         add_status_table("GCP",datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"))
 except:
     dbengine = create_engine('sqlite:///flask2.sqlite3',encoding = "utf-8")
