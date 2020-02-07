@@ -34,7 +34,7 @@ def Display_Current_SQL(room=""):
         session.commit()
         session.close()
         for i in aaa:
-            html+=i+"<br>"
+            html+=i.date+"<br>"
     except Exception as e:
         return "DBerr:"+str(e)    
     
