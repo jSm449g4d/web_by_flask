@@ -29,11 +29,11 @@ def Display_Current_SQL(room=""):
         Base.metadata.create_all(wsgi.dbengine)
         session.add(testtable(room="sqlarchemytst",user ="",remark="tst",sha256=hashlib.sha256("")
                             ,date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"))
-        aaa=session.filter(tptef_table.room == room)
+        aaa=session.query(tptef_table).filter(tptef_table.room == room)
         session.commit()
         session.close()
-        for i in aaa:
-            html+=i+"<br>"
+        #for i in aaa:
+        #    html+=i+"<br>"
     except:
         return "DB_error"
     
