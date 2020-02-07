@@ -36,7 +36,7 @@ def Display_Current_SQL(room=""):
 #        session.add(tptef_table(room="sqlarchemytst",user ="a",remark="tst",sha256="tst"
 #                            ,date = datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")))
 
-        session.add(testtable(id=random.randint(1,100000),date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =0))
+        session.add(testtable(id=random.randint(1,10000),date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =0))
         #aaa=session.query(tptef_table).filter(tptef_table.room == room)
         session.commit()
         session.close()
