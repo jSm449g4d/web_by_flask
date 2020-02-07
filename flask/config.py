@@ -110,7 +110,6 @@ def show(req):
             db = firestore.client()
             resp=db.collection('users').document('alovelace').get().to_dict()
             status_table+=html_create_recode("Firestore",json.dumps(resp))
-        #SQLAlchemy test
         if "Resource_Reload" in req.form and secure_filename(req.form["Resource_Reload"])=="True":
             wsgi.wsgi_Resource_Reload()
     return wsgi.render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],
