@@ -44,9 +44,8 @@ def Display_Current_SQL(room=""):
         session.close()
         #for i in aaa:
         #    html+=i+"<br>"
-    except:
-        return "DB_error"
-    
+    except Exception as e:
+        return "DBerr:"+str(e)    
     
     con=sqlite3.connect(os.path.join("./flask.sqlite3"),isolation_level = None)
     cur=con.cursor()
