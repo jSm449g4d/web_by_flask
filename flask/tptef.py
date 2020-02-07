@@ -27,8 +27,8 @@ def Display_Current_SQL(room=""):
     try:
         session = sessionmaker(bind=wsgi.dbengine)()
         Base.metadata.create_all(wsgi.dbengine)
-        #session.add(tptef_table(room="sqlarchemytst",user ="",remark="tst",sha256="tst"
-        #                    ,date = datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"))
+        session.add(tptef_table(room="sqlarchemytst",user ="",remark="tst",sha256="tst"
+                            ,date = datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"))
         #aaa=session.query(tptef_table).filter(tptef_table.room == room)
         session.commit()
         session.close()
@@ -38,7 +38,8 @@ def Display_Current_SQL(room=""):
         return "DB_error"
     
     
-    
+    con=sqlite3.connect(os.path.join("./flask.sqlite3"),isolation_level = None)
+    cur=con.cursor()
     cur.execute("create table if not exists tptef (room text,user text,remark text,sha256 text,date datetime)")
     orders=cur.execute("select * from tptef where room=\"%s\""%room).fetchall()
     cur.close();con.close()
