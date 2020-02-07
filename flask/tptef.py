@@ -22,29 +22,19 @@ class tptef_table(Base):
     remark=Column(String(256))
     sha256=Column(String(32))
     date = Column(String(128),primary_key= True)
-class testtable(Base):
-    __tablename__ = 'test2'
-    id = Column(Integer,primary_key = True)
-    date = Column(String(255))
-    temperature = Column(Integer)
 
 def Display_Current_SQL(room=""):
     html=""
     try:
-#        session.add(tptef_table(room="sqlarchemytst",user ="a",remark="tst",sha256="tst"
-#                            ,date = datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")))     
         session = sessionmaker(bind=wsgi.dbengine)()
         Base.metadata.create_all(wsgi.dbengine)
-        session.add(testtable(id=random.randint(1,10000),date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =0))
-        
         session.add(tptef_table(room="sqlarchemytst",user ="a",remark="tst",sha256="tst"
                             ,date = datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")))     
-        
-        #aaa=session.query(tptef_table).filter(tptef_table.room == room)
+        aaa=session.query(tptef_table).filter(tptef_table.room == room)
         session.commit()
         session.close()
-        #for i in aaa:
-        #    html+=i+"<br>"
+        for i in aaa:
+            html+=i+"<br>"
     except Exception as e:
         return "DBerr:"+str(e)    
     
