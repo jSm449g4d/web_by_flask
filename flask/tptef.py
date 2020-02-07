@@ -75,9 +75,9 @@ def show(req):
         if "fbtoken" in req.form:fbtoken=secure_filename(req.form["fbtoken"])#Firebase_Token_keep
         
         if 'room' in req.form:
-            room=req.form['room'].translate(str.maketrans("\"\'\\/<>%`?;",'__________'))#Not_secure_filename!
+            room=req.form['room'].translate(str.maketrans("","","\"\'\\/<>%`?;"))#Not_secure_filename!
         if 'user' in req.form:
-            user=req.form['user'].translate(str.maketrans("\"\'\\/<>%`?;",'__________'))#Not_secure_filename!
+            user=req.form['user'].translate(str.maketrans("","","\"\'\\/<>%`?;"))#Not_secure_filename!
         if 'remark' in req.form:
             remark=req.form['remark'].translate(str.maketrans("\"\'\\/<>%`?;",'””￥_〈〉％”？；'))#Not_secure_filename!
         if 'pass' in req.form:
