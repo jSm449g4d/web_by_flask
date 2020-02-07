@@ -22,6 +22,15 @@ class tptef_table(Base):
     date = Column(String(64),primary_key= True)
 
 def Display_Current_SQL(room=""):
+    try:
+        session = sessionmaker(bind=wsgi.dbengine)()
+        Base.metadata.create_all(wsgi.dbengine)
+        session.commit()
+        session.close()
+    except:
+        return "DB_error"
+    
+    
     html=""
     #sqlite3
     con=sqlite3.connect(os.path.join("./flask.sqlite3"),isolation_level = None)
