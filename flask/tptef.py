@@ -31,12 +31,14 @@ class testtable(Base):
 def Display_Current_SQL(room=""):
     html=""
     try:
-        session = sessionmaker(bind=wsgi.dbengine)()
-        Base.metadata.create_all(wsgi.dbengine)
 #        session.add(tptef_table(room="sqlarchemytst",user ="a",remark="tst",sha256="tst"
 #                            ,date = datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")))
-
-        session.add(testtable(id=random.randint(1,10000),date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =0))
+#        session.add(testtable(id=random.randint(1,10000),date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =0))        
+        session = sessionmaker(bind=wsgi.dbengine)()
+        Base.metadata.create_all(wsgi.dbengine)
+        session.add(
+        testtable(id=15,date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =0))
+        
         #aaa=session.query(tptef_table).filter(tptef_table.room == room)
         session.commit()
         session.close()
