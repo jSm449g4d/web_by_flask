@@ -45,7 +45,7 @@ def show(req):
                             trip=hashlib.sha256(passwd.encode('utf-8')).hexdigest(),
                             date = datetime.now(pytz.UTC).strftime("%Y/%m/%d %H:%M:%S %f (UTC)")))
         if "clear" in req.form and secure_filename(req.form["clear"])=="True":
-            session.query(table).filter(table.trip == hashlib.sha256(passwd.encode('utf-8')).hexdigest()).delete()
+            session.query(table).filter(table.trip == hashlib.sha256(passwd.encode('utf-8')).hexdigest(),room=room).delete()
 
     #show chat thread
     for order in session.query(table).filter(table.room == room):
