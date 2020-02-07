@@ -111,18 +111,8 @@ def show(req):
             resp=db.collection('users').document('alovelace').get().to_dict()
             status_table+=html_create_recode("Firestore",json.dumps(resp))
         #SQLAlchemy test
-        if "mysql_check" in req.form and secure_filename(req.form["mysql_check"])=="True":
-            try:
-                session = sessionmaker(bind=wsgi.dbengine)()
-                Base.metadata.create_all(wsgi.dbengine)
-                session.add(
-                testtable(id=iii,date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =0))
-                session.commit()
-                session.close()
-                wsgi.dbengine.dispose()
-                status_table+=html_create_recode("sqlalchemy","Ced")
-            except Exception as e:
-                status_table+=html_create_recode("MySQL_err",str(e))
+        if "Resource_Reload" in req.form and secure_filename(req.form["Resource_Reload"])=="True":
+            wsgi.wsgi_Resource_Reload()
     return wsgi.render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],
                             form_gcs_uri=config_dict["form_gcs_uri"],STATUS_TABLE=status_table)
 
