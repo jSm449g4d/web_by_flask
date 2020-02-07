@@ -2,7 +2,7 @@ from flask import  render_template_string,send_file
 from werkzeug.utils import secure_filename
 import os
 import hashlib
-import datetime
+from datetime import datetime
 import pytz
 from firebase_admin import auth
 from firebase_admin import firestore
@@ -32,12 +32,13 @@ def Display_Current_SQL(room=""):
     html=""
     try:
 #        session.add(tptef_table(room="sqlarchemytst",user ="a",remark="tst",sha256="tst"
-#                            ,date = datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")))
-#        session.add(testtable(id=random.randint(1,10000),date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =0))        
+#                            ,date = datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")))     
         session = sessionmaker(bind=wsgi.dbengine)()
         Base.metadata.create_all(wsgi.dbengine)
-        session.add(
-        testtable(id=15,date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =0))
+        session.add(testtable(id=random.randint(1,10000),date =datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"),temperature =0))
+        
+        session.add(tptef_table(room="sqlarchemytst",user ="a",remark="tst",sha256="tst"
+                            ,date = datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")))     
         
         #aaa=session.query(tptef_table).filter(tptef_table.room == room)
         session.commit()
@@ -68,7 +69,7 @@ def Order_Into_SQL(room="",user="",remark="",passwd=""):
     con=sqlite3.connect(os.path.join("./flask.sqlite3"),isolation_level = None)
     cur=con.cursor()
     sha256=hashlib.sha256(passwd.encode('utf-8')).hexdigest()
-    cur.execute("insert into tptef values(?,?,?,?,?)",[room,user,remark,sha256,datetime.datetime.now()])
+    cur.execute("insert into tptef values(?,?,?,?,?)",[room,user,remark,sha256,datetime.now()])
     cur.close();con.close()
 
 def Clear_Order_SQL(passwd=""):
