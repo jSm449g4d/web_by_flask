@@ -28,7 +28,7 @@ def Display_Current_SQL(room=""):
         session = sessionmaker(bind=wsgi.dbengine)()
         Base.metadata.create_all(wsgi.dbengine)
         session.add(tptef_table(room="sqlarchemytst",user ="a",remark="tst",sha256="tst"
-                            ,date = datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)"))
+                            ,date = datetime.now(pytz.UTC).strftime(" %Y/%m/%d %H:%M:%S (UTC)")))
         #aaa=session.query(tptef_table).filter(tptef_table.room == room)
         session.commit()
         session.close()
