@@ -21,7 +21,6 @@ class table(Base):
     date = Column(String(64),primary_key= True)
 
 def show(req):
-    return "a"
     
     room=""
     user=""
@@ -56,5 +55,6 @@ def show(req):
         orders+="<td style=\"font-size: 12px;\">"+order.date+"</td></tr>"
     session.commit()
     session.close()
+    return "a"
     
     return wsgi_util.render_template_2("tptef.html",ORDERS=orders,ROOM=room,USER=user,PASS=passwd)
