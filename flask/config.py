@@ -13,7 +13,7 @@ import json
 import firebase_admin
 from firebase_admin import auth,firestore
 from urllib import parse
-import wsgi
+import wsgi_util
 from sqlalchemy import Column,Integer,String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -111,7 +111,7 @@ def show(req):
             resp=db.collection('users').document('alovelace').get().to_dict()
             status_table+=html_create_recode("Firestore",json.dumps(resp))
         if "Resource_Reload" in req.form and secure_filename(req.form["Resource_Reload"])=="True":
-            wsgi.wsgi_Resource_Reload()
-    return wsgi.render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],
+            wsgi_util.Resource_Reload()
+    return wsgi_util.render_template_2("config.html",STATUS_GCS=status_GCS,DIR_DB=config_dict["dir_db"],
                             form_gcs_uri=config_dict["form_gcs_uri"],STATUS_TABLE=status_table)
 

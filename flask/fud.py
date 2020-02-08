@@ -6,6 +6,7 @@ from werkzeug.utils import secure_filename
 import os
 import sqlite3
 import hashlib
+import wsgi_util
 
 DataDir="./fud"
 
@@ -75,4 +76,4 @@ def show(req):
             if sql_reg(target,passwd,mode=0)!=0:
                 os.remove(os.path.join(DataDir,target))
             
-    return render_template_2("fud.html",FILES=htmlwalk(),PASS=passwd)
+    return wsgi_util.render_template_2("fud.html",FILES=htmlwalk(),PASS=passwd)

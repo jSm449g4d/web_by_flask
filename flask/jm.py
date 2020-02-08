@@ -11,6 +11,7 @@ import random
 from urllib import parse
 import re
 import neologdn
+import wsgi_util
 
 def render_template_2(dir,**kwargs):
     html=""
@@ -130,4 +131,4 @@ def show(req):
                         output+=random.choice(list(rand_noun));continue
                     output+=text_surface.split(",")[i]
         
-    return render_template_2("jm.html",OUTPUT=output,ENDPOINT=endpoint,RANDOM_ART=random_art,CHANGE_PROB=str(change_prob))
+    return wsgi_util.render_template_2("jm.html",OUTPUT=output,ENDPOINT=endpoint,RANDOM_ART=random_art,CHANGE_PROB=str(change_prob))

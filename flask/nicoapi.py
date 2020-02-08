@@ -12,6 +12,7 @@ import threading
 from urllib import parse
 import urllib3
 import certifi
+import wsgi_util
 
 DataDir="./nicoapi"
 
@@ -117,7 +118,6 @@ def fill_default_fields(url=""):
         html+=fields_to_html_text_forms(2,"lim","499")
         html+=fields_to_html_text_forms(3,"st","AAAAAX")
         fields_command="AAAAAX_1_2000_499"
-
     else :
         html=fields_to_html_text_forms(0)
         fields_command=""
@@ -211,8 +211,7 @@ def show(req):
     else :
         fields,fields_c=fill_default_fields(urls)
     
-
     orders=Display_Current_SQL(passwd)
     _,size_files=about_files(passwd)
-    return render_template_2("nicoapi.html",ORDERS=orders,URL=urls,QUERY=query,PASS=passwd,\
+    return wsgi_util.render_template_2("nicoapi.html",ORDERS=orders,URL=urls,QUERY=query,PASS=passwd,\
     SIZE_FILES=size_files,FIELDS=fields,FIELDS_C=fields_c)
