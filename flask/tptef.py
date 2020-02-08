@@ -6,10 +6,10 @@ from datetime import datetime
 import pytz
 from firebase_admin import auth
 from firebase_admin import firestore
-import wsgi
 from sqlalchemy import Column,Integer,String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from wsgi import access_counter,dbengine,render_template_2
 
 
 Base = declarative_base()
@@ -22,14 +22,16 @@ class table(Base):
     date = Column(String(64),primary_key= True)
 
 def show(req):
+    global access_counter,dbengine
     room=""
     user=""
     content=""
     passwd=""
     fbtoken=""
-    orders=""
-    session = sessionmaker(bind=wsgi.dbengine)()
-    Base.metadata.create_all(wsgi.dbengine)
+    access_counter+=1
+    orders=str(dbengine)[:15]+"sss"+str(access_counter)
+    session = sessionmaker(bind=dbengine)()
+    Base.metadata.create_all(dbengine)
     if req.method == 'POST':
         if "fbtoken" in req.form:fbtoken=secure_filename(req.form["fbtoken"])#Firebase_Token_keep
         if 'room' in req.form:
@@ -57,4 +59,4 @@ def show(req):
     session.commit()
     session.close()
     
-    return wsgi.render_template_2("tptef.html",ORDERS=orders,ROOM=room,USER=user,PASS=passwd)
+    return render_template_2("tptef.html",ORDERS=orders,ROOM=room,USER=user,PASS=passwd)
