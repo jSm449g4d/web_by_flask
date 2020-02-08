@@ -46,7 +46,6 @@ def show(req):
         if "clear" in req.form and secure_filename(req.form["clear"])=="True":
             session.query(table).filter(table.trip == hashlib.sha256(passwd.encode('utf-8')).hexdigest(),table.room==room).delete()
 
-    return "a"
     #show chat thread
     for order in session.query(table).filter(table.room == room):
         orders+="<tr><td>"+order.user+"</td>"
@@ -54,6 +53,7 @@ def show(req):
         orders+="<td style=\"font-size: 12px;\">"+order.trip[:16]+"<br>"+order.trip[16:32]+\
         "<br>"+order.trip[32:48]+"<br>"+order.trip[48:64]+"</td>"
         orders+="<td style=\"font-size: 12px;\">"+order.date+"</td></tr>"
+    return "a"
     session.commit()
     session.close()
     
