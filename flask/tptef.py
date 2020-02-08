@@ -46,6 +46,7 @@ def show(req):
         if "clear" in req.form and secure_filename(req.form["clear"])=="True":
             session.query(table).filter(table.trip == hashlib.sha256(passwd.encode('utf-8')).hexdigest(),table.room==room).delete()
 
+    return "a"
     #show chat thread
     for order in session.query(table).filter(table.room == room):
         orders+="<tr><td>"+order.user+"</td>"
@@ -55,6 +56,5 @@ def show(req):
         orders+="<td style=\"font-size: 12px;\">"+order.date+"</td></tr>"
     session.commit()
     session.close()
-    return "a"
     
     return wsgi_util.render_template_2("tptef.html",ORDERS=orders,ROOM=room,USER=user,PASS=passwd)
