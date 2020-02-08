@@ -2,7 +2,7 @@
 import sys
 import os
 import flask
-from flask import  redirect,request,render_template_string
+from flask import  redirect,request,render_template_string,render_template
 from werkzeug.utils import secure_filename
 import importlib
 import zipfile
@@ -21,6 +21,7 @@ from firebase_admin import auth
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.chdir(os.path.join("./",os.path.dirname(__file__)))
 app = flask.Flask(__name__)
+wsgi_util=importlib.import_module("wsgi_util")
 #prevent uploading too large file
 app.config['MAX_CONTENT_LENGTH'] = 100000000
 #unzip CDN contents for fallback
