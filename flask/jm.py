@@ -13,14 +13,6 @@ import re
 import neologdn
 import wsgi_util
 
-def render_template_2(dir,**kwargs):
-    html=""
-    with open(os.path.join("./templates/",dir),"r",encoding="utf-8") as f:
-        html=f.read()
-        for kw,arg in kwargs.items():
-            html=html.replace("{{"+kw+"}}",arg)
-    return render_template_string(html)
-
 def FaaS_janome(url="",fields={}):
     ret=""
     if url=="":#fallback
